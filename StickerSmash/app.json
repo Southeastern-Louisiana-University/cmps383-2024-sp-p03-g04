@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Selu383-SP24-Mobile-p03-g04",
-    "slug": "Selu383-SP24-Mobile-p03-g04",
+    "name": "StickerSmash",
+    "slug": "StickerSmash",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -22,10 +22,16 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.selu383.sp24.p03.g04"
+      "package": "com.leblanc.gavin.StickerSmash"
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "17a9ba3c-b66f-47b9-a549-493dbe851d71"
+      }
+    },
+    "owner": "leblanc.gavin"
   }
 }
