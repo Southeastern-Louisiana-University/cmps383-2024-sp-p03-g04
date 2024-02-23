@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Selu383.SP24.Api.Features.Authorization;
 using Selu383.SP24.Api.Features.Hotels;
+using Selu383.SP24.Api.Features.Rooms;
 
 namespace Selu383.SP24.Api.Data;
 
@@ -15,8 +16,8 @@ public static class SeedHelper
 
         await AddRoles(serviceProvider);
         await AddUsers(serviceProvider);
-
         await AddHotels(dataContext);
+        await AddRooms(dataContext);
     }
 
     private static async Task AddUsers(IServiceProvider serviceProvider)
@@ -32,7 +33,7 @@ public static class SeedHelper
         var adminUser = new User
         {
             UserName = "galkadi",
-            Email="galkadi@gmail.com"
+            Email = "galkadi@gmail.com"
         };
         await userManager.CreateAsync(adminUser, defaultPassword);
         await userManager.AddToRoleAsync(adminUser, RoleNames.Admin);
@@ -94,5 +95,37 @@ public static class SeedHelper
         }
 
         await dataContext.SaveChangesAsync();
+    }
+
+    private static async Task AddRooms(DataContext dataContext)
+    {
+        var rooms = dataContext.Set<Room>();
+
+        if (await rooms.AnyAsync())
+        {
+            return;
+        }
+
+        var roomTypes = new RoomType[] { RoomType.Single, RoomType.Single, RoomType.Double, RoomType.Double };
+        for (int i = 0; i < 4; i++)
+        {
+            var isPremium = i % 2 == 0;
+            var description = isPremium ? "Premium room with snacks, extra plus comfy pillows, comforter and bigger TV" : "Standard room";
+            var price = isPremium ? 200 : 100;
+            dataContext.Set<Room>()
+           .Add(new Room
+           {
+               Type = roomTypes[i],
+               Number = 101 + i,
+               IsPremium = isPremium,
+               Description = description,
+               Price = price,
+               Capacity = roomTypes[i] == RoomType.Single ? 2 : 4
+           });
+
+        }
+        await dataContext.SaveChangesAsync();
+
+
     }
 }
