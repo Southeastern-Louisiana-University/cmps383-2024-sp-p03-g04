@@ -1,4 +1,6 @@
-﻿namespace Selu383.SP24.Api.Features.Rooms
+﻿using Selu383.SP24.Api.Features.Hotels;
+
+namespace Selu383.SP24.Api.Features.Rooms
 {
     public enum RoomType
     {
@@ -14,6 +16,10 @@
         public required string Description { get; set; }
         public decimal Price { get; set; }
         public int Capacity { get; set; }
+        public bool IsClean { get; set; } 
+        public bool IsOccupied { get; set; }
+        public int HotelId { get; set; } 
+        public Hotel Hotel { get; set; }
     }
 
 }

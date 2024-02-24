@@ -9,7 +9,7 @@ using Selu383.SP24.Api.Features.Rooms;
 namespace Selu383.SP24.Api.Controllers
 {
     [ApiController]
-    [Route("api/rooms")]
+    [Route("api/hotels/{hotelId}/rooms")]
     public class RoomsController : ControllerBase
     {
         private readonly DataContext dataContext;
@@ -34,7 +34,10 @@ namespace Selu383.SP24.Api.Controllers
                 IsPremium = dto.IsPremium,
                 Description = dto.Description,
                 Price = dto.Price,
-                Capacity = dto.Type == RoomType.Single ? 2 : 4
+                Capacity = dto.Type == RoomType.Single ? 2 : 4,
+                IsClean=dto.IsClean,
+                IsOccupied=dto.IsOccupied,
+                HotelId = dto.HotelId,
             };
 
             Rooms.Add(room);
@@ -53,9 +56,9 @@ namespace Selu383.SP24.Api.Controllers
 
         [HttpGet]
         [Authorize(Roles = RoleNames.Admin)]
-        public async Task<ActionResult<IEnumerable<RoomDto>>> GetAllRooms()
+        public async Task<ActionResult<IEnumerable<RoomDto>>> GetAllRoomsByHotel(int hotelId)
         {
-            var rooms = await Rooms.ToListAsync();
+            var rooms = await Rooms.Where(x => x.HotelId == hotelId).ToListAsync();
 
             var roomDtos = rooms.Select(room => new RoomDto
             {
@@ -65,17 +68,19 @@ namespace Selu383.SP24.Api.Controllers
                 IsPremium = room.IsPremium,
                 Description = room.Description,
                 Price = room.Price,
-                Capacity = room.Capacity
+                Capacity = room.Capacity,
+                IsClean=room.IsClean,
+                IsOccupied = room.IsOccupied,
             });
 
             return Ok(roomDtos);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("{roomId}")]
         [Authorize(Roles = RoleNames.Admin)]
-        public async Task<ActionResult> EditRoom(int id, RoomDto dto)
+        public async Task<ActionResult> EditRoom(int id,int hotelId, RoomDto dto)
         {
-            var room = await Rooms.FindAsync(id);
+            var room = await Rooms.FirstOrDefaultAsync(x => x.Id == id && x.HotelId == hotelId);
             if (room == null)
             {
                 return NotFound();
@@ -87,17 +92,19 @@ namespace Selu383.SP24.Api.Controllers
             room.Description = dto.Description;
             room.Price = dto.Price;
             room.Capacity = dto.Type == RoomType.Single ? 2 : 4;
+            room.IsClean = dto.IsClean;
+            dto.IsOccupied = dto.IsOccupied;
 
             await dataContext.SaveChangesAsync();
 
             return NoContent();
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{roomId}")]
         [Authorize(Roles = RoleNames.Admin)]
-        public async Task<ActionResult> DeleteRoom(int id)
+        public async Task<ActionResult> DeleteRoom(int hotelId, int id)
         {
-            var room = await Rooms.FindAsync(id);
+            var room = await Rooms.FirstOrDefaultAsync(x => x.Id == id && x.HotelId == hotelId);
             if (room == null)
             {
                 return NotFound();

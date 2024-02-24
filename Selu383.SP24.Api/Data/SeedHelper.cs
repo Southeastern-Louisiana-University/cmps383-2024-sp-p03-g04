@@ -89,6 +89,7 @@ public static class SeedHelper
             dataContext.Set<Hotel>()
                 .Add(new Hotel
                 {
+                    HotelCode = "enstay" + i,
                     Name = "Hammond " + i,
                     Address = "1234 Place st"
                 });
@@ -100,6 +101,7 @@ public static class SeedHelper
     private static async Task AddRooms(DataContext dataContext)
     {
         var rooms = dataContext.Set<Room>();
+        var hotels = dataContext.Set<Hotel>();
 
         if (await rooms.AnyAsync())
         {
@@ -107,22 +109,32 @@ public static class SeedHelper
         }
 
         var roomTypes = new RoomType[] { RoomType.Single, RoomType.Single, RoomType.Double, RoomType.Double };
-        for (int i = 0; i < 4; i++)
-        {
-            var isPremium = i % 2 == 0;
-            var description = isPremium ? "Premium room with snacks, extra plus comfy pillows, comforter and bigger TV" : "Standard room";
-            var price = isPremium ? 200 : 100;
-            dataContext.Set<Room>()
-           .Add(new Room
-           {
-               Type = roomTypes[i],
-               Number = 101 + i,
-               IsPremium = isPremium,
-               Description = description,
-               Price = price,
-               Capacity = roomTypes[i] == RoomType.Single ? 2 : 4
-           });
 
+        var allhotel = await hotels.ToListAsync();
+        foreach (var hotel in allhotel)
+        {
+
+            for (int i = 0; i < 4; i++)
+            {
+                var isPremium = i % 2 == 0;
+                var description = isPremium ? "Premium room with snacks, extra plus comfy pillows, comforter and bigger TV" : "Standard room";
+                var price = isPremium ? 200 : 100;
+                dataContext.Set<Room>()
+               .Add(new Room
+               {
+                   Type = roomTypes[i],
+                   Number = 101 + i,
+                   IsPremium = isPremium,
+                   Description = description,
+                   Price = price,
+                   Capacity = roomTypes[i] == RoomType.Single ? 2 : 4,
+                   IsClean = true,
+                   IsOccupied = false,
+                   HotelId=hotel.Id
+
+               });
+
+            }
         }
         await dataContext.SaveChangesAsync();
 

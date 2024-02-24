@@ -12,7 +12,7 @@ public class RoomConfiguration : IEntityTypeConfiguration<Room>
         builder.Property(x => x.Number)
             .IsRequired();
 
-        builder.HasIndex(x => x.Number)
+        builder.HasIndex(x => new { x.Number, x.HotelId })
             .IsUnique();
 
         builder.Property(x => x.IsPremium);
