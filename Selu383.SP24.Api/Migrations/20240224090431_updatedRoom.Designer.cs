@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Selu383.SP24.Api.Data;
 
@@ -11,9 +12,11 @@ using Selu383.SP24.Api.Data;
 namespace Selu383.SP24.Api.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240224090431_updatedRoom")]
+    partial class updatedRoom
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -235,10 +238,6 @@ namespace Selu383.SP24.Api.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("HotelCode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int?>("ManagerId")
                         .HasColumnType("int");
 
@@ -270,9 +269,6 @@ namespace Selu383.SP24.Api.Migrations
                         .HasMaxLength(1000)
                         .HasColumnType("nvarchar(1000)");
 
-                    b.Property<int>("HotelId")
-                        .HasColumnType("int");
-
                     b.Property<bool>("IsClean")
                         .HasColumnType("bit");
 
@@ -293,9 +289,7 @@ namespace Selu383.SP24.Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("HotelId");
-
-                    b.HasIndex("Number", "HotelId")
+                    b.HasIndex("Number")
                         .IsUnique();
 
                     b.ToTable("Room");
@@ -365,17 +359,6 @@ namespace Selu383.SP24.Api.Migrations
                     b.Navigation("Manager");
                 });
 
-            modelBuilder.Entity("Selu383.SP24.Api.Features.Rooms.Room", b =>
-                {
-                    b.HasOne("Selu383.SP24.Api.Features.Hotels.Hotel", "Hotel")
-                        .WithMany("Rooms")
-                        .HasForeignKey("HotelId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Hotel");
-                });
-
             modelBuilder.Entity("Selu383.SP24.Api.Features.Authorization.Role", b =>
                 {
                     b.Navigation("Users");
@@ -386,11 +369,6 @@ namespace Selu383.SP24.Api.Migrations
                     b.Navigation("Hotels");
 
                     b.Navigation("Roles");
-                });
-
-            modelBuilder.Entity("Selu383.SP24.Api.Features.Hotels.Hotel", b =>
-                {
-                    b.Navigation("Rooms");
                 });
 #pragma warning restore 612, 618
         }
