@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
 import "./index.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from "./Home/Home.tsx";
+import Home from "./SignUp/SignUp.tsx";
 import LoginPage from "./LoginPage/Login.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
@@ -11,7 +11,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <Routes>
       <Route path="/" element={<App />}>
         <Route path="/Login" element={<LoginPage />} />
-        <Route path="/Home" element={<Home />} />
+        <Route path="/SignUp" element={<Home />} />
       </Route>
     </Routes>
   </BrowserRouter>

@@ -9,7 +9,7 @@ function App() {
           <h1>EnStay Suites</h1>
           <div className="PageLinks">
             <Link to="/Login">Login</Link>
-            <Link to="/Home">Sign Up</Link>
+            <Link to="/SignUp">Sign Up</Link>
           </div>
         </nav>
       </div>
