@@ -1,3 +1,7 @@
+.navbar-nav .nav-item .nav-link:hover {
+  color: black; 
+  background-color:aliceblue;
+}
 #root {
   max-width: 1280px;
   margin: 0 auto;

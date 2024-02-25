@@ -1,10 +1,10 @@
-import "./App.css";
-import { BrowserRouter, Link, Outlet } from "react-router-dom";
-
-function App() {
-  return (
-    <>
-      <div className="app-container">
+  let items=["Home","About", "Services","Rooms","Gallery","Contact"];
+      <NavBar 
+    <div>
+      brandName="EnForce" 
+      imageSrcPath={imagePath}
+      navItems={items}/>
+    </div>
         <nav className="top-nav">
           <h1>EnStay Suites</h1>
           <div className="PageLinks">
@@ -12,17 +12,3 @@ function App() {
             <Link to="/SignUp">Sign Up</Link>
           </div>
         </nav>
-      </div>
-
-      <div className="content-container">
-        <Outlet />
-      </div>
-
-      <footer className="footer">
-        <p>&copy; 2024 EnStay Suites</p>
-      </footer>
-    </>
-  );
-}
-
-export default App;

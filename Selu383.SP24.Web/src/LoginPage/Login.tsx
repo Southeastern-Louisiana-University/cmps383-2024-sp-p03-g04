@@ -9,9 +9,7 @@ const LoginPage: React.FC = () => {
     e.preventDefault();
 
     try {
-      const BASE_URL = "http://localhost:5000"; // Adjust this to match your frontend URL
-
-      const response = await fetch(`${BASE_URL}/api/authentication/login`, {
+      const response = await fetch(`/api/authentication/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -23,14 +21,15 @@ const LoginPage: React.FC = () => {
       });
 
       if (response.ok) {
-        // Login successful, handle the success (redirect or update state)
-        console.log("Login successful");
+        const responseData = await response.json();
+        console.log(responseData);
       } else {
-        // Login failed, handle the failure (display error message, etc.)
-        console.error("Login failed");
+        console.error("Login failed", response.status, response.statusText);
+        const errorText = await response.text();
+        console.error("Error details:", errorText);
       }
     } catch (error) {
-      console.error("An error occurred during login", error);
+      console.error("Login failed", error);
     }
   };
 
