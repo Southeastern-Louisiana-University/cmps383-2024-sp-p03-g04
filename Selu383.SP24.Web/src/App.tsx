@@ -42,6 +42,11 @@ function App() {
 
   let items = ["Home", "About", "Services", "Rooms", "Gallery", "Contact"];
 
+  //Note for Shreeza: I have made a temp navbar while i was working because i'm not familiar with bootstrap framework
+  //and couldn't figure out how to make it the full width of the screen, feel free to change it to the
+  //navbar you made if you can get it to be the full width of the screen
+  // -Kade
+
   return (
     <>
       <div className="app-container">
