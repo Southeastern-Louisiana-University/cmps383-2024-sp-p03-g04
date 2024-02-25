@@ -1,6 +1,5 @@
 import { useState } from "react";
 import "../App.css";
-
 interface NavBarProps {
   brandName: string;
   imageSrcPath: string;
@@ -39,12 +38,21 @@ function NavBar({ brandName, imageSrcPath, navItems }: NavBarProps) {
           <span className="navbar-toggler-icon"></span>
         </button>
 
-        <div className={`collapse navbar-collapse ${collapsed ? "" : "show"}`} id="navbarSupportedContent">
+        <div
+          className={`collapse navbar-collapse ${collapsed ? "" : "show"}`}
+          id="navbarSupportedContent"
+        >
           <ul className="navbar-nav me-auto mb-2 mb-md-1">
             {navItems.map((item, index) => (
-              <li key={index} className="nav-item" onClick={() => setSelectedIndex(index)}>
+              <li
+                key={index}
+                className="nav-item"
+                onClick={() => setSelectedIndex(index)}
+              >
                 <a
-                  className={`nav-link ${selectedIndex === index ? "active fw-bold" : ""}`}
+                  className={`nav-link ${
+                    selectedIndex === index ? "active fw-bold" : ""
+                  }`}
                   href="#"
                 >
                   {item}

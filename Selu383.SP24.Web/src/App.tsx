@@ -20,6 +20,21 @@ function LoginNavBar() {
   );
 }
 
+function RegNavBar() {
+  return (
+    <div className="top-nav">
+      <div className="logo-name">
+        <img id="logoImage" src={imagePath} alt="EnStay Suites" />
+        <h1>EnStay Suites</h1>
+      </div>
+      <div className="PageLinksReg">
+        <Link to="/Home">Home</Link>
+        <Link to="/Reservations">Reservations</Link>
+      </div>
+    </div>
+  );
+}
+
 function App() {
   const location = useLocation();
   const isLoginPage =
@@ -30,15 +45,7 @@ function App() {
   return (
     <>
       <div className="app-container">
-        {isLoginPage ? (
-          <LoginNavBar />
-        ) : (
-          <NavBar
-            brandName={"EnStay"}
-            imageSrcPath={imagePath}
-            navItems={items}
-          />
-        )}
+        {isLoginPage ? <LoginNavBar /> : <RegNavBar />}
       </div>
       <div className="content-container">
         <Outlet />

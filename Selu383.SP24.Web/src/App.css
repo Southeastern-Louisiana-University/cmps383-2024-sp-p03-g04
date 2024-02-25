@@ -74,6 +74,30 @@ a:nth-of-type(2) .logo {
   gap: 10px;
 }
 
+.PageLinksReg {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 20px 10px 10px 10px;
+  gap: 10px;
+}
+.PageLinksReg a {
+  color: #232825;
+  padding: 7px 10px;
+  text-decoration: none;
+  min-width: 72px;
+  font-weight: 400;
+  border-radius: 10px;
+  width: 125px;
+}
+
+.PageLinksReg a:hover {
+  background-color: #1a8a47;
+  color: rgb(255, 255, 255);
+  border-radius: 10px;
+}
+
 .PageLinks a {
   color: #1a8a47;
   padding: 7px 10px;
