@@ -7,6 +7,7 @@ interface NavBarProps {
   brandName: string;
   imageSrcPath: string;
   navItems: string[];
+  isLoggedIn: boolean;
 }
 
 function NavBar({
