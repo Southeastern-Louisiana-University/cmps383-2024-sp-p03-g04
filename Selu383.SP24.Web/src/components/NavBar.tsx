@@ -7,15 +7,9 @@ interface NavBarProps {
   brandName: string;
   imageSrcPath: string;
   navItems: string[];
-  isLoggedIn: boolean;
 }
 
-function NavBar({
-  brandName,
-  imageSrcPath,
-  navItems,
-  isLoggedIn,
-}: NavBarProps) {
+function NavBar({ brandName, imageSrcPath, navItems }: NavBarProps) {
   const [selectedIndex, setSelectedIndex] = useState(-1);
   const [collapsed, setCollapsed] = useState(true);
   const { user, setUser } = useUser();
@@ -85,7 +79,7 @@ function NavBar({
             onClick={user ? handleLogOut : undefined}
             style={{ marginLeft: "auto", marginRight: "20px" }}
           >
-            {isLoggedIn ? "Logout" : "Login"}
+            {user ? "Logout" : "Login"}
           </Link>
 
           <Link className="nav-link" to="/SignUp">

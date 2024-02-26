@@ -6,7 +6,7 @@ interface CreateUserDto {
   userName: string;
   password: string;
   email: string;
-  role: string[];
+  roles: string[];
 }
 
 const SignupPage: React.FC = () => {
@@ -23,7 +23,7 @@ const SignupPage: React.FC = () => {
       userName: username,
       password: password,
       email: email,
-      role: ["User"], // or provide the necessary roles
+      roles: ["Customer"], // or provide the necessary roles
     };
 
     const response = await fetch(`/api/users/customer`, {
