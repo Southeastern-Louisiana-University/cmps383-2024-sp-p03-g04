@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./Login.css";
 import { useNavigate } from "react-router-dom";
+import { useUser } from "./UserContext";
 
 interface UserDto {
 	userName?: string;
@@ -10,7 +11,9 @@ interface UserDto {
 const LoginPage: React.FC = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [user, setUser] = useState<UserDto | null>(null);
+  // const [user, setUser] = useState<UserDto | null>(null);
+  const { setUser } = useUser(); // Use the useUser hook here
+
 
   const navigate = useNavigate();
 
