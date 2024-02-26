@@ -45,9 +45,7 @@ function RegNavBar() {
 }
 
 function App() {
-
   const location = useLocation();
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // Add this state
 
   //need to create a better isloggedIn const which tracks the login of the user.
   // const isLoggedIn =
@@ -62,22 +60,19 @@ function App() {
 
   return (
     <>
-        <div className="app-container">
-          {isLoggedIn ? (
-            <NavBar
-              brandName={"EnStay"} imageSrcPath={imagePath} navItems={items} isLoggedIn={isLoggedIn}
-            />
-          ) : (
-            <NavBar brandName={""} imageSrcPath={imagePath} navItems={items} isLoggedIn={isLoggedIn}/>
-          )}
-        </div>
-        <div className="content-container">
-         
-          <Outlet />
-        </div>
-        <footer className="footer">
-          <p>&copy; 2024 EnStay Suites</p>
-        </footer>
+      <div className="app-container">
+        <NavBar
+          brandName={"EnStay"}
+          imageSrcPath={imagePath}
+          navItems={items}
+        />
+      </div>
+      <div className="content-container">
+        <Outlet />
+      </div>
+      <footer className="footer">
+        <p>&copy; 2024 EnStay Suites</p>
+      </footer>
     </>
   );
 }

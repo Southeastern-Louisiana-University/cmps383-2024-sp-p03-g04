@@ -1,20 +1,29 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import "../App.css";
+import { useUser } from "../Login/UserContext";
 
 interface NavBarProps {
   brandName: string;
   imageSrcPath: string;
   navItems: string[];
-  isLoggedIn: boolean; // Add this prop to keep track of the login status
 }
 
-function NavBar({ brandName, imageSrcPath, navItems, isLoggedIn }: NavBarProps) {
+function NavBar({ brandName, imageSrcPath, navItems }: NavBarProps) {
   const [selectedIndex, setSelectedIndex] = useState(-1);
   const [collapsed, setCollapsed] = useState(true);
+  const { user, setUser } = useUser();
 
   const toggleCollapse = () => {
     setCollapsed(!collapsed);
+  };
+
+  const handleLogOut = () => {
+    console.log("USER LOGGED OUT");
+
+    return fetch("/api/authentication/logout", { method: "POST" }).then(
+      async (x) => setUser(null)
+    );
   };
 
   return (
@@ -66,10 +75,11 @@ function NavBar({ brandName, imageSrcPath, navItems, isLoggedIn }: NavBarProps) 
           {/* Move the Login/Logout link here and apply margin-left: auto; */}
           <Link
             className="nav-link"
-            to={isLoggedIn ? "/Logout" : "/Login"}
-            style={{ marginLeft: 'auto', marginRight:'20px' }}
+            to={user ? "/Home" : "/Login"}
+            onClick={user ? handleLogOut : undefined}
+            style={{ marginLeft: "auto", marginRight: "20px" }}
           >
-            {isLoggedIn ? "Logout" : "Login"}
+            {user ? "Logout" : "Login"}
           </Link>
         </div>
       </div>
