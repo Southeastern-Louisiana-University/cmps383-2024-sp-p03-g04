@@ -1,9 +1,18 @@
 import "./App.css";
-import { BrowserRouter, Link, Outlet, useLocation } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Link,
+  Outlet,
+  useLocation,
+} from "react-router-dom";
 import NavBar from "./components/NavBar";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap/dist/js/bootstrap.min.js";
-import imagePath from "./assets/logo.png";
+import imagePath from "./images/logo.png";
+import Home from "./Home/Home";
+import { useState } from "react";
 
 function LoginNavBar() {
   return (
@@ -36,9 +45,13 @@ function RegNavBar() {
 }
 
 function App() {
+
   const location = useLocation();
-  const isLoginPage =
-    location.pathname === "/Login" || location.pathname === "/SignUp";
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // Add this state
+
+  //need to create a better isloggedIn const which tracks the login of the user.
+  // const isLoggedIn =
+  //   location.pathname === "/Login" || location.pathname === "/SignUp";
 
   let items = ["Home", "About", "Services", "Rooms", "Gallery", "Contact"];
 
@@ -49,15 +62,22 @@ function App() {
 
   return (
     <>
-      <div className="app-container">
-        {isLoginPage ? <LoginNavBar /> : <RegNavBar />}
-      </div>
-      <div className="content-container">
-        <Outlet />
-      </div>
-      <footer className="footer">
-        <p>&copy; 2024 EnStay Suites</p>
-      </footer>
+        <div className="app-container">
+          {isLoggedIn ? (
+            <NavBar
+              brandName={"EnStay"} imageSrcPath={imagePath} navItems={items} isLoggedIn={isLoggedIn}
+            />
+          ) : (
+            <NavBar brandName={""} imageSrcPath={imagePath} navItems={items} isLoggedIn={isLoggedIn}/>
+          )}
+        </div>
+        <div className="content-container">
+         
+          <Outlet />
+        </div>
+        <footer className="footer">
+          <p>&copy; 2024 EnStay Suites</p>
+        </footer>
     </>
   );
 }

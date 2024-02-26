@@ -1,16 +1,23 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Login.css";
 import { useNavigate } from "react-router-dom";
+
+interface UserDto {
+	userName?: string;
+	id?: number;
+}
 
 const LoginPage: React.FC = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [user, setUser] = useState<UserDto | null>(null);
+
   const navigate = useNavigate();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    try {
+    
       const response = await fetch(`/api/authentication/login`, {
         method: "POST",
         headers: {
@@ -20,21 +27,30 @@ const LoginPage: React.FC = () => {
           userName: username,
           password: password,
         }),
-      });
+      }).then(async x=>{
+        const responseData = await x.json();
+        if(x.status ==200){
+          setUser(responseData);
+          navigate('/');
+        }
+      })
 
-      if (response.ok) {
-        const responseData = await response.json();
-        console.log(responseData);
-        navigate("/Home");
-      } else {
-        console.error("Login failed", response.status, response.statusText);
-        const errorText = await response.text();
-        console.error("Error details:", errorText);
-      }
-    } catch (error) {
-      console.error("Login failed", error);
-    }
+      // if (response.ok) {
+      //   const responseData = await response.json();
+      //   console.log(responseData);
+      //   navigate("/Home");
+      // } else {
+      //   console.error("Login failed", response.status, response.statusText);
+      //   const errorText = await response.text();
+      //   console.error("Error details:", errorText);
+      // }
+   
   };
+  useEffect(() => {
+    fetch("/api/authentication/me").then(async (x) =>{
+      x.json().then((userResp) => setUser(userResp))
+    });
+  }, [])
 
   return (
     <>

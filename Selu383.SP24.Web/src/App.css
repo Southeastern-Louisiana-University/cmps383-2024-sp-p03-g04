@@ -3,9 +3,9 @@
   background-color: aliceblue;
 }
 #root {
-  max-width: 1280px;
+  max-width: 100%;
   margin: 0 auto;
-  padding: 2rem;
+  /* padding: 2rem; */
   text-align: center;
 }
 
@@ -31,9 +31,9 @@ a:nth-of-type(2) .logo {
 }
 
 .app-container {
-  display: flex;
-  flex-direction: row;
-  position: fixed;
+  /* display: flex;
+  flex-direction: row; */
+  /* position: fixed; */
   top: 0;
   left: 0;
   right: 0;

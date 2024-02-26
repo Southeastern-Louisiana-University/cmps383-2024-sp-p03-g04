@@ -11,6 +11,10 @@ input {
   box-shadow: inset 0px 0px 10px 0px rgba(0, 0, 0, 0.3);
 }
 
+.app-container {
+  width: 100%;
+}
+
 h2 {
   color: rgb(70, 174, 102);
   margin-top: -30px;

@@ -1,12 +1,15 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import "../App.css";
+
 interface NavBarProps {
   brandName: string;
   imageSrcPath: string;
   navItems: string[];
+  isLoggedIn: boolean; // Add this prop to keep track of the login status
 }
 
-function NavBar({ brandName, imageSrcPath, navItems }: NavBarProps) {
+function NavBar({ brandName, imageSrcPath, navItems, isLoggedIn }: NavBarProps) {
   const [selectedIndex, setSelectedIndex] = useState(-1);
   const [collapsed, setCollapsed] = useState(true);
 
@@ -15,9 +18,9 @@ function NavBar({ brandName, imageSrcPath, navItems }: NavBarProps) {
   };
 
   return (
-    <nav className="navbar navbar-expand-md navbar-light bg-light shadow">
+    <nav className="navbar navbar-expand-lg navbar-light bg-light shadow">
       <div className="container-fluid">
-        <a className="navbar-brand" href="#">
+        <Link className="navbar-brand" to="/">
           <img
             src={imageSrcPath}
             width="45"
@@ -26,7 +29,7 @@ function NavBar({ brandName, imageSrcPath, navItems }: NavBarProps) {
             alt=""
           />
           <span className="fw-bolder fs-4">{brandName}</span>
-        </a>
+        </Link>
         <button
           className="navbar-toggler"
           type="button"
@@ -49,28 +52,25 @@ function NavBar({ brandName, imageSrcPath, navItems }: NavBarProps) {
                 className="nav-item"
                 onClick={() => setSelectedIndex(index)}
               >
-                <a
+                <Link
                   className={`nav-link ${
                     selectedIndex === index ? "active fw-bold" : ""
                   }`}
-                  href="#"
+                  to={`/${item.toLowerCase()}`}
                 >
                   {item}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
-          <form className="d-flex me-3" role="search">
-            <input
-              className="form-control me-2"
-              type="search"
-              placeholder="Search"
-              aria-label="Search"
-            />
-            <button className="btn btn-outline-success" type="submit">
-              Book
-            </button>
-          </form>
+          {/* Move the Login/Logout link here and apply margin-left: auto; */}
+          <Link
+            className="nav-link"
+            to={isLoggedIn ? "/Logout" : "/Login"}
+            style={{ marginLeft: 'auto', marginRight:'20px' }}
+          >
+            {isLoggedIn ? "Logout" : "Login"}
+          </Link>
         </div>
       </div>
     </nav>
