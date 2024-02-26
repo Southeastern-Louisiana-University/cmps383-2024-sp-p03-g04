@@ -9,7 +9,12 @@ interface NavBarProps {
   isLoggedIn: boolean; // Add this prop to keep track of the login status
 }
 
-function NavBar({ brandName, imageSrcPath, navItems, isLoggedIn }: NavBarProps) {
+function NavBar({
+  brandName,
+  imageSrcPath,
+  navItems,
+  isLoggedIn,
+}: NavBarProps) {
   const [selectedIndex, setSelectedIndex] = useState(-1);
   const [collapsed, setCollapsed] = useState(true);
 
@@ -67,9 +72,13 @@ function NavBar({ brandName, imageSrcPath, navItems, isLoggedIn }: NavBarProps) 
           <Link
             className="nav-link"
             to={isLoggedIn ? "/Logout" : "/Login"}
-            style={{ marginLeft: 'auto', marginRight:'20px' }}
+            style={{ marginLeft: "auto", marginRight: "20px" }}
           >
             {isLoggedIn ? "Logout" : "Login"}
+          </Link>
+
+          <Link className="nav-link" to="/SignUp">
+            Sign Up
           </Link>
         </div>
       </div>

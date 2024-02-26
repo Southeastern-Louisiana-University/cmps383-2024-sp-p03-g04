@@ -14,38 +14,7 @@ import imagePath from "./images/logo.png";
 import Home from "./Home/Home";
 import { useState } from "react";
 
-function LoginNavBar() {
-  return (
-    <div className="top-nav">
-      <div className="logo-name">
-        <img id="logoImage" src={imagePath} alt="EnStay Suites" />
-        <h1>EnStay Suites</h1>
-      </div>
-      <div className="PageLinks">
-        <Link to="/Login">Login</Link>
-        <Link to="/SignUp">Sign Up</Link>
-      </div>
-    </div>
-  );
-}
-
-function RegNavBar() {
-  return (
-    <div className="top-nav">
-      <div className="logo-name">
-        <img id="logoImage" src={imagePath} alt="EnStay Suites" />
-        <h1>EnStay Suites</h1>
-      </div>
-      <div className="PageLinksReg">
-        <Link to="/Home">Home</Link>
-        <Link to="/Reservations">Reservations</Link>
-      </div>
-    </div>
-  );
-}
-
 function App() {
-
   const location = useLocation();
   const [isLoggedIn, setIsLoggedIn] = useState(false); // Add this state
 
@@ -62,22 +31,29 @@ function App() {
 
   return (
     <>
-        <div className="app-container">
-          {isLoggedIn ? (
-            <NavBar
-              brandName={"EnStay"} imageSrcPath={imagePath} navItems={items} isLoggedIn={isLoggedIn}
-            />
-          ) : (
-            <NavBar brandName={""} imageSrcPath={imagePath} navItems={items} isLoggedIn={isLoggedIn}/>
-          )}
-        </div>
-        <div className="content-container">
-         
-          <Outlet />
-        </div>
-        <footer className="footer">
-          <p>&copy; 2024 EnStay Suites</p>
-        </footer>
+      <div className="app-container">
+        {isLoggedIn ? (
+          <NavBar
+            brandName={"EnStay"}
+            imageSrcPath={imagePath}
+            navItems={items}
+            isLoggedIn={isLoggedIn}
+          />
+        ) : (
+          <NavBar
+            brandName={""}
+            imageSrcPath={imagePath}
+            navItems={items}
+            isLoggedIn={isLoggedIn}
+          />
+        )}
+      </div>
+      <div className="content-container">
+        <Outlet />
+      </div>
+      <footer className="footer">
+        <p>&copy; 2024 EnStay Suites</p>
+      </footer>
     </>
   );
 }
