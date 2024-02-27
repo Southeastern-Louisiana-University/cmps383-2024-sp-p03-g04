@@ -125,3 +125,22 @@ a:nth-of-type(2) .logo {
   text-align: center;
   padding: 1px;
 }
+
+
+.fixed-buttons {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+
+.fixed-buttons .btn {
+  margin-bottom: 10px;
+}
+
+
+
+
+
+

@@ -18,62 +18,69 @@ function NavBar({ brandName, imageSrcPath, navItems, isLoggedIn }: NavBarProps) 
   };
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light shadow">
-      <div className="container-fluid">
-        <Link className="navbar-brand" to="/">
-          <img
-            src={imageSrcPath}
-            width="45"
-            height="40"
-            className="d-inline-block align-center"
-            alt=""
-          />
-          <span className="fw-bolder fs-4">{brandName}</span>
-        </Link>
-        <button
-          className="navbar-toggler"
-          type="button"
-          onClick={toggleCollapse}
-          aria-controls="navbarSupportedContent"
-          aria-expanded={!collapsed ? "true" : "false"}
-          aria-label="Toggle navigation"
-        >
-          <span className="navbar-toggler-icon"></span>
-        </button>
-
-        <div
-          className={`collapse navbar-collapse ${collapsed ? "" : "show"}`}
-          id="navbarSupportedContent"
-        >
-          <ul className="navbar-nav me-auto mb-2 mb-md-1">
-            {navItems.map((item, index) => (
-              <li
-                key={index}
-                className="nav-item"
-                onClick={() => setSelectedIndex(index)}
-              >
-                <Link
-                  className={`nav-link ${
-                    selectedIndex === index ? "active fw-bold" : ""
-                  }`}
-                  to={`/${item.toLowerCase()}`}
-                >
-                  {item}
-                </Link>
-              </li>
-            ))}
-          </ul>
-          {/* Move the Login/Logout link here and apply margin-left: auto; */}
-          <Link
-            className="nav-link"
-            to={isLoggedIn ? "/Logout" : "/Login"}
-            style={{ marginLeft: 'auto', marginRight:'20px' }}
-          >
-            {isLoggedIn ? "Logout" : "Login"}
+    <>
+      <nav className="navbar navbar-expand-lg navbar-light bg-light shadow">
+        <div className="container-fluid">
+          <Link className="navbar-brand" to="/">
+            <img
+              src={imageSrcPath}
+              width="45"
+              height="40"
+              className="d-inline-block align-center"
+              alt=""
+            />
+            <span className="fw-bolder fs-4">{brandName}</span>
           </Link>
+          <button
+            className="navbar-toggler"
+            type="button"
+            onClick={toggleCollapse}
+            aria-controls="navbarSupportedContent"
+            aria-expanded={!collapsed ? "true" : "false"}
+            aria-label="Toggle navigation"
+          >
+            <span className="navbar-toggler-icon"></span>
+          </button>
+
+          <div
+            className={`collapse navbar-collapse ${collapsed ? "" : "show"}`}
+            id="navbarSupportedContent"
+          >
+            <ul className="navbar-nav me-auto mb-2 mb-md-1">
+              {navItems.map((item, index) => (
+                <li
+                  key={index}
+                  className="nav-item"
+                  onClick={() => setSelectedIndex(index)}
+                >
+                  <Link
+                    className={`nav-link ${
+                      selectedIndex === index ? "active fw-bold" : ""
+                    }`}
+                    to={`/${item.toLowerCase()}`}
+                  >
+                    {item}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+          {/* Fixed buttons */}
+          <div className="fixed-buttons">
+            <Link
+              className={`btn btn-primary ${isLoggedIn ? "boxed" : ""}`}
+              to={isLoggedIn ? "/Logout" : "/Login"}
+              style={{ marginRight: '10px', backgroundColor: '#0CAFFF' }}
+            >
+              {isLoggedIn ? "Logout" : "Login"}
+            </Link>
+            <Link className="btn btn-primary boxed" to="/book" style={{ backgroundColor: '#0CAFFF' }}>
+              Book Now
+            </Link>
+          </div>
         </div>
-      </div>
-    </nav>
+      </nav>
+    </>
   );
 }
 
