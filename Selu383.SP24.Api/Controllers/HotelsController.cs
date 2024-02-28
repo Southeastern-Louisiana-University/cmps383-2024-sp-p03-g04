@@ -151,9 +151,10 @@ public class HotelsController : ControllerBase
             .Select(x => new HotelDto
             {
                 Id = x.Id,
+                HotelCode=x.HotelCode,
                 Name = x.Name,
                 Address = x.Address,
                 ManagerId = x.ManagerId
-            });
+            }); ;
     }
 }

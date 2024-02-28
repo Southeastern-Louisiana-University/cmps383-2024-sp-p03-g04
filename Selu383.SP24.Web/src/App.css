@@ -1,21 +1,12 @@
+.navbar-nav .nav-item .nav-link:hover {
+  color: black;
+  background-color: aliceblue;
+}
 #root {
-  max-width: 1280px;
+  max-width: 100%;
   margin: 0 auto;
-  padding: 2rem;
+  /* padding: 2rem; */
   text-align: center;
-}
-
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
 }
 
 @keyframes logo-spin {
@@ -27,16 +18,129 @@
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+a:nth-of-type(2) .logo {
+  animation: logo-spin infinite 20s linear;
 }
 
-.card {
-  padding: 2em;
+#logoImage {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto;
+  display: block;
+  align-items: flex-start;
 }
 
-.read-the-docs {
-  color: #888;
+.app-container {
+  /* display: flex;
+  flex-direction: row; */
+  /* position: fixed; */
+  top: 0;
+  left: 0;
+  right: 0;
 }
+
+.top-nav {
+  background-color: #ffffff;
+  color: white;
+  padding: 10px 10px 30px 10px;
+  text-align: center;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0px 1px 19px -10px #000000;
+}
+
+.logo-name {
+  display: flex;
+  flex-direction: row;
+}
+
+.top-nav h1 {
+  margin: 0;
+  color: black;
+  font-weight: 700;
+  align-self: center;
+  font-size: 2rem;
+}
+
+.PageLinks {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 20px 10px 10px 10px;
+  gap: 10px;
+}
+
+.PageLinksReg {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 20px 10px 10px 10px;
+  gap: 10px;
+}
+.PageLinksReg a {
+  color: #232825;
+  padding: 7px 10px;
+  text-decoration: none;
+  min-width: 72px;
+  font-weight: 400;
+  border-radius: 10px;
+  width: 125px;
+}
+
+.PageLinksReg a:hover {
+  background-color: #1a8a47;
+  color: rgb(255, 255, 255);
+  border-radius: 10px;
+}
+
+.PageLinks a {
+  color: #1a8a47;
+  padding: 7px 10px;
+  text-decoration: none;
+  min-width: 72px;
+  font-weight: 400;
+  border: 1px solid #1a8a47;
+  border-radius: 10px;
+  width: 150px;
+}
+
+.PageLinks a:hover {
+  background-color: #1a8a47;
+  color: rgb(255, 255, 255);
+  border-radius: 10px;
+}
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #ffffff;
+  color: rgb(0, 0, 0);
+  text-align: center;
+  padding: 1px;
+}
+
+
+.fixed-buttons {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+
+.fixed-buttons .btn {
+  margin-bottom: 10px;
+}
+
+
+
+
+
+

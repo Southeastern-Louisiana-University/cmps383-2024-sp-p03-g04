@@ -1,0 +1,84 @@
+input {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 2px solid #45b14e;
+  border-radius: 4px;
+  box-sizing: border-box;
+  color: black;
+  background-color: #f2f2f2;
+  box-shadow: inset 0px 0px 10px 0px rgba(0, 0, 0, 0.3);
+}
+
+.app-container {
+  width: 100%;
+}
+
+h2 {
+  color: rgb(70, 174, 102);
+  margin-top: -30px;
+  font-weight: 400;
+}
+
+label {
+  padding: 12px 12px 12px 0;
+  display: inline-block;
+  align-self: flex-start;
+}
+
+form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+body,
+html {
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+}
+
+#LoginOrganizer {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #ffffff;
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+#WelcomeEnstay {
+  margin-top: -10px;
+  padding-bottom: 30px;
+  font-weight: 700;
+  text-align: center;
+  text-shadow: 0px 10px 20px rgba(18, 60, 33, 0.2);
+}
+
+@media (max-width: 768px) {
+  #LoginOrganizer {
+    padding: 10px;
+  }
+}
+
+button {
+  width: 100%;
+  background-color: #4caf50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #45a049;
+}
