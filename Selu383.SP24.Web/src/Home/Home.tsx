@@ -175,7 +175,7 @@ const Home: React.FC = () => {
                     selected={checkOutDate}
                     onChange={(date: Date) => setCheckOutDate(date)}
                     dateFormat="E MMM dd, yyyy"
-                    minDate={checkInDate || new Date()} // Allow selecting starting from the check-in date
+                    minDate={checkInDate || new Date()}  
                     className="form-control"
                   />
                 </Form.Group>
