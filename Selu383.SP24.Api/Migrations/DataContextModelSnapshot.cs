@@ -254,44 +254,6 @@ namespace Selu383.SP24.Api.Migrations
                     b.ToTable("Hotel");
                 });
 
-            modelBuilder.Entity("Selu383.SP24.Api.Features.Reservations.Reservations", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CheckInDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("CheckOutDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("GuestId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("HotelId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsPaid")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("NumberOfGuests")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RoomId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("GuestId", "RoomId")
-                        .IsUnique();
-
-                    b.ToTable("Reservations");
-                });
-
             modelBuilder.Entity("Selu383.SP24.Api.Features.Rooms.Room", b =>
                 {
                     b.Property<int>("Id")
