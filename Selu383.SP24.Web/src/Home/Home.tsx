@@ -1,19 +1,21 @@
 import React, { useState } from "react";
 import { Card, Container, Row, Col, Form, Button } from "react-bootstrap";
 import "./Home.css";
-import image from "./hotel.jpg";
+import image from "../images/hotel.jpg";
 import { BiSearch } from "react-icons/bi";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
+
+interface HotelDto {
+  hotelCode: string;
+  name: string;
+  address: string;
+  managerId: string;
+}
+
 const Home: React.FC = () => {
   const currentDate = new Date();
-  // const formattedCurrentDate = currentDate.toLocaleDateString("en-US", {
-  //  weekday: "short",
-  //  month: "short",
-  //  day: "2-digit",
-  //  year: "numeric",
-  // });
   const [location, setLocation] = useState("");
   const [hotels, setHotels] = useState<any[]>([]);
   const [checkInDate, setCheckInDate] = useState<Date | null>(currentDate);
@@ -24,17 +26,19 @@ const Home: React.FC = () => {
   const [adults, setAdults] = useState<number[]>([1]);
   const [children, setChildren] = useState<number[]>([0]);
 
-  const handleLocationSearch = async () => {
-    try {
-      const dummyHotelData = [
-        { name: "Hotel A", location: "Hammond, LA" },
-        { name: "Hotel B", location: "Hammond, LA" },
-        { name: "Hotel C", location: "Hammond, LA" },
-      ];
-      setHotels(dummyHotelData);
-    } catch (error) {
-      console.error("Error fetching hotel data:", error);
-    }
+  const getHotels = async () => {
+   
+      await fetch(`/api/hotels`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }).then(async (x) =>{
+        const hotelData = await x.json();
+        console.log("sdlkfjdsklfjds",hotelData);
+        setHotels(hotelData);
+      })
+  
   };
 
   const incrementCount = (type: string, index: number) => {
@@ -113,21 +117,21 @@ const Home: React.FC = () => {
           <Col xs={12} sm={6} md={3}>
             <Card className="text-dark bg-light mb-3">
               <Card.Body>
-                <Card.Title>Destination</Card.Title>
+                <Card.Title>Hotels  </Card.Title>
                 <Form>
                   <Row className="align-items-center">
                     <Col xs={9}>
                       <Form.Group controlId="location">
                         <Form.Control
                           type="text"
-                          placeholder="Enter a location"
+                          placeholder="Search for hotels"
                           value={location}
                           onChange={(e) => setLocation(e.target.value)}
                         />
                       </Form.Group>
                     </Col>
                     <Col xs={3}>
-                      <Button variant="primary" onClick={handleLocationSearch}>
+                      <Button variant="primary" onClick={getHotels}>
                         <BiSearch />
                       </Button>
                     </Col>
@@ -175,7 +179,7 @@ const Home: React.FC = () => {
                     selected={checkOutDate}
                     onChange={(date: Date) => setCheckOutDate(date)}
                     dateFormat="E MMM dd, yyyy"
-                    minDate={checkInDate || new Date()} // Allow selecting starting from the check-in date
+                    minDate={checkInDate || new Date()}  
                     className="form-control"
                   />
                 </Form.Group>
@@ -250,7 +254,7 @@ const Home: React.FC = () => {
                 ))}
                 <Button
                   variant="primary"
-                  onClick={() => console.log("Update clicked")}
+                onClick={() => console.log("Update clicked")}
                 >
                   Update
                 </Button>

@@ -128,11 +128,10 @@ a:nth-of-type(2) .logo {
 
 
 .fixed-buttons {
-  position: absolute;
+  position: fixed;
   right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-}
+  bottom: 10px;
+  z-index: 999;}
 
 
 .fixed-buttons .btn {
