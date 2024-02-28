@@ -1,9 +1,6 @@
 import "./App.css";
 import {
-  BrowserRouter as Router,
-  // Route,
-  // Routes,
-  // Link,
+
   Outlet,
   // useLocation,
 } from "react-router-dom";

@@ -3,10 +3,10 @@ import "./Login.css";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "./UserContext";
 
-interface UserDto {
-	userName?: string;
-	id?: number;
-}
+// interface UserDto {
+// 	userName?: string;
+// 	id?: number;
+// }
 
 const LoginPage: React.FC = () => {
   const [username, setUsername] = useState("");
@@ -21,7 +21,7 @@ const LoginPage: React.FC = () => {
     e.preventDefault();
 
     
-      const response = await fetch(`/api/authentication/login`, {
+      await fetch(`/api/authentication/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -1,4 +1,3 @@
-import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
 import "./index.css";
@@ -16,7 +15,8 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         <Route path="/" element={<App />}>
           <Route path="/Login" element={<LoginPage />} />
           <Route path="/SignUp" element={<SignUp />} />
-          <Route path="/Home" element={<Home />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/home" element={<Home />} />
           <Route path="/Reservations" element={<Reservations />} />
         </Route>
       </Routes>
