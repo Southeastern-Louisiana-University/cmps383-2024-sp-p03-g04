@@ -6,13 +6,12 @@ import { BiSearch } from "react-icons/bi";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-
-interface HotelDto {
-  hotelCode: string;
-  name: string;
-  address: string;
-  managerId: string;
-}
+//interface HotelDto {
+//hotelCode: string;
+//name: string;
+//address: string;
+//managerId: string;
+//}
 
 const Home: React.FC = () => {
   const currentDate = new Date();
@@ -27,18 +26,16 @@ const Home: React.FC = () => {
   const [children, setChildren] = useState<number[]>([0]);
 
   const getHotels = async () => {
-   
-      await fetch(`/api/hotels`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }).then(async (x) =>{
-        const hotelData = await x.json();
-        console.log("sdlkfjdsklfjds",hotelData);
-        setHotels(hotelData);
-      })
-  
+    await fetch(`/api/hotels`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then(async (x) => {
+      const hotelData = await x.json();
+      console.log("sdlkfjdsklfjds", hotelData);
+      setHotels(hotelData);
+    });
   };
 
   const incrementCount = (type: string, index: number) => {
@@ -117,7 +114,7 @@ const Home: React.FC = () => {
           <Col xs={12} sm={6} md={3}>
             <Card className="text-dark bg-light mb-3">
               <Card.Body>
-                <Card.Title>Hotels  </Card.Title>
+                <Card.Title>Hotels </Card.Title>
                 <Form>
                   <Row className="align-items-center">
                     <Col xs={9}>
@@ -179,7 +176,7 @@ const Home: React.FC = () => {
                     selected={checkOutDate}
                     onChange={(date: Date) => setCheckOutDate(date)}
                     dateFormat="E MMM dd, yyyy"
-                    minDate={checkInDate || new Date()}  
+                    minDate={checkInDate || new Date()}
                     className="form-control"
                   />
                 </Form.Group>
@@ -254,7 +251,7 @@ const Home: React.FC = () => {
                 ))}
                 <Button
                   variant="primary"
-                onClick={() => console.log("Update clicked")}
+                  onClick={() => console.log("Update clicked")}
                 >
                   Update
                 </Button>
