@@ -1,21 +1,18 @@
 import "./App.css";
 import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  Link,
+
   Outlet,
-  useLocation,
+  // useLocation,
 } from "react-router-dom";
 import NavBar from "./components/NavBar";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap/dist/js/bootstrap.min.js";
 import imagePath from "./images/logo.png";
-import Home from "./Home/Home";
-import { useState } from "react";
+//import Home from "./Home/Home";
+//import { useState } from "react";
 
 function App() {
-  const location = useLocation();
+  // const location = useLocation();
 
   //need to create a better isloggedIn const which tracks the login of the user.
   // const isLoggedIn =

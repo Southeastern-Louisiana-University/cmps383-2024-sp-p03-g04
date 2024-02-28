@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Card, Container, Row, Col, Form, Button, Dropdown } from "react-bootstrap";
+import { Card, Container, Row, Col, Form, Button } from "react-bootstrap";
 import "./Home.css";
 import image from "./hotel.jpg";
 import { BiSearch } from "react-icons/bi";
@@ -8,12 +8,12 @@ import "react-datepicker/dist/react-datepicker.css";
 
 const Home: React.FC = () => {
   const currentDate = new Date();
-  const formattedCurrentDate = currentDate.toLocaleDateString("en-US", {
-    weekday: "short",
-    month: "short",
-    day: "2-digit",
-    year: "numeric",
-  });
+  // const formattedCurrentDate = currentDate.toLocaleDateString("en-US", {
+  //  weekday: "short",
+  //  month: "short",
+  //  day: "2-digit",
+  //  year: "numeric",
+  // });
   const [location, setLocation] = useState("");
   const [hotels, setHotels] = useState<any[]>([]);
   const [checkInDate, setCheckInDate] = useState<Date | null>(currentDate);
@@ -158,7 +158,7 @@ const Home: React.FC = () => {
                     selected={checkInDate}
                     onChange={(date: Date) => setCheckInDate(date)}
                     dateFormat="E MMM dd, yyyy"
-                    minDate={new Date()} 
+                    minDate={new Date()}
                     className="form-control"
                   />
                 </Form.Group>
@@ -189,7 +189,9 @@ const Home: React.FC = () => {
                 <Card.Title>Rooms & Guests</Card.Title>
                 {rooms.map((room, index) => (
                   <div key={index}>
-                    <h6>Room {index + 1}</h6>
+                    <h6>
+                      {room} Room {index + 1}
+                    </h6>
                     <Form.Group controlId={`adults-${index}`}>
                       <Form.Label>Adults</Form.Label>
                       <Form.Control
@@ -216,7 +218,11 @@ const Home: React.FC = () => {
                         max={4 - adults[index]}
                         onChange={(e) => {
                           const value = parseInt(e.target.value);
-                          if (!isNaN(value) && value >= 0 && value <= 4 - adults[index]) {
+                          if (
+                            !isNaN(value) &&
+                            value >= 0 &&
+                            value <= 4 - adults[index]
+                          ) {
                             const updatedChildren = [...children];
                             updatedChildren[index] = value;
                             setChildren(updatedChildren);
@@ -225,18 +231,27 @@ const Home: React.FC = () => {
                       />
                     </Form.Group>
                     {index === rooms.length - 1 && (
-                      <Button variant="secondary" onClick={() => incrementCount("rooms", index)}>
+                      <Button
+                        variant="secondary"
+                        onClick={() => incrementCount("rooms", index)}
+                      >
                         Add another room
                       </Button>
                     )}
                     {index !== 0 && (
-                      <Button variant="danger" onClick={() => decrementCount("rooms", index)}>
+                      <Button
+                        variant="danger"
+                        onClick={() => decrementCount("rooms", index)}
+                      >
                         Remove
                       </Button>
                     )}
                   </div>
                 ))}
-                <Button variant="primary" onClick={() => console.log("Update clicked")}>
+                <Button
+                  variant="primary"
+                  onClick={() => console.log("Update clicked")}
+                >
                   Update
                 </Button>
               </Card.Body>
