@@ -22,7 +22,7 @@ function NavBar({ brandName, imageSrcPath, navItems }: NavBarProps) {
     console.log("USER LOGGED OUT");
 
     return fetch("/api/authentication/logout", { method: "POST" }).then(
-      async (x) => setUser(null)
+      async (_x) => setUser(null)
     );
   };
 

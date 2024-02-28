@@ -37,6 +37,7 @@ const SignupPage: React.FC = () => {
       if (x.status === 200) {
         // Optionally handle success
         console.log(responseData);
+        console.log(response);
         navigate("/");
       } else {
         // Optionally handle errors
