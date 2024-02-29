@@ -7,9 +7,17 @@ import LoginPage from "./Login/Login.tsx";
 import Home from "./Home/Home.tsx";
 import Reservations from "./Reservations/Reservations.tsx";
 import { UserProvider } from "./Login/UserContext.tsx";
+import { ToastContainer } from "react-toastify";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <BrowserRouter>
+      <ToastContainer
+        position="top-right"
+        autoClose={2000}
+        theme="colored"
+        hideProgressBar={true}
+        closeOnClick={true}
+      />
     <UserProvider>
       <Routes>
         <Route path="/" element={<App />}>

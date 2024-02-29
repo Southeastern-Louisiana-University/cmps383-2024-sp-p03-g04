@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import "../App.css";
 import { useUser } from "../Login/UserContext";
+import { Slide, toast } from "react-toastify";
 
 interface NavBarProps {
   brandName: string;
@@ -19,12 +20,17 @@ function NavBar({ brandName, imageSrcPath, navItems }: NavBarProps) {
   };
 
   const handleLogOut = () => {
-    console.log("USER LOGGED OUT");
 
     return fetch("/api/authentication/logout", { method: "POST" }).then(
-      async (_x) => setUser(null)
-    );
+      async (_x) => {
+      setUser(null) ;
+      toast.success('Successfully Logged Out',{
+        transition: Slide
+      });      
+  });
+
   };
+  
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light shadow">

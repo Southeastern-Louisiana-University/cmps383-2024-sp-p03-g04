@@ -7,16 +7,23 @@ import {
 import NavBar from "./components/NavBar";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap/dist/js/bootstrap.min.js";
+import 'react-toastify/dist/ReactToastify.css';
+
 import imagePath from "./images/logo.png";
+import { useEffect } from "react";
+import { useUser } from "./Login/UserContext";
 //import Home from "./Home/Home";
 //import { useState } from "react";
 
 function App() {
-  // const location = useLocation();
 
-  //need to create a better isloggedIn const which tracks the login of the user.
-  // const isLoggedIn =
-  //   location.pathname === "/Login" || location.pathname === "/SignUp";
+  const { setUser } = useUser(); // Use the useUser hook here
+
+  useEffect(() => {
+    fetch("/api/authentication/me").then(async (x) =>{
+      x.json().then((userResp) => setUser(userResp))
+    });
+  }, [])
 
   let items = ["Home", "About", "Services", "Rooms", "Gallery", "Contact"];
 
