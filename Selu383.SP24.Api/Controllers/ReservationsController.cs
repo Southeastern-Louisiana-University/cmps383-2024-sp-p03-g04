@@ -75,11 +75,8 @@ namespace Selu383.SP24.Api.Features.Reservations
         public IActionResult UpdateReservation(int id, ReservationsDto dto)
         {
             // Update a specific reservation by its ID
-            if (id != dto.Id)
-            {
-                return BadRequest();
-            }
-            var reservation = reservations.FirstOrDefault(x => x.Id == id);
+           
+            var reservation = GetReservationsDto(reservations.Where(x => x.Id == id)).FirstOrDefault();
             if (reservation == null)
             {
                 return NotFound(id);
@@ -90,7 +87,7 @@ namespace Selu383.SP24.Api.Features.Reservations
             reservation.CheckOutDate = dto.CheckOutDate;
             reservation.NumberOfGuests = dto.NumberOfGuests;
             reservation.IsPaid = dto.IsPaid;
-
+            
             dataContext.SaveChanges();
             return Ok(dto);
         }
