@@ -7,6 +7,7 @@ import LoginPage from "./Login/Login.tsx";
 import Home from "./Home/Home.tsx";
 import Reservations from "./Reservations/Reservations.tsx";
 import { UserProvider } from "./Login/UserContext.tsx";
+import Profile from "./User/Profile.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <BrowserRouter>
@@ -17,6 +18,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
           <Route path="/SignUp" element={<SignUp />} />
           <Route path="/" element={<Home />} />
           <Route path="/home" element={<Home />} />
+          <Route path="/profile" element={<Profile />} />
           <Route path="/Reservations" element={<Reservations />} />
         </Route>
       </Routes>

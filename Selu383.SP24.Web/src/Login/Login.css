@@ -15,7 +15,7 @@ input {
   width: 100%;
 }
 
-h2 {
+h3 {
   color: rgb(70, 174, 102);
   margin-top: -30px;
   font-weight: 400;
@@ -41,32 +41,24 @@ html {
   font-size: 16px;
 }
 
-#LoginOrganizer {
+.LoginOrganizer {
   border-radius: 5px;
   background-color: #f2f2f2;
   display: flex;
   flex-direction: column;
   align-items: center;
   background-color: #ffffff;
-  width: 100%;
-  max-width: 700px;
+  max-width: 500px;
   margin: 0 auto;
   padding: 20px;
 }
 
-#WelcomeEnstay {
-  margin-top: -10px;
+.WelcomeEnstay {
   padding-bottom: 30px;
-  font-weight: 700;
   text-align: center;
   text-shadow: 0px 10px 20px rgba(18, 60, 33, 0.2);
 }
 
-@media (max-width: 768px) {
-  #LoginOrganizer {
-    padding: 10px;
-  }
-}
 
 button {
   width: 100%;
@@ -81,4 +73,10 @@ button {
 
 button:hover {
   background-color: #45a049;
+}
+
+@media (max-width: 768px) {
+  #LoginOrganizer {
+    padding: 10px;
+  }
 }

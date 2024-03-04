@@ -1,12 +1,13 @@
-/* Home.css */
 .home {
-  height: 100vh; /* Set the height of the section to 100% of the viewport height */
-  overflow: hidden; /* Hide any overflow */
+  overflow: hidden; 
 }
 
 .home img {
-  width: 100%; /* Make the image fill the entire width of its container */
-  height: auto; /* Automatically adjust the height to maintain aspect ratio */
+  width: 100%; 
+  height: auto; 
   display: block;
-  margin: 0 auto; /* Center the image horizontally */
+  margin: 0 auto; 
 }
+
+
+
