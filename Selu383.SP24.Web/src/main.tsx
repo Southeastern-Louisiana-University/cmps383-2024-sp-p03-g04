@@ -12,13 +12,13 @@ import { ToastContainer } from "react-toastify";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <BrowserRouter>
-      <ToastContainer
-        position="top-right"
-        autoClose={2000}
-        theme="colored"
-        hideProgressBar={true}
-        closeOnClick={true}
-      />
+    <ToastContainer
+      position="top-right"
+      autoClose={2000}
+      theme="colored"
+      hideProgressBar={true}
+      closeOnClick={true}
+    />
     <UserProvider>
       <Routes>
         <Route path="/" element={<App />}>

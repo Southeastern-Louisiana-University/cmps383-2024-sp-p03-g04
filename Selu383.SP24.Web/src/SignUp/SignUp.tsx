@@ -70,7 +70,9 @@ const SignupPage: React.FC = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <button type="submit">Sign up</button>
+          <button className="button1" type="submit">
+            Sign up
+          </button>
         </form>
       </div>
     </>

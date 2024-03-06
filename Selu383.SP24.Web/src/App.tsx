@@ -5,25 +5,19 @@ import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap/dist/js/bootstrap.min.js";
 import "@fortawesome/fontawesome-free/css/all.css";
 import Footer from "./components/Footer";
-
-function App() {
-import 'react-toastify/dist/ReactToastify.css';
-
-import imagePath from "./images/logo.png";
+import "react-toastify/dist/ReactToastify.css";
+//import imagePath from "./images/logo.png";
 import { useEffect } from "react";
 import { useUser } from "./Login/UserContext";
-//import Home from "./Home/Home";
-//import { useState } from "react";
 
 function App() {
-
   const { setUser } = useUser(); // Use the useUser hook here
 
   useEffect(() => {
-    fetch("/api/authentication/me").then(async (x) =>{
-      x.json().then((userResp) => setUser(userResp))
+    fetch("/api/authentication/me").then(async (x) => {
+      x.json().then((userResp) => setUser(userResp));
     });
-  }, [])
+  }, []);
 
   let items = ["Home", "About", "Services", "Rooms", "Gallery", "Contact"];
   return (
