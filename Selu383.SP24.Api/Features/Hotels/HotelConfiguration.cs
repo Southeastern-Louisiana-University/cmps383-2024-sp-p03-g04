@@ -11,7 +11,16 @@ public class HotelConfiguration : IEntityTypeConfiguration<Hotel>
             .HasMaxLength(120)
             .IsRequired();
 
-        builder.Property(x => x.Address)
+        builder.Property(x => x.StreetAddress)
+            .IsRequired();
+
+        builder.Property(x => x.City)
+            .IsRequired();
+
+        builder.Property(x => x.State)
+            .IsRequired();
+
+        builder.Property(x => x.ZipCode)
             .IsRequired();
     }
 }

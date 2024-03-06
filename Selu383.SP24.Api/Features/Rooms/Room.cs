@@ -1,4 +1,5 @@
 ﻿using Selu383.SP24.Api.Features.Hotels;
+using Selu383.SP24.Api.Features.Reservations;
 
 namespace Selu383.SP24.Api.Features.Rooms
 {
@@ -20,6 +21,8 @@ namespace Selu383.SP24.Api.Features.Rooms
         public bool IsOccupied { get; set; }
         public int HotelId { get; set; } 
         public Hotel Hotel { get; set; }
+        public ICollection<Reservation> Reservations { get; set; }
+
     }
 
 }

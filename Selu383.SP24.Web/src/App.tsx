@@ -5,10 +5,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap/dist/js/bootstrap.min.js";
 import "@fortawesome/fontawesome-free/css/all.css";
 import Footer from "./components/Footer";
-
-function App() {
 import 'react-toastify/dist/ReactToastify.css';
-
 import imagePath from "./images/logo.png";
 import { useEffect } from "react";
 import { useUser } from "./Login/UserContext";

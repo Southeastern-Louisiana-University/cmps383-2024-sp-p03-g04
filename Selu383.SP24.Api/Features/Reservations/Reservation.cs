@@ -4,7 +4,7 @@ using Selu383.SP24.Api.Features.Hotels;
 
 namespace Selu383.SP24.Api.Features.Reservations;
 
-public class Reservations
+public class Reservation
 {
     public int Id { get; set; }
     public int GuestId { get; set; }
@@ -14,4 +14,7 @@ public class Reservations
     public DateTime CheckOutDate { get; set; }
     public int NumberOfGuests { get; set; }
     public bool IsPaid { get; set; }
+    public Hotel Hotel { get; set; }
+    public Room Room { get; set; }
+
 }

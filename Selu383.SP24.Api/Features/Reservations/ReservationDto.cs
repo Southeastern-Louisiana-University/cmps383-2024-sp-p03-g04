@@ -3,7 +3,7 @@ using Selu383.SP24.Api.Features.Authorization;
 
 namespace Selu383.SP24.Api.Features.Reservations
 {
-    public class ReservationsDto
+    public class ReservationDto
     {
         public int Id { get; set; }
         public int GuestId { get; set; }
@@ -16,11 +16,11 @@ namespace Selu383.SP24.Api.Features.Reservations
         
 
         // Constructors
-        public ReservationsDto()
+        public ReservationDto()
         {
         }
 
-        public ReservationsDto(int Id, int guestId, int hotelId,int roomId, DateTime checkInDate, DateTime checkOutDate, int numberOfGuests, bool isPaid)
+        public ReservationDto(int Id, int guestId, int hotelId,int roomId, DateTime checkInDate, DateTime checkOutDate, int numberOfGuests, bool isPaid)
         {
             HotelId = hotelId;
             GuestId = guestId;
