@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Card } from "react-bootstrap";
 import { useLocation, useNavigate } from "react-router-dom";
-import "./Reservations.css"; // Import the CSS file
 
 interface Hotel {
   id: number;
@@ -19,10 +18,10 @@ const Rooms: React.FC = () => {
   const navigate = useNavigate();
 
   const formatDate = (dateString: string | number) => {
-    let date = new Date(dateString);
-    let year = date.getFullYear();
-    let month = ("0" + (date.getMonth() + 1)).slice(-2); // Months are 0-indexed in JavaScript
-    let day = ("0" + date.getDate()).slice(-2);
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = ("0" + (date.getMonth() + 1)).slice(-2); // Months are 0-indexed in JavaScript
+    const day = ("0" + date.getDate()).slice(-2);
     return `${year}-${month}-${day}`;
   };
 
@@ -34,7 +33,7 @@ const Rooms: React.FC = () => {
     ? formatDate(location.state.checkOutDate)
     : "";
 
-  const [hotel, setHotels] = useState<Hotel>(initialHotels);
+  const [hotel] = useState<Hotel>(initialHotels);
   console.log("🚀 ~ hotel:", hotel.id);
   const [rooms, setRooms] = useState<any[]>([]);
 
@@ -81,7 +80,7 @@ const Rooms: React.FC = () => {
               <Col md={3}>
                 <Card.Img
                   variant="top"
-                  src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aG90ZWwlMjByb29tfGVufDB8fDB8fHww"
+                  src="https://media.istockphoto.com/id/1050564510/photo/3d-rendering-beautiful-luxury-bedroom-suite-in-hotel-with-tv.jpg?s=612x612&w=0&k=20&c=ZYEso7dgPl889aYddhY2Fj3GOyuwqliHkbbT8pjl_iM="
                 />{" "}
                 {/* Replace with your image source */}
               </Col>

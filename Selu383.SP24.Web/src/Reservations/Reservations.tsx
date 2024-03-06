@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Card, Form, Button } from "react-bootstrap";
 import { useLocation, useNavigate } from "react-router-dom";
-import "./Reservations.css"; // Import the CSS file
 
 interface Hotel {
   name: string;

@@ -36,14 +36,17 @@ const Home: React.FC = () => {
       },
     }).then(async (response) => {
       const hotelData = await response.json();
-      const filteredHotels = hotelData.filter((hotel: any) =>
-        hotel.city.toLowerCase().includes(location.toLowerCase())
-      );
-      setHotels(filteredHotels);
+      // const filteredHotels = hotelData.filter((hotel: any) =>
+      //   hotel.city.toLowerCase().includes(location.toLowerCase())
+      // );
+      setHotels(hotelData);
+
     });
   };
+  
 
   useEffect(() => {
+
     if (hotels.length > 0) {
       setShowDropdown(true); // Show dropdown if hotels are available
     } else {
@@ -51,8 +54,9 @@ const Home: React.FC = () => {
     }
   }, [hotels]);
 
-  const handleSearch = () => {
-  console.log("🚀 ~ hotels:", hotels)    
+  const handleSearch = async () => {
+  await getHotels();   
+
     navigate("/reservations", { state: { hotels,checkInDate, checkOutDate } });
   };
 
