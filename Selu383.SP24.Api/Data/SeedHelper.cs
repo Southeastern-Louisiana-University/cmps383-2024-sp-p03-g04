@@ -86,15 +86,16 @@ public static class SeedHelper
             return;
         }
 
-        for (int i = 0; i < 4; i++)
+        var hotelData = new List<Hotel>
+    {
+        new Hotel { HotelCode = "enstay1", Name = "EnStay Baronne", Address = "225 Baronne St, New Orleans, LA 70112" },
+        new Hotel { HotelCode = "enstay2", Name = "EnStay Esplanade", Address = "405 Esplanade Ave, New Orleans, LA 70116" },
+        new Hotel { HotelCode = "enstay3", Name = "EnStay Convention", Address = "200 Convention St, Baton Rouge, LA 70801" }
+    };
+
+        foreach (var hotel in hotelData)
         {
-            dataContext.Set<Hotel>()
-                .Add(new Hotel
-                {
-                    HotelCode = "enstay" + i,
-                    Name = "Hammond " + i,
-                    Address = "1234 Place st"
-                });
+            hotels.Add(hotel);
         }
 
         await dataContext.SaveChangesAsync();
@@ -116,8 +117,8 @@ public static class SeedHelper
                 .Add(new Reservations
                 {
                     GuestId = i,
-                    HotelId = i,
-                    RoomId = 100 + i,
+                    HotelId = i+1,
+                    RoomId = 101 + i,
                     CheckInDate = DateTime.Now.AddDays(i * 7),
                     CheckOutDate = DateTime.Now.AddDays((i * 7) + 7),
                     NumberOfGuests = i + 1,

@@ -251,7 +251,7 @@ namespace Selu383.SP24.Api.Migrations
 
                     b.HasIndex("ManagerId");
 
-                    b.ToTable("Hotel");
+                    b.ToTable("Hotel", (string)null);
                 });
 
             modelBuilder.Entity("Selu383.SP24.Api.Features.Reservations.Reservations", b =>
@@ -288,7 +288,7 @@ namespace Selu383.SP24.Api.Migrations
                     b.HasIndex("GuestId", "RoomId")
                         .IsUnique();
 
-                    b.ToTable("Reservations");
+                    b.ToTable("Reservations", (string)null);
                 });
 
             modelBuilder.Entity("Selu383.SP24.Api.Features.Rooms.Room", b =>
@@ -335,7 +335,7 @@ namespace Selu383.SP24.Api.Migrations
                     b.HasIndex("Number", "HotelId")
                         .IsUnique();
 
-                    b.ToTable("Room");
+                    b.ToTable("Room", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
