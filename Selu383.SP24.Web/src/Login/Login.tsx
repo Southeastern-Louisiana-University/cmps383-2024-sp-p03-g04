@@ -36,9 +36,9 @@ const LoginPage: React.FC = () => {
 
   return (
     <>
-      <div id="LoginOrganizer">
-        <h1 id="WelcomeEnstay">Welcome to EnStay</h1>
-        <h2>Login to continue</h2>
+      <div className="LoginOrganizer">
+        <h1 className="WelcomeEnstay">Welcome to EnStay</h1>
+        <h3>Login to continue</h3>
         <form id="Login" onSubmit={handleLogin}>
           <label>Username</label>
           <input
