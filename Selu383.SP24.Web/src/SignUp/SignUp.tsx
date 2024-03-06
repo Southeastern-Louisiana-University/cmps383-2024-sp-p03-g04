@@ -48,9 +48,9 @@ const SignupPage: React.FC = () => {
 
   return (
     <>
-      <div id="SignupOrganizer">
-        <h1 id="WelcomeEnstay">Welcome to EnStay</h1>
-        <h2>Sign up to create an account</h2>
+      <div className="SignupOrganizer">
+        <h1 className="WelcomeEnstay">Welcome to EnStay</h1>
+        <h3>Sign up to create an account</h3>
         <form id="Signup" onSubmit={handleSignup}>
           <label>Email</label>
           <input
@@ -70,7 +70,9 @@ const SignupPage: React.FC = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <button type="submit">Sign up</button>
+          <button className="button1" type="submit">
+            Sign up
+          </button>
         </form>
       </div>
     </>

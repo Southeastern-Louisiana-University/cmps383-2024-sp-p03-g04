@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Selu383.SP24.Api.Features.Authorization;
 using Selu383.SP24.Api.Features.Hotels;
+using Selu383.SP24.Api.Features.Reservations;
 using Selu383.SP24.Api.Features.Rooms;
 
 namespace Selu383.SP24.Api.Data;
@@ -18,6 +19,8 @@ public static class SeedHelper
         await AddUsers(serviceProvider);
         await AddHotels(dataContext);
         await AddRooms(dataContext);
+        await AddReservations(dataContext);
+
     }
 
     private static async Task AddUsers(IServiceProvider serviceProvider)
@@ -84,19 +87,46 @@ public static class SeedHelper
             return;
         }
 
-        for (int i = 0; i < 4; i++)
+        var hotelData = new List<Hotel>
+{
+    new Hotel
+    {
+        HotelCode = "enstay1",
+        Name = "EnStay Baronne",
+        StreetAddress = "225 Baronne St",
+        City = "New Orleans",
+        State = "LA",
+        ZipCode = "70112"
+    },
+    new Hotel
+    {
+        HotelCode = "enstay2",
+        Name = "EnStay Esplanade",
+        StreetAddress = "405 Esplanade Ave",
+        City = "New Orleans",
+        State = "LA",
+        ZipCode = "70116"
+    },
+    new Hotel
+    {
+        HotelCode = "enstay3",
+        Name = "EnStay Convention",
+        StreetAddress = "200 Convention St",
+        City = "Baton Rouge",
+        State = "LA",
+        ZipCode = "70801"
+    }
+};
+
+        foreach (var hotel in hotelData)
         {
-            dataContext.Set<Hotel>()
-                .Add(new Hotel
-                {
-                    HotelCode = "enstay" + i,
-                    Name = "Hammond " + i,
-                    Address = "1234 Place st"
-                });
+            hotels.Add(hotel);
         }
 
         await dataContext.SaveChangesAsync();
     }
+
+
 
     private static async Task AddRooms(DataContext dataContext)
     {
@@ -130,7 +160,7 @@ public static class SeedHelper
                    Capacity = roomTypes[i] == RoomType.Single ? 2 : 4,
                    IsClean = true,
                    IsOccupied = false,
-                   HotelId=hotel.Id
+                   HotelId = hotel.Id
 
                });
 
@@ -140,4 +170,34 @@ public static class SeedHelper
 
 
     }
+
+    private static async Task AddReservations(DataContext dataContext)
+    {
+        var reservations = dataContext.Set<Reservation>();
+
+        if (await reservations.AnyAsync())
+        {
+            return;
+        }
+
+
+        for (int i = 0; i < 3; i++)
+        {
+            dataContext.Set<Reservation>()
+                .Add(new Reservation
+                {
+                    GuestId = i,
+                    HotelId = i + 1,
+                    RoomId =  i + 1,
+                    CheckInDate = DateTime.Now.AddDays(i * 7),
+                    CheckOutDate = DateTime.Now.AddDays((i * 7) + 7),
+                    NumberOfGuests = i + 1,
+                    IsPaid = true
+                });
+        }
+        await dataContext.SaveChangesAsync();
+
+
+    }
+
 }

@@ -52,7 +52,10 @@ public class HotelsController : ControllerBase
         var hotel = new Hotel
         {
             Name = dto.Name,
-            Address = dto.Address,
+            StreetAddress = dto.StreetAddress,
+            City = dto.City,
+            State = dto.State,
+            ZipCode = dto.ZipCode,
             ManagerId = dto.ManagerId
         };
         hotels.Add(hotel);
@@ -86,7 +89,10 @@ public class HotelsController : ControllerBase
         }
 
         hotel.Name = dto.Name;
-        hotel.Address = dto.Address;
+        hotel.StreetAddress = dto.StreetAddress;
+        hotel.City = dto.City;
+        hotel.State = dto.State;
+        hotel.ZipCode = dto.ZipCode;
         if (User.IsInRole(RoleNames.Admin))
         {
             hotel.ManagerId = dto.ManagerId;
@@ -141,7 +147,10 @@ public class HotelsController : ControllerBase
     {
         return string.IsNullOrWhiteSpace(dto.Name) ||
                dto.Name.Length > 120 ||
-               string.IsNullOrWhiteSpace(dto.Address) ||
+               string.IsNullOrWhiteSpace(dto.StreetAddress) ||
+               string.IsNullOrWhiteSpace(dto.City) ||
+               string.IsNullOrWhiteSpace(dto.State) ||
+               string.IsNullOrWhiteSpace(dto.ZipCode) ||
                InvalidManagerId(dto.ManagerId);
     }
 
@@ -151,10 +160,13 @@ public class HotelsController : ControllerBase
             .Select(x => new HotelDto
             {
                 Id = x.Id,
-                HotelCode=x.HotelCode,
+                HotelCode = x.HotelCode,
                 Name = x.Name,
-                Address = x.Address,
+                StreetAddress = x.StreetAddress,
+                City = x.City,
+                State = x.State,
+                ZipCode = x.ZipCode,
                 ManagerId = x.ManagerId
-            }); ;
+            });
     }
 }

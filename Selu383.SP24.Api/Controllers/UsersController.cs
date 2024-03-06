@@ -118,7 +118,14 @@ public class UsersController : ControllerBase
         var userCreated = new User
         {
             UserName = dto.UserName,
+            Email = dto.Email
         };
+      
+        var roleResult = await userManager.AddToRoleAsync(userCreated, "User");
+        if (!roleResult.Succeeded)
+        {
+            return BadRequest("Failed to add role to user.");
+        }
 
         var validatePassword = await userManager.CreateAsync(userCreated, dto.Password);
 
@@ -131,9 +138,10 @@ public class UsersController : ControllerBase
         {
             Id = userCreated.Id,
             UserName = dto.UserName,
-            Roles = ["Customer"],
+            Roles = new[] {"User"},
             Email = dto.Email,
         };
+
 
         return Ok(newUser);
     }

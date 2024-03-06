@@ -1,15 +1,15 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import "../App.css";
 import { useUser } from "../Login/UserContext";
+import "./navbar.css";
+import { Slide, toast } from "react-toastify";
 
 interface NavBarProps {
   brandName: string;
-  imageSrcPath: string;
   navItems: string[];
 }
 
-function NavBar({ brandName, imageSrcPath, navItems }: NavBarProps) {
+function NavBar({ brandName, navItems }: NavBarProps) {
   const [selectedIndex, setSelectedIndex] = useState(-1);
   const [collapsed, setCollapsed] = useState(true);
   const { user, setUser } = useUser();
@@ -19,24 +19,20 @@ function NavBar({ brandName, imageSrcPath, navItems }: NavBarProps) {
   };
 
   const handleLogOut = () => {
-    console.log("USER LOGGED OUT");
-
     return fetch("/api/authentication/logout", { method: "POST" }).then(
-      async (_x) => setUser(null)
+      async (_x) => {
+        setUser(null);
+        toast.success("Successfully Logged Out", {
+          transition: Slide,
+        });
+      }
     );
   };
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light shadow">
+    <nav className="navbar navbar-expand-lg" style={{ background: "#a5b4fc" }}>
       <div className="container-fluid">
         <Link className="navbar-brand" to="/">
-          <img
-            src={imageSrcPath}
-            width="45"
-            height="40"
-            className="d-inline-block align-center"
-            alt=""
-          />
           <span className="fw-bolder fs-4">{brandName}</span>
         </Link>
         <button
@@ -72,7 +68,6 @@ function NavBar({ brandName, imageSrcPath, navItems }: NavBarProps) {
               </li>
             ))}
           </ul>
-          {/* Move the Login/Logout link here and apply margin-left: auto; */}
           <Link
             className="nav-link"
             to={user ? "/Home" : "/Login"}
@@ -82,8 +77,8 @@ function NavBar({ brandName, imageSrcPath, navItems }: NavBarProps) {
             {user ? "Logout" : "Login"}
           </Link>
 
-          <Link className="nav-link" to="/SignUp">
-            Sign Up
+          <Link className="nav-link" to={user ? "/profile" : "/SignUp"}>
+            {user ? "Profile" : "Sign Up"}
           </Link>
         </div>
       </div>
