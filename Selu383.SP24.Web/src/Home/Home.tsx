@@ -52,8 +52,7 @@ const Home: React.FC = () => {
   }, [hotels]);
 
   const handleSearch = () => {
-  console.log("🚀 ~ hotels:", hotels)
-
+  console.log("🚀 ~ hotels:", hotels)    
     navigate("/reservations", { state: { hotels,checkInDate, checkOutDate } });
   };
 
@@ -102,7 +101,7 @@ const Home: React.FC = () => {
                     <Dropdown className="my-3 show">
                       <Dropdown.Menu show>
                         {hotels.map((hotel, index) => (
-                          <Dropdown.Item key={index}>
+                          <Dropdown.Item key={index} onClick={() => setLocation(`${hotel.name} ${hotel.city}`)}>
                             {hotel.name}{" "}{hotel.city}
                           </Dropdown.Item>
                         ))}

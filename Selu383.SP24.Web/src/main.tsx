@@ -9,6 +9,7 @@ import Reservations from "./Reservations/Reservations.tsx";
 import { UserProvider } from "./Login/UserContext.tsx";
 import Profile from "./User/Profile.tsx";
 import { ToastContainer } from "react-toastify";
+import Rooms from "./Rooms/Rooms.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <BrowserRouter>
@@ -28,6 +29,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
           <Route path="/home" element={<Home />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/Reservations" element={<Reservations />} />
+          <Route path="/reservations/rooms" element={<Rooms/>} />
         </Route>
       </Routes>
     </UserProvider>

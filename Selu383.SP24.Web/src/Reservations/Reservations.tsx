@@ -20,11 +20,10 @@ const Reservations: React.FC = () => {
   const initialHotels: Hotel[] = location.state ? location.state.hotels : [];
   const checkInDate = location.state ? location.state.checkInDate: [];
   const checkOutDate = location.state ? location.state.checkOutDate: [];
-  console.log("🚀 ~ checkOutDate:", location.state)
 
   const [hotels, setHotels] = useState<Hotel[]>(initialHotels);
-  console.log("🚀 ~ hotels:", hotels)
   const [searchQuery, setSearchQuery] = useState("");
+
 
   const getHotels = async () => {
     const response = await fetch(`/api/hotels`, {
@@ -49,7 +48,8 @@ const Reservations: React.FC = () => {
   };
 
   const handleViewRooms = (hotel:Hotel) => {
-    navigate("/reservations/rooms", { state: { hotel } });
+    console.log("🚀 ~ handleViewRooms ~ hotel:", hotel)
+    navigate("/reservations/rooms", { state: { hotel,checkInDate,checkOutDate } });
     };
 
   return (
