@@ -37,7 +37,7 @@ const Home: React.FC = () => {
     }).then(async (response) => {
       const hotelData = await response.json();
       const filteredHotels = hotelData.filter((hotel: any) =>
-        hotel.address.toLowerCase().includes(location.toLowerCase())
+        hotel.city.toLowerCase().includes(location.toLowerCase())
       );
       setHotels(filteredHotels);
     });
@@ -52,7 +52,9 @@ const Home: React.FC = () => {
   }, [hotels]);
 
   const handleSearch = () => {
-    navigate("/reservations", { state: { hotels } });
+  console.log("🚀 ~ hotels:", hotels)
+
+    navigate("/reservations", { state: { hotels,checkInDate, checkOutDate } });
   };
 
   return (
@@ -101,7 +103,7 @@ const Home: React.FC = () => {
                       <Dropdown.Menu show>
                         {hotels.map((hotel, index) => (
                           <Dropdown.Item key={index}>
-                            {hotel.name}
+                            {hotel.name}{" "}{hotel.city}
                           </Dropdown.Item>
                         ))}
                       </Dropdown.Menu>
