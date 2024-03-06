@@ -3,7 +3,7 @@ input {
   padding: 12px 20px;
   margin: 8px 0;
   display: inline-block;
-  border: 2px solid #45b14e;
+  border: 2px solid #a5b4fc;
   border-radius: 4px;
   box-sizing: border-box;
   color: black;
@@ -16,9 +16,10 @@ input {
 }
 
 h3 {
-  color: rgb(70, 174, 102);
+  color: #a5b4fc;
   margin-top: -30px;
   font-weight: 400;
+  text-shadow: 2px 2.5px 3px rgba(18, 60, 33, 0.25);
 }
 
 label {
@@ -39,6 +40,7 @@ html {
   margin: 0;
   padding: 0;
   font-size: 16px;
+  height: 100%;
 }
 
 .LoginOrganizer {
@@ -51,6 +53,8 @@ html {
   max-width: 500px;
   margin: 0 auto;
   padding: 20px;
+  padding-bottom: 15vh;
+  padding-top: 15.2vh;
 }
 
 .WelcomeEnstay {
@@ -59,10 +63,9 @@ html {
   text-shadow: 0px 10px 20px rgba(18, 60, 33, 0.2);
 }
 
-
-button1 {
+.button1 {
   width: 100%;
-  background-color: #4caf50;
+  background-color: #a5b4fc;
   color: white;
   padding: 14px 20px;
   margin: 8px 0;
@@ -71,8 +74,13 @@ button1 {
   cursor: pointer;
 }
 
-button1:hover {
-  background-color: #45a049;
+.app-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.button1:hover {
+  background-color: #8a99e3;
 }
 
 @media (max-width: 768px) {

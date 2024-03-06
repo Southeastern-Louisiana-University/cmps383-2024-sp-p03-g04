@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useUser } from "../Login/UserContext";
-import './navbar.css';
+import "./navbar.css";
 import { Slide, toast } from "react-toastify";
 
 interface NavBarProps {
@@ -9,7 +9,7 @@ interface NavBarProps {
   navItems: string[];
 }
 
-function NavBar({ brandName,  navItems }: NavBarProps) {
+function NavBar({ brandName, navItems }: NavBarProps) {
   const [selectedIndex, setSelectedIndex] = useState(-1);
   const [collapsed, setCollapsed] = useState(true);
   const { user, setUser } = useUser();
@@ -19,20 +19,18 @@ function NavBar({ brandName,  navItems }: NavBarProps) {
   };
 
   const handleLogOut = () => {
-
     return fetch("/api/authentication/logout", { method: "POST" }).then(
       async (_x) => {
-      setUser(null) ;
-      toast.success('Successfully Logged Out',{
-        transition: Slide
-      });      
-  });
-
+        setUser(null);
+        toast.success("Successfully Logged Out", {
+          transition: Slide,
+        });
+      }
+    );
   };
-  
 
   return (
-    <nav className="navbar navbar-expand-lg" style={{background: '#a5b4fc'}}>
+    <nav className="navbar navbar-expand-lg" style={{ background: "#a5b4fc" }}>
       <div className="container-fluid">
         <Link className="navbar-brand" to="/">
           <span className="fw-bolder fs-4">{brandName}</span>
@@ -79,9 +77,8 @@ function NavBar({ brandName,  navItems }: NavBarProps) {
             {user ? "Logout" : "Login"}
           </Link>
 
-          <Link 
-          className="nav-link" to={user?"/profile":"/SignUp"}>
-          {user ? "Profile" : "SignUp"}
+          <Link className="nav-link" to={user ? "/profile" : "/SignUp"}>
+            {user ? "Profile" : "Sign Up"}
           </Link>
         </div>
       </div>
