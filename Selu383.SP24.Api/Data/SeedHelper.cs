@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Selu383.SP24.Api.Features.Authorization;
 using Selu383.SP24.Api.Features.Hotels;
+using Selu383.SP24.Api.Features.Reservations;
 using Selu383.SP24.Api.Features.Rooms;
 
 namespace Selu383.SP24.Api.Data;
@@ -17,6 +18,7 @@ public static class SeedHelper
         await AddRoles(serviceProvider);
         await AddUsers(serviceProvider);
         await AddHotels(dataContext);
+        await AddReservations(dataContext);
         await AddRooms(dataContext);
     }
 
@@ -98,46 +100,79 @@ public static class SeedHelper
         await dataContext.SaveChangesAsync();
     }
 
-    private static async Task AddRooms(DataContext dataContext)
+    private static async Task AddReservations(DataContext dataContext)
     {
-        var rooms = dataContext.Set<Room>();
-        var hotels = dataContext.Set<Hotel>();
+        var reservations = dataContext.Set<Reservations>();
 
-        if (await rooms.AnyAsync())
+        if (await reservations.AnyAsync())
         {
             return;
         }
 
-        var roomTypes = new RoomType[] { RoomType.Single, RoomType.Single, RoomType.Double, RoomType.Double };
 
-        var allhotel = await hotels.ToListAsync();
-        foreach (var hotel in allhotel)
+        for (int i = 0; i < 3; i++)
         {
+            dataContext.Set<Reservations>()
+                .Add(new Reservations
+                {
+                    Id = i,
+                    GuestId = i,
+                    HotelId = i.ToString(),
+                    RoomId = 100 + i,
+                    CheckInDate = DateTime.Now.AddDays(i * 7),
+                    CheckOutDate = DateTime.Now.AddDays((i * 7) + 7),
+                    NumberOfGuests = i + 1,
+                    IsPaid = true
 
-            for (int i = 0; i < 4; i++)
-            {
-                var isPremium = i % 2 == 0;
-                var description = isPremium ? "Premium room with snacks, extra plus comfy pillows, comforter and bigger TV" : "Standard room";
-                var price = isPremium ? 200 : 100;
-                dataContext.Set<Room>()
-               .Add(new Room
-               {
-                   Type = roomTypes[i],
-                   Number = 101 + i,
-                   IsPremium = isPremium,
-                   Description = description,
-                   Price = price,
-                   Capacity = roomTypes[i] == RoomType.Single ? 2 : 4,
-                   IsClean = true,
-                   IsOccupied = false,
-                   HotelId=hotel.Id
 
-               });
 
-            }
+                });
+            await dataContext.SaveChangesAsync();
         }
-        await dataContext.SaveChangesAsync();
-
 
     }
-}
+
+
+        private static async Task AddRooms(DataContext dataContext)
+        {
+            var rooms = dataContext.Set<Room>();
+            var hotels = dataContext.Set<Hotel>();
+
+            if (await rooms.AnyAsync())
+            {
+                return;
+            }
+
+            var roomTypes = new RoomType[] { RoomType.Single, RoomType.Single, RoomType.Double, RoomType.Double };
+
+            var allhotel = await hotels.ToListAsync();
+            foreach (var hotel in allhotel)
+            {
+
+                for (int i = 0; i < 4; i++)
+                {
+                    var isPremium = i % 2 == 0;
+                    var description = isPremium ? "Premium room with snacks, extra plus comfy pillows, comforter and bigger TV" : "Standard room";
+                    var price = isPremium ? 200 : 100;
+                    dataContext.Set<Room>()
+                   .Add(new Room
+                   {
+                       Type = roomTypes[i],
+                       Number = 101 + i,
+                       IsPremium = isPremium,
+                       Description = description,
+                       Price = price,
+                       Capacity = roomTypes[i] == RoomType.Single ? 2 : 4,
+                       IsClean = true,
+                       IsOccupied = false,
+                       HotelId = hotel.Id
+
+                   });
+
+                }
+            }
+            await dataContext.SaveChangesAsync();
+
+
+        }
+    }
