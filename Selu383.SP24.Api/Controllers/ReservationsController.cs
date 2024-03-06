@@ -20,23 +20,24 @@ namespace Selu383.SP24.Api.Features.Reservations
         private readonly DbSet<Reservations> reservations;
         private readonly DataContext dataContext;
         private readonly UserManager<User> userManager;
+        private readonly DbSet<Room> rooms;
 
-
-        public ReservationsController(DataContext dataContext) 
-        { 
+        public ReservationsController(DataContext dataContext)
+        {
             this.dataContext = dataContext;
             reservations = dataContext.Set<Reservations>();
+            rooms = dataContext.Set<Room>();
         }
 
-        // GET: api/reservations
         [HttpGet]
+        [Authorize(Roles = RoleNames.Admin)]
+
         public IQueryable<ReservationsDto> GetAllReservations()
         {
             // Retrieve all reservations
             return GetReservationsDto(reservations);
         }
 
-        // GET: api/reservations/{id}
         [HttpGet("{id}")]
         [Authorize(Roles = RoleNames.Admin)]
 
@@ -51,7 +52,6 @@ namespace Selu383.SP24.Api.Features.Reservations
             return Ok(reservation);
         }
 
-        // Retrieve the reservation by checkIn Date
         [HttpGet("date/{checkInDate}")]
         [Authorize(Roles = RoleNames.Admin)]
         public ActionResult<IEnumerable<ReservationsDto>> GetReservationsByCheckInDate(DateTime checkInDate)
@@ -63,20 +63,54 @@ namespace Selu383.SP24.Api.Features.Reservations
             }
             return Ok(GetReservationsDto(dateReservations));
         }
+        //he date should be passed in the URL in the format yyyy-MM-dd. For example, to check available rooms in hotel 1 on January 1, 2023, the URL would be api/reservations/availableRooms/1/2023-01-01
+        [HttpGet("availableRooms/{hotelId}/{checkInDate}/{checkOutDate}")]
+        [Authorize]
+        public ActionResult<IEnumerable<RoomDto>> GetAvailableRooms(int hotelId, DateTime checkInDate, DateTime checkOutDate)
+        {
+            var availableRooms = rooms
+                .Where(r => r.HotelId == hotelId && r.IsClean)
+                .ToList();
 
-        // POST: api/reservations
+            // Filter out rooms that are occupied
+            availableRooms = availableRooms
+                .Where(r => !IsRoomOccupied(r.Id, hotelId, checkInDate, checkOutDate))
+                .ToList();
+
+            // Convert to RoomDto
+            var availableRoomDtos = availableRooms.Select(r => new RoomDto
+            {
+                Id = r.Id,
+                Type = r.Type,
+                Number = r.Number,
+                IsPremium = r.IsPremium,
+                Description = r.Description,
+                Price = r.Price,
+                Capacity = r.Capacity,
+                IsClean = r.IsClean,
+                IsOccupied = IsRoomOccupied(r.Id, hotelId, checkInDate, checkOutDate),
+                HotelId = r.HotelId
+            });
+
+            return Ok(availableRoomDtos);
+        }
+
         [HttpPost]
         [Authorize]
-        public ActionResult<ReservationsDto> CreateReservation(ReservationsDto dto)
+        public async Task<ActionResult<ReservationsDto>> CreateReservation(ReservationsDto dto)
         {
-            var user =  User.GetCurrentUserName();
             var userID = User.GetCurrentUserId();
 
-            if (user == null)
+            // Check if the room is available for the entire duration of the stay
+            for (var date = dto.CheckInDate; date < dto.CheckOutDate; date = date.AddDays(1))
             {
-                return Unauthorized("User does not exist.");
+                if (IsRoomOccupied(dto.RoomId, dto.HotelId, dto.CheckInDate,dto.CheckOutDate))
+                {
+                    return BadRequest("The room is not available for the entire duration of the stay.");
+                }
             }
-            //create new reservation
+
+            // Create new reservation
             var reservation = new Reservations
             {
                 GuestId = (int)userID,
@@ -91,16 +125,16 @@ namespace Selu383.SP24.Api.Features.Reservations
             dataContext.SaveChanges();
             dto.Id = reservation.Id;
 
-            return Ok(reservation); 
+            return Ok(reservation);
         }
 
-        // PUT: api/reservations/{id}
+
         [HttpPut("{id}")]
         [Authorize(Roles = RoleNames.Admin)]
         public IActionResult UpdateReservation(int id, ReservationsDto dto)
         {
             // Update a specific reservation by its ID
-           
+
             var reservation = GetReservationsDto(reservations.Where(x => x.Id == id)).FirstOrDefault();
             if (reservation == null)
             {
@@ -112,13 +146,13 @@ namespace Selu383.SP24.Api.Features.Reservations
             reservation.CheckOutDate = dto.CheckOutDate;
             reservation.NumberOfGuests = dto.NumberOfGuests;
             reservation.IsPaid = dto.IsPaid;
-            
+
             dataContext.SaveChanges();
             return Ok(dto);
         }
 
-        // DELETE: api/reservations/{id}
         [HttpDelete("{id}")]
+        [Authorize(Roles = RoleNames.Admin)]
         public IActionResult DeleteReservation(int id)
         {
             // Delete a specific reservation by its ID
@@ -145,6 +179,11 @@ namespace Selu383.SP24.Api.Features.Reservations
                 }); ;
         }
 
-       
+        private bool IsRoomOccupied(int roomId, int hotelId, DateTime checkInDate, DateTime checkOutDate)
+        {
+            return reservations.Any(r => r.RoomId == roomId && r.HotelId == hotelId &&
+                !(checkInDate >= r.CheckOutDate || checkOutDate <= r.CheckInDate));
+        }
+
     }
 }
