@@ -13,5 +13,10 @@
         public bool IsOccupied { get; set; }
         public int HotelId { get; set; }
 
+
+        public bool IsAvailable()
+        {
+            return IsClean && !IsOccupied;
+        }
     }
 }

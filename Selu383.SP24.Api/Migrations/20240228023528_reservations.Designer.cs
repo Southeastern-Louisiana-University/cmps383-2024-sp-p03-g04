@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Selu383.SP24.Api.Data;
 
@@ -11,9 +12,11 @@ using Selu383.SP24.Api.Data;
 namespace Selu383.SP24.Api.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240228023528_reservations")]
+    partial class reservations
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -251,44 +254,7 @@ namespace Selu383.SP24.Api.Migrations
 
                     b.HasIndex("ManagerId");
 
-                    b.ToTable("Hotel", (string)null);
-                });
-
-            modelBuilder.Entity("Selu383.SP24.Api.Features.Reservations.Reservations", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CheckInDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("CheckOutDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("GuestId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("HotelId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("IsPaid")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("NumberOfGuests")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RoomId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("GuestId", "RoomId")
-                        .IsUnique();
-
-                    b.ToTable("Reservations", (string)null);
+                    b.ToTable("Hotel");
                 });
 
             modelBuilder.Entity("Selu383.SP24.Api.Features.Reservations.Reservations", b =>
@@ -373,7 +339,7 @@ namespace Selu383.SP24.Api.Migrations
                     b.HasIndex("Number", "HotelId")
                         .IsUnique();
 
-                    b.ToTable("Room", (string)null);
+                    b.ToTable("Room");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>

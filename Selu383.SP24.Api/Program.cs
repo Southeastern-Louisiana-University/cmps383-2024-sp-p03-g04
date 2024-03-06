@@ -25,6 +25,16 @@ builder.Services.ConfigureApplicationCookie(options =>
     };
 });
 
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(builder =>
+    {
+        builder.WithOrigins("http://localhost:5173")
+            .AllowAnyMethod()
+            .AllowAnyHeader();
+    });
+});
+
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -50,6 +60,7 @@ app.UseAuthentication();
 
 app
     .UseRouting()
+    .UseCors() // Use CORS before routing
     .UseAuthorization()
     .UseEndpoints(x =>
     {
