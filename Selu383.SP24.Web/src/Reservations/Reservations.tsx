@@ -32,10 +32,10 @@ const Reservations: React.FC = () => {
       },
     });
     const hotelData = await response.json();
-    const filteredHotels = hotelData.filter((hotel: any) =>
-      hotel.address.toLowerCase().includes(searchQuery.toLowerCase())
-    );
-    setHotels(filteredHotels);
+    // const filteredHotels = hotelData.filter((hotel: any) =>
+    //   hotel.address.toLowerCase().includes(searchQuery.toLowerCase())
+    // );
+    setHotels(hotelData);
   };
 
   useEffect(() => {

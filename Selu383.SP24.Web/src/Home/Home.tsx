@@ -40,13 +40,10 @@ const Home: React.FC = () => {
       //   hotel.city.toLowerCase().includes(location.toLowerCase())
       // );
       setHotels(hotelData);
-
     });
   };
-  
 
   useEffect(() => {
-
     if (hotels.length > 0) {
       setShowDropdown(true); // Show dropdown if hotels are available
     } else {
@@ -55,9 +52,9 @@ const Home: React.FC = () => {
   }, [hotels]);
 
   const handleSearch = async () => {
-  await getHotels();   
+    await getHotels();
 
-    navigate("/reservations", { state: { hotels,checkInDate, checkOutDate } });
+    navigate("/reservations", { state: { hotels, checkInDate, checkOutDate } });
   };
 
   return (
@@ -68,13 +65,11 @@ const Home: React.FC = () => {
           backgroundImage: `url(${image})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
+          height: "77vh",
         }}
       >
-        <Container>
-          <Row
-            className="justify-content-center align-items-center"
-            style={{ minHeight: "calc(100vh - 56px)" }}
-          >
+        <Container className="position-absolute top-50 start-50 translate-middle">
+          <Row>
             <Col xs={12} sm={6} md={3}>
               <Card className="text-dark bg-light mb-3">
                 <Card.Body>
@@ -105,8 +100,13 @@ const Home: React.FC = () => {
                     <Dropdown className="my-3 show">
                       <Dropdown.Menu show>
                         {hotels.map((hotel, index) => (
-                          <Dropdown.Item key={index} onClick={() => setLocation(`${hotel.name} ${hotel.city}`)}>
-                            {hotel.name}{" "}{hotel.city}
+                          <Dropdown.Item
+                            key={index}
+                            onClick={() =>
+                              setLocation(`${hotel.name} ${hotel.city}`)
+                            }
+                          >
+                            {hotel.name} {hotel.city}
                           </Dropdown.Item>
                         ))}
                       </Dropdown.Menu>

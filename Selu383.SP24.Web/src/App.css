@@ -6,8 +6,16 @@
 
 .app-container {
   display: flex;
+  /* max-height: 5vh; */
+
   flex-direction: column;
   top: 0;
   left: 0;
   right: 0;
+
+}
+
+.content-container {
+  /* max-height: 75vh; */
+  flex-grow: 1;
 }
