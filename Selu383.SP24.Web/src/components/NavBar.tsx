@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { useUser } from "../Login/UserContext";
 import "./navbar.css";
 import { Slide, toast } from "react-toastify";
+import LoginModal from "../Login/LoginModal"; 
+import SignupModal from "../SignUp/SignupModal"; 
 
 interface NavBarProps {
   brandName: string;
@@ -13,6 +15,8 @@ function NavBar({ brandName, navItems }: NavBarProps) {
   const [selectedIndex, setSelectedIndex] = useState(-1);
   const [collapsed, setCollapsed] = useState(true);
   const { user, setUser } = useUser();
+  const [showLoginModal, setShowLoginModal] = useState(false);
+  const [showSignupModal, setShowSignupModal] = useState(false);
 
   const toggleCollapse = () => {
     setCollapsed(!collapsed);
@@ -68,20 +72,44 @@ function NavBar({ brandName, navItems }: NavBarProps) {
               </li>
             ))}
           </ul>
-          <Link
-            className="nav-link"
-            to={user ? "/Home" : "/Login"}
-            onClick={user ? handleLogOut : undefined}
-            style={{ marginLeft: "auto", marginRight: "20px" }}
-          >
-            {user ? "Logout" : "Login"}
-          </Link>
-
-          <Link className="nav-link" to={user ? "/profile" : "/SignUp"}>
-            {user ? "Profile" : "Sign Up"}
-          </Link>
+          {user ? (
+            <>
+              <Link
+                className="nav-link"
+                to="/profile" 
+                style={{ marginRight: "20px" }}
+              >
+                Profile
+              </Link>
+              <Link
+                className="nav-link"
+                to="/Home"
+                onClick={handleLogOut}
+              >
+                Logout
+              </Link>
+            </>
+          ) : (
+            <>
+              <button
+                className="nav-link"
+                onClick={() => setShowLoginModal(true)}
+                style={{ marginLeft: "auto", marginRight: "20px" }}
+              >
+                Login
+              </button>
+              <button
+                className="nav-link"
+                onClick={() => setShowSignupModal(true)}
+              >
+                Sign Up
+              </button>
+            </>
+          )}
         </div>
       </div>
+      <LoginModal show={showLoginModal} onHide={() => setShowLoginModal(false)} />
+      <SignupModal show={showSignupModal} onHide={() => setShowSignupModal(false)} />
     </nav>
   );
 }
