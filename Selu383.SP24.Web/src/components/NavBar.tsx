@@ -3,8 +3,9 @@ import { Link } from "react-router-dom";
 import { useUser } from "../Login/UserContext";
 import "./navbar.css";
 import { Slide, toast } from "react-toastify";
-import LoginModal from "../Login/LoginModal"; 
-import SignupModal from "../SignUp/SignupModal"; 
+import LoginModal from "../Login/LoginModal";
+import SignupModal from "../SignUp/SignupModal";
+import { Dropdown } from "react-bootstrap";
 
 interface NavBarProps {
   brandName: string;
@@ -76,13 +77,33 @@ function NavBar({ brandName, navItems }: NavBarProps) {
             <>
               <Link
                 className="nav-link"
-                to="/profile" 
+                to="/profile"
                 style={{ marginRight: "20px" }}
               >
-                Profile
+                <Dropdown>
+                  <Dropdown.Toggle
+                    id="dropdown-basic"
+                    className="btn btn-outline-light custom-dropdown-toggle"
+                    style={{
+                      backgroundColor: "transparent",
+                      borderColor: "#fff",
+                      color: "#fff",
+                    }}
+                  >
+                    {user.userName}
+                  </Dropdown.Toggle>
+
+                  <Dropdown.Menu>
+                    <Dropdown.Item>
+                      <Link to="/profile/userinfo" className="dropdown-link">
+                        Profile
+                      </Link>
+                    </Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
               </Link>
               <Link
-                className="nav-link"
+                className="btn btn-outline-light"
                 to="/Home"
                 onClick={handleLogOut}
               >
@@ -92,14 +113,14 @@ function NavBar({ brandName, navItems }: NavBarProps) {
           ) : (
             <>
               <button
-                className="nav-link"
+                className="btn btn-outline-light"
                 onClick={() => setShowLoginModal(true)}
                 style={{ marginLeft: "auto", marginRight: "20px" }}
               >
                 Login
               </button>
               <button
-                className="nav-link"
+                className="btn btn-outline-light"
                 onClick={() => setShowSignupModal(true)}
               >
                 Sign Up
@@ -108,8 +129,14 @@ function NavBar({ brandName, navItems }: NavBarProps) {
           )}
         </div>
       </div>
-      <LoginModal show={showLoginModal} onHide={() => setShowLoginModal(false)} />
-      <SignupModal show={showSignupModal} onHide={() => setShowSignupModal(false)} />
+      <LoginModal
+        show={showLoginModal}
+        onHide={() => setShowLoginModal(false)}
+      />
+      <SignupModal
+        show={showSignupModal}
+        onHide={() => setShowSignupModal(false)}
+      />
     </nav>
   );
 }

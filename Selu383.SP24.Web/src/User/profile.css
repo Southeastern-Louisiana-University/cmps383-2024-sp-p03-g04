@@ -1,3 +1,15 @@
-.profile-container{
+.profile-container {
     height: 100vh;
 }
+
+.reservations-section {
+    margin-top: 20px; 
+}
+
+.card-container {
+    width: 80%; 
+    margin-top: 20px; 
+    margin-right: 20px; 
+}
+
+

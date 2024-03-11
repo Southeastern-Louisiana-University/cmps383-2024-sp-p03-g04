@@ -27,12 +27,12 @@
 }
 
 .SignupOrganizer input {
-  width: calc(100% - 40px); 
+  width: calc(100% - 0px); 
   margin-bottom: 5px; 
 }
 
 .button1 {
   width: 100%; 
-  margin-top: px; 
+  margin-top: 10px; 
   
 }
