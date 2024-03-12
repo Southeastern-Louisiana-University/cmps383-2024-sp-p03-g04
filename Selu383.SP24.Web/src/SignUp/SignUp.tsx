@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./SignUp.css";
 import { useNavigate } from "react-router-dom";
+import { Slide, toast } from "react-toastify";
 
 interface CreateUserDto {
   userName: string;
@@ -10,7 +11,7 @@ interface CreateUserDto {
 }
 
 interface SignupPageProps {
-  onSuccess: () => void; 
+  onSuccess: () => void;
 }
 
 const SignupPage: React.FC<SignupPageProps> = ({ onSuccess }) => {
@@ -27,7 +28,7 @@ const SignupPage: React.FC<SignupPageProps> = ({ onSuccess }) => {
       userName: username,
       password: password,
       email: email,
-      roles: ["Customer"], 
+      roles: ["User"],
     };
 
     const response = await fetch(`/api/users/customer`, {
@@ -37,14 +38,17 @@ const SignupPage: React.FC<SignupPageProps> = ({ onSuccess }) => {
       },
       body: JSON.stringify(newUser),
     }).then(async (x) => {
-      const responseData = await x.json();
-      if (x.status === 200) {
-        console.log(responseData);
-        console.log(response);
-        navigate("/");
-        onSuccess(); 
+      const resp = await x;
+      if (resp.status !== 200) {
+        toast.error(await resp.text(), {
+          transition: Slide,
+        });
       } else {
-        console.error("Signup failed", x.status, x.statusText);
+        navigate("/");
+        onSuccess();
+        toast.success("User successfully registered", {
+          transition: Slide,
+        });
       }
     });
   };
@@ -55,19 +59,25 @@ const SignupPage: React.FC<SignupPageProps> = ({ onSuccess }) => {
         <h1 className="WelcomeEnstay">Welcome to EnStay</h1>
         <h3>Sign up to create an account</h3>
         <form id="Signup" onSubmit={handleSignup}>
-          <label><b>Email</b></label>
+          <label>
+            <b>Email</b>
+          </label>
           <input
             type="text"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
-          <label><b>Username</b></label>
+          <label>
+            <b>Username</b>
+          </label>
           <input
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
-          <label><b>Password</b></label>
+          <label>
+            <b>Password</b>
+          </label>
           <input
             type="password"
             value={password}
