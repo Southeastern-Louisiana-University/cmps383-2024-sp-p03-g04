@@ -17,7 +17,6 @@ import CustomCard from "../components/CustomCard";
 import { BiSearch } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 
-
 const Home: React.FC = () => {
   const currentDate = new Date();
   const navigate = useNavigate();
@@ -29,6 +28,19 @@ const Home: React.FC = () => {
   const [checkOutDate, setCheckOutDate] = useState<Date | null>(tomorrowDate);
   const [showDropdown, setShowDropdown] = useState(false);
 
+  const [guests, setGuests] = useState(1);
+  const [roomType, setRoomType] = useState("Single");
+  const [roomTypes, setRoomTypes] = useState(["Single", "Double"]);
+
+  useEffect(() => {
+    if (guests >= 3) {
+      setRoomTypes(["Double"]);
+      setRoomType("Double");
+    } else {
+      setRoomTypes(["Single", "Double"]);
+    }
+  }, [guests]);
+
   const getHotels = async () => {
     await fetch(`/api/hotels`, {
       method: "GET",
@@ -37,16 +49,13 @@ const Home: React.FC = () => {
       },
     }).then(async (response) => {
       const hotelData = await response.json();
-      // const filteredHotels = hotelData.filter((hotel: any) =>
-      //   hotel.city.toLowerCase().includes(location.toLowerCase())
-      // );
       setHotels(hotelData);
     });
   };
 
   useEffect(() => {
     if (hotels.length > 0) {
-      setShowDropdown(true); 
+      setShowDropdown(true); // Show dropdown if hotels are available
     } else {
       setShowDropdown(false);
     }
@@ -54,7 +63,6 @@ const Home: React.FC = () => {
 
   const handleSearch = async () => {
     await getHotels();
-
     navigate("/reservations", { state: { hotels, checkInDate, checkOutDate } });
   };
 
@@ -66,94 +74,148 @@ const Home: React.FC = () => {
           backgroundImage: `url(${image})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
-          height: "77vh",
+          minHeight: "100vh",
         }}
       >
         <Container className="position-absolute top-50 start-50 translate-middle">
           <Row>
-            <Col xs={12} sm={6} md={3}>
+            <Col>
               <Card className="text-dark bg-light mb-3">
                 <Card.Body>
-                  <Card.Title>Hotels </Card.Title>
-                  <Form>
-                    <Row className="align-items-center">
-                      <Col xs={9}>
-                        <Form.Group controlId="location">
-                          <Form.Control
-                            type="text"
-                            placeholder="Search for hotels"
-                            value={location}
-                            onChange={(e) => {
-                              setLocation(e.target.value);
-                              getHotels(); 
-                            }}
-                          />
-                        </Form.Group>
-                      </Col>
-                      <Col xs={3}>
-                        <Button variant="primary" onClick={handleSearch}>
-                          <BiSearch />
-                        </Button>
-                      </Col>
-                    </Row>
-                  </Form>
-                  {showDropdown && (
-                    <Dropdown className="my-3 show">
-                      <Dropdown.Menu show>
-                        {hotels.map((hotel, index) => (
-                          <Dropdown.Item
-                            key={index}
-                            onClick={() =>
-                              setLocation(`${hotel.name} ${hotel.city}`)
-                            }
-                          >
-                            {hotel.name} {hotel.city}
-                          </Dropdown.Item>
-                        ))}
-                      </Dropdown.Menu>
-                    </Dropdown>
-                  )}
+                  <Row>
+                    <Col>
+                      <CustomCard title="Hotels"> <br/>
+                        <Form>
+                          <Row className="align-items-center">
+                            <Col xs={9}>
+                              <Form.Group controlId="location">
+                                <Form.Control
+                                  type="text"
+                                  placeholder="Search for hotels"
+                                  value={location}
+                                  onChange={(e) => {
+                                    setLocation(e.target.value);
+                                    getHotels(); // Trigger hotel fetching on input change
+                                  }}
+                                />
+                              </Form.Group>
+                            </Col>
+                            <Col xs={3}>
+                              <Button variant="primary" onClick={handleSearch}>
+                                <BiSearch />
+                              </Button>
+                            </Col>
+                          </Row>
+                        </Form>
+                      </CustomCard>
+                      {showDropdown && (
+                        <Dropdown className="my-3 show">
+                          <Dropdown.Menu show>
+                            {hotels.map((hotel, index) => (
+                              <Dropdown.Item
+                                key={index}
+                                onClick={() =>
+                                  setLocation(`${hotel.name} ${hotel.city}`)
+                                }
+                              >
+                                {hotel.name} {hotel.city}
+                              </Dropdown.Item>
+                            ))}
+                          </Dropdown.Menu>
+                        </Dropdown>
+                      )}
+                    </Col>
+                    <Col>
+                      <CustomCard title="Check In">
+                        <Card.Body>
+                          <Form.Group controlId="checkInDate">
+                            <DatePicker
+                              selected={checkInDate}
+                              onChange={(date: Date) => setCheckInDate(date)}
+                              dateFormat="E MMM dd, yyyy"
+                              minDate={new Date()}
+                              className="form-control"
+                            />
+                          </Form.Group>
+                        </Card.Body>
+                      </CustomCard>
+                    </Col>
+                    <Col>
+                      <CustomCard title="Check Out">
+                        <Card.Body>
+                          <Form.Group controlId="checkOutDate">
+                            <DatePicker
+                              selected={checkOutDate}
+                              onChange={(date: Date) => setCheckOutDate(date)}
+                              dateFormat="E MMM dd, yyyy"
+                              minDate={checkInDate || new Date()}
+                              className="form-control"
+                            />
+                          </Form.Group>
+                        </Card.Body>
+                      </CustomCard>
+                    </Col>
+                    <Col>
+                      <CustomCard title="Rooms & Guests">
+                        <Card.Body>
+                          <Form>
+                            <Form.Group controlId="roomAndGuests">
+                              <Dropdown>
+                                <Dropdown.Toggle
+                                  variant="info"
+                                  id="dropdown-basic"
+                                >
+                                  {guests
+                                    ? ` ${roomType} Bed & ${guests} Guest`
+                                    : "Select Rooms & Guests"}
+                                </Dropdown.Toggle>
+
+                                <Dropdown.Menu style={{ width: "100%" }}>
+                                  <Form>
+                                    <Form.Group controlId="guests">
+                                      <Form.Label>Number of Guests</Form.Label>
+                                      <select
+                                        className="form-select"
+                                        value={guests}
+                                        onChange={(e) =>
+                                          setGuests(Number(e.target.value))
+                                        }
+                                      >
+                                        {[1, 2, 3, 4].map((num) => (
+                                          <option key={num} value={num}>
+                                            {num}
+                                          </option>
+                                        ))}
+                                      </select>
+                                    </Form.Group>
+
+                                    <Form.Group controlId="roomType">
+                                      <Form.Label>Room Type</Form.Label>
+                                      <select
+                                        className="form-select"
+                                        value={roomType}
+                                        onChange={(e) =>
+                                          setRoomType(e.target.value)
+                                        }
+                                      >
+                                        {roomTypes.map((type) => (
+                                          <option key={type} value={type}>
+                                            {type}
+                                          </option>
+                                        ))}
+                                      </select>
+                                    </Form.Group>
+                                  </Form>
+                                </Dropdown.Menu>
+                              </Dropdown>
+                            </Form.Group>
+                          </Form>
+                        </Card.Body>
+                      </CustomCard>
+                    </Col>
+                  </Row>
                 </Card.Body>
               </Card>
-            </Col>
-            <Col xs={12} sm={6} md={4} lg={3}>
-              <CustomCard title="Check In">
-                <Card.Body>
-                  <Form.Group controlId="checkInDate">
-                    <DatePicker
-                      selected={checkInDate}
-                      onChange={(date: Date) => setCheckInDate(date)}
-                      dateFormat="E MMM dd, yyyy"
-                      minDate={new Date()}
-                      className="form-control"
-                    />
-                  </Form.Group>
-                </Card.Body>
-              </CustomCard>
-            </Col>
-
-            <Col xs={12} sm={6} md={4} lg={3}>
-              <CustomCard title="Check Out">
-                <Card.Body>
-                  <Form.Group controlId="checkOutDate">
-                    <DatePicker
-                      selected={checkOutDate}
-                      onChange={(date: Date) => setCheckOutDate(date)}
-                      dateFormat="E MMM dd, yyyy"
-                      minDate={checkInDate || new Date()}
-                      className="form-control"
-                    />
-                  </Form.Group>
-                </Card.Body>
-              </CustomCard>
-            </Col>
-
-            <Col xs={12} sm={6} md={4} lg={3}>
-              <CustomCard title="Rooms & Guests">
-                <Card.Body>
-                  <div className="box">1 Room, 1 Guest</div>
-                </Card.Body>
-              </CustomCard>
             </Col>
           </Row>
         </Container>
