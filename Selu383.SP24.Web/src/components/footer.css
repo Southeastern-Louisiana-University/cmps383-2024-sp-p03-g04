@@ -19,7 +19,7 @@
   .footer-social,
   .footer-icon,
   .footer-copyright {
-    flex: 1 0 100%; 
+    flex: 1 0 auto; 
     text-align: center;
     padding-top: 1rem;
   }

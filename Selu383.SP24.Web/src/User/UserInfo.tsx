@@ -1,38 +1,13 @@
-import React, { useState, useEffect} from 'react';
+import React from 'react';
 import Card from 'react-bootstrap/Card';
 import { Button } from "react-bootstrap";
 import { useNavigate } from 'react-router-dom'; 
+import { useUser } from '../Login/UserContext';
 import './UserInfo.css';
-
-interface User {
-  id: number;
-  userName: string;
-  email: string;
-  roles: string[];
-}
 
 const UserInfo: React.FC = () => {
   const navigate = useNavigate(); 
-
-  const [user, setUser] = useState<User | null>(null);
-
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const response = await fetch('/api/users');
-        if (response.ok) {
-          const userData: User[] = await response.json();
-          setUser(userData[0]);
-        } else {
-          console.error('Failed to fetch user data');
-        }
-      } catch (error) {
-        console.error('Error fetching user data:', error);
-      }
-    };
-
-    fetchUserData();
-  }, []);
+  const { user } = useUser();
 
   if (!user) {
     return <div>Loading...</div>;

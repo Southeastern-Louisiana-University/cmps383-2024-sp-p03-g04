@@ -9,7 +9,8 @@ import {
   Button,
 } from "react-bootstrap";
 import "./Home.css";
-import image from "../images/hotel.jpg";
+import image from "../images/resort.webp";
+import homeImage from '../images/hotel.jpg'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "../components/Footer";
@@ -74,11 +75,13 @@ const Home: React.FC = () => {
           backgroundImage: `url(${image})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
-          minHeight: "100vh",
+          minHeight:"100vh",
+          maxHeight: "100vh",
+          overflow:"hidden"
         }}
       >
-        <Container className="position-absolute top-50 start-50 translate-middle">
-          <Row>
+        <>
+          <Row >
             <Col>
               <Card className="text-dark bg-light mb-3">
                 <Card.Body>
@@ -216,6 +219,47 @@ const Home: React.FC = () => {
                   </Row>
                 </Card.Body>
               </Card>
+            </Col>
+          </Row>
+        </>
+      </section>
+      <section className="about-us-section">
+        <Container>
+          <Row>
+            <Col>
+              <h2>EnStay</h2>
+              <section className="home">
+                <div className="image-container">
+                  <img src={homeImage} alt="EnStay Hotel" className="image" />
+                </div>
+                <div className="content">
+                  <p>
+                    EnStay welcomes you to Louisiana's finest in luxury
+                    accommodations. With prime locations in New Orleans and
+                    Baton Rouge, our hotels epitomize elegance and comfort. From
+                    meticulously designed rooms to gourmet dining and
+                    rejuvenating spa treatments, we ensure an unparalleled
+                    experience. Explore the vibrant culture of Louisiana or
+                    unwind in our serene ambiance. At EnStay, hospitality is a
+                    lifestyle. Join us for an unforgettable journey where every
+                    moment is tailored to perfection. Welcome to EnStay, where
+                    luxury meets unparalleled hospitality.
+                  </p>
+                </div>
+              </section>
+              <h3>Our Commitment:</h3>
+              <p>
+                At EnStay, we are dedicated to providing our guests with
+                exceptional service and unforgettable experiences. Whether
+                you're traveling for business or pleasure, our friendly staff is
+                here to ensure that your stay is nothing short of extraordinary.
+              </p>
+              <p>
+                Indulge in luxury, immerse yourself in Southern hospitality, and
+                make EnStay your home away from home. We look forward to
+                welcoming you to EnStay and making your visit to Louisiana truly
+                memorable.
+              </p>
             </Col>
           </Row>
         </Container>

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-import './profile.css'; 
+import './userReservation.css'; 
 
 interface Reservation {
   id: number;
@@ -10,7 +10,7 @@ interface Reservation {
   numberOfGuests: number;
 }
 
-function Profile() {
+function UserReservation() {
   const [reservations, setReservations] = useState<Reservation[]>([]);
 
   useEffect(() => {
@@ -55,4 +55,4 @@ function Profile() {
   );
 }
 
-export default Profile;
+export default UserReservation;
