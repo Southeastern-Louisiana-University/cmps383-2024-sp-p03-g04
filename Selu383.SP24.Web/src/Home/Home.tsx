@@ -9,14 +9,14 @@ import {
   Button,
 } from "react-bootstrap";
 import "./Home.css";
-import image from "../images/hotel.jpg";
+import image from "../images/resort.webp";
+import homeImage from '../images/hotel.jpg'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "../components/Footer";
 import CustomCard from "../components/CustomCard";
 import { BiSearch } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
-
 
 const Home: React.FC = () => {
   const currentDate = new Date();
@@ -37,28 +37,22 @@ const Home: React.FC = () => {
       },
     }).then(async (response) => {
       const hotelData = await response.json();
-      // const filteredHotels = hotelData.filter((hotel: any) =>
-      //   hotel.city.toLowerCase().includes(location.toLowerCase())
-      // );
       setHotels(hotelData);
-
     });
   };
-  
 
   useEffect(() => {
-
     if (hotels.length > 0) {
-      setShowDropdown(true); 
+      setShowDropdown(true);
     } else {
       setShowDropdown(false);
     }
   }, [hotels]);
 
   const handleSearch = async () => {
-  await getHotels();   
+    await getHotels();
 
-    navigate("/reservations", { state: { hotels,checkInDate, checkOutDate } });
+    navigate("/reservations", { state: { hotels, checkInDate, checkOutDate } });
   };
 
   return (
@@ -90,7 +84,7 @@ const Home: React.FC = () => {
                             value={location}
                             onChange={(e) => {
                               setLocation(e.target.value);
-                              getHotels(); 
+                              getHotels();
                             }}
                           />
                         </Form.Group>
@@ -106,8 +100,13 @@ const Home: React.FC = () => {
                     <Dropdown className="my-3 show">
                       <Dropdown.Menu show>
                         {hotels.map((hotel, index) => (
-                          <Dropdown.Item key={index} onClick={() => setLocation(`${hotel.name} ${hotel.city}`)}>
-                            {hotel.name}{" "}{hotel.city}
+                          <Dropdown.Item
+                            key={index}
+                            onClick={() =>
+                              setLocation(`${hotel.name} ${hotel.city}`)
+                            }
+                          >
+                            {hotel.name} {hotel.city}
                           </Dropdown.Item>
                         ))}
                       </Dropdown.Menu>
@@ -154,6 +153,47 @@ const Home: React.FC = () => {
                   <div className="box">1 Room, 1 Guest</div>
                 </Card.Body>
               </CustomCard>
+            </Col>
+          </Row>
+        </Container>
+      </section>
+      <section className="about-us-section">
+        <Container>
+          <Row>
+            <Col>
+              <h2>EnStay</h2>
+              <section className="home">
+                <div className="image-container">
+                  <img src={homeImage} alt="EnStay Hotel" className="image" />
+                </div>
+                <div className="content">
+                  <p>
+                    EnStay welcomes you to Louisiana's finest in luxury
+                    accommodations. With prime locations in New Orleans and
+                    Baton Rouge, our hotels epitomize elegance and comfort. From
+                    meticulously designed rooms to gourmet dining and
+                    rejuvenating spa treatments, we ensure an unparalleled
+                    experience. Explore the vibrant culture of Louisiana or
+                    unwind in our serene ambiance. At EnStay, hospitality is a
+                    lifestyle. Join us for an unforgettable journey where every
+                    moment is tailored to perfection. Welcome to EnStay, where
+                    luxury meets unparalleled hospitality.
+                  </p>
+                </div>
+              </section>
+              <h3>Our Commitment:</h3>
+              <p>
+                At EnStay, we are dedicated to providing our guests with
+                exceptional service and unforgettable experiences. Whether
+                you're traveling for business or pleasure, our friendly staff is
+                here to ensure that your stay is nothing short of extraordinary.
+              </p>
+              <p>
+                Indulge in luxury, immerse yourself in Southern hospitality, and
+                make EnStay your home away from home. We look forward to
+                welcoming you to EnStay and making your visit to Louisiana truly
+                memorable.
+              </p>
             </Col>
           </Row>
         </Container>

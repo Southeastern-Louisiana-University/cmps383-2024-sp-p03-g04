@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { Dropdown } from "react-bootstrap";
 import { useUser } from "../Login/UserContext";
-import "./navbar.css";
 import { Slide, toast } from "react-toastify";
 import LoginModal from "../Login/LoginModal";
 import SignupModal from "../SignUp/SignupModal";
-import { Dropdown } from "react-bootstrap";
+import "./navbar.css";
+
 
 interface NavBarProps {
   brandName: string;
@@ -75,11 +76,7 @@ function NavBar({ brandName, navItems }: NavBarProps) {
           </ul>
           {user ? (
             <>
-              <Link
-                className="nav-link"
-                to="/profile"
-                style={{ marginRight: "20px" }}
-              >
+              <div className="dropdown-container">
                 <Dropdown>
                   <Dropdown.Toggle
                     id="dropdown-basic"
@@ -94,14 +91,16 @@ function NavBar({ brandName, navItems }: NavBarProps) {
                   </Dropdown.Toggle>
 
                   <Dropdown.Menu>
-                    <Dropdown.Item>
-                      <Link to="/profile/userinfo" className="dropdown-link">
-                        Profile
-                      </Link>
+                    <Dropdown.Item as={Link} to="/profile/userinfo">
+                      Profile
+                    </Dropdown.Item>
+
+                    <Dropdown.Item as={Link} to="/userReservation">
+                      Reservations
                     </Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>
-              </Link>
+              </div>
               <Link
                 className="btn btn-outline-light"
                 to="/Home"

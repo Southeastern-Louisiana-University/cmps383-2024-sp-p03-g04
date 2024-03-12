@@ -19,3 +19,9 @@
     background-color: transparent !important; 
   }
   
+  .dropdown-container{
+    display: flex;
+    flex-direction: row;
+    margin-right: 1rem;
+  }
+  
