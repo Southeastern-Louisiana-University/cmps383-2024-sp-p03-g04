@@ -1,13 +1,17 @@
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import "./Login.css";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "./UserContext";
 import { Slide, toast } from "react-toastify";
 
-const LoginPage: React.FC = () => {
+interface LoginPageProps {
+  onSuccess: () => void; 
+}
+
+const LoginPage: React.FC<LoginPageProps> = ({ onSuccess }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const { setUser } = useUser(); // Use the useUser hook here
+  const { setUser } = useUser(); 
   const navigate = useNavigate();
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -24,12 +28,13 @@ const LoginPage: React.FC = () => {
       }),
     }).then(async (x) => {
       const responseData = await x.json();
-      if (x.status == 200) {
+      if (x.status === 200) {
         setUser(responseData);
         navigate("/");
-        toast.success('Successfully LoggedIn'),{
+        toast.success("Successfully LoggedIn", {
           transition: Slide
-        };
+        });
+        onSuccess(); 
       }
     });
   };
@@ -40,19 +45,19 @@ const LoginPage: React.FC = () => {
         <h1 className="WelcomeEnstay">Welcome to EnStay</h1>
         <h3>Login to continue</h3>
         <form id="Login" onSubmit={handleLogin}>
-          <label>Username</label>
+          <label><b>Username</b></label>
           <input
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
-          <label>Password</label>
+          <label><b>Password</b></label>
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <button className="button1" type="submit">Login</button>
+          <button className="button1" type="submit"><b>Login</b></button>
         </form>
       </div>
     </>

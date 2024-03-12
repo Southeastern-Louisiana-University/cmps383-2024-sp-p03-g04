@@ -1,45 +1,58 @@
-import React, { useEffect, useState } from "react";
-import { useUser } from "../Login/UserContext";
-import './profile.css';
+import { useState, useEffect } from 'react';
+import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
+import './profile.css'; 
 
-const Profile: React.FC = () => {
-  const { user,setUser } = useUser();
-  const [loading, setLoading] = useState(true);
+interface Reservation {
+  id: number;
+  checkInDate: string;
+  checkOutDate: string;
+  numberOfGuests: number;
+}
+
+function Profile() {
+  const [reservations, setReservations] = useState<Reservation[]>([]);
 
   useEffect(() => {
-    setLoading(true);
-    fetch("/api/authentication/me")
+    fetch("/api/reservations")
       .then((response) => {
         if (response.ok) {
           return response.json();
         } else {
-          throw new Error("Failed to fetch user data");
+          throw new Error("Failed to fetch reservations");
         }
       })
-      .then((userData) => {
-        setUser(userData);
-        setLoading(false);
+      .then((reservationsData: Reservation[]) => {
+        setReservations(reservationsData);
       })
       .catch((error) => {
-        console.error("Error fetching user data:", error);
-        setLoading(false);
+        console.error("Error fetching reservations:", error);
       });
   }, []);
 
   return (
-    <div className="profile-container">
-    {loading ? (
-      <p>Loading...</p>
-    ) : user ? (
-      <div>
-        <p>Welcome <b>{user.userName}</b> to your profile page! </p>
-        <p></p>
+    <div className="container"> 
+      <h2 className="reservations-section">Your Reservations</h2> 
+      <div className="row">
+        {reservations.map((reservation, index) => (
+          <div key={index} className="col-md-4 mb-4"> 
+            <Card className="card-container"> 
+              <Card.Img variant="top" src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aG90ZWwlMjByb29tfGVufDB8fDB8fHww" />
+              <Card.Body>
+                <Card.Title>Reservation {reservation.id}</Card.Title>
+                <Card.Text>
+                  Check-in Date: {reservation.checkInDate}<br />
+                  Check-out Date: {reservation.checkOutDate}<br />
+                  Number of Guests: {reservation.numberOfGuests}<br />
+                </Card.Text>
+                <Button variant="primary">View Details</Button>
+              </Card.Body>
+            </Card>
+          </div>
+        ))}
       </div>
-    ) : (
-      <p>No user data available</p>
-    )}
-  </div>
+    </div>
   );
-};
+}
 
 export default Profile;

@@ -17,6 +17,7 @@ import CustomCard from "../components/CustomCard";
 import { BiSearch } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 
+
 const Home: React.FC = () => {
   const currentDate = new Date();
   const navigate = useNavigate();
@@ -45,7 +46,7 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     if (hotels.length > 0) {
-      setShowDropdown(true); // Show dropdown if hotels are available
+      setShowDropdown(true); 
     } else {
       setShowDropdown(false);
     }
@@ -84,7 +85,7 @@ const Home: React.FC = () => {
                             value={location}
                             onChange={(e) => {
                               setLocation(e.target.value);
-                              getHotels(); // Trigger hotel fetching on input change
+                              getHotels(); 
                             }}
                           />
                         </Form.Group>
