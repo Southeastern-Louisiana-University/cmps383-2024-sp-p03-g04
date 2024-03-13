@@ -1,0 +1,12 @@
+
+.book {
+
+  max-width: 70%; /* Adjust the width as needed */
+  padding: 20px;
+  background-color: #ffffff;
+  box-shadow: 0 8px 8px rgba(0, 0.2, 0.2, 0.2);
+  margin-left: auto;
+  margin-right: auto;
+
+}
+

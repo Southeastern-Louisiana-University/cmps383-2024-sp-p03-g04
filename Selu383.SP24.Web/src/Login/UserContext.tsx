@@ -4,7 +4,8 @@ import { ReactNode, createContext, useContext, useState } from "react";
 interface UserDto {
 	userName?: string;
 	id?: number;
-  Email?:string;
+  email?:string;
+  roles: string[];
 }
 interface UserContextProps {
   user: UserDto | null;

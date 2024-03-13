@@ -23,9 +23,9 @@ public class UsersController : ControllerBase
     public async Task<ActionResult<UserDto>> Create(CreateUserDto dto)
     {
         using var transaction = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
-        
-        var user=await userManager.FindByEmailAsync(dto.Email);
-        if(user != null)
+
+        var user = await userManager.FindByEmailAsync(dto.Email);
+        if (user != null)
         {
             return BadRequest("The user with this email already exists. Please use a different email");
         }
@@ -98,7 +98,7 @@ public class UsersController : ControllerBase
         {
             Id = user.Id,
             UserName = user.UserName,
-            Email= user.Email,
+            Email = user.Email,
             Roles = (await userManager.GetRolesAsync(user)).ToArray()
         };
 
@@ -109,24 +109,25 @@ public class UsersController : ControllerBase
     [HttpPost("customer")] //customer registration
     public async Task<ActionResult<CreateUserDto>> RegisterUser(CreateUserDto dto)
     {
-        var existingUser = await userManager.FindByNameAsync(dto.UserName);
-        if (existingUser != null)
+        var checkUser = await userManager.FindByNameAsync(dto.UserName);
+        if (checkUser != null)
         {
             return BadRequest($"The username {dto.UserName} is already taken");
+        }
+
+        var checkEmail = await userManager.FindByEmailAsync(dto.Email);
+        if (checkEmail != null)
+        {
+            return BadRequest($"The Email {dto.Email} is already taken");
         }
 
         var userCreated = new User
         {
             UserName = dto.UserName,
-            Email = dto.Email
-        };
-      
-        var roleResult = await userManager.AddToRoleAsync(userCreated, "User");
-        if (!roleResult.Succeeded)
-        {
-            return BadRequest("Failed to add role to user.");
-        }
+            Email = dto.Email,
+            SecurityStamp = Guid.NewGuid().ToString() // Generate a random security stamp
 
+        };
         var validatePassword = await userManager.CreateAsync(userCreated, dto.Password);
 
         if (!validatePassword.Succeeded)
@@ -134,11 +135,17 @@ public class UsersController : ControllerBase
             return BadRequest($"The password is not strong enough. Please use a strong password.");
         }
 
+        var roleResult = await userManager.AddToRoleAsync(userCreated, "User");
+        if (!roleResult.Succeeded)
+        {
+            return BadRequest("Failed to add role to user.");
+        }
+
         var newUser = new UserDto
         {
             Id = userCreated.Id,
             UserName = dto.UserName,
-            Roles = new[] {"User"},
+            Roles = new[] { "User" },
             Email = dto.Email,
         };
 

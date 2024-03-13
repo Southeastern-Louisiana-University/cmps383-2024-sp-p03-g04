@@ -1,7 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Card } from "react-bootstrap";
 import { useLocation, useNavigate } from "react-router-dom";
-import "./Reservations.css"; // Import the CSS file
 
 interface Hotel {
   id: number;
@@ -19,24 +19,21 @@ const Rooms: React.FC = () => {
   const navigate = useNavigate();
 
   const formatDate = (dateString: string | number) => {
-    let date = new Date(dateString);
-    let year = date.getFullYear();
-    let month = ("0" + (date.getMonth() + 1)).slice(-2); // Months are 0-indexed in JavaScript
-    let day = ("0" + date.getDate()).slice(-2);
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = ("0" + (date.getMonth() + 1)).slice(-2); // Months are 0-indexed in JavaScript
+    const day = ("0" + date.getDate()).slice(-2);
     return `${year}-${month}-${day}`;
   };
+  const { hotel, checkInDate, checkOutDate, guests, selectedHotel, roomType } =
+    location.state || {};
 
-  const initialHotels: Hotel = location.state ? location.state.hotel : [];
-  const checkInDate = location.state
-    ? formatDate(location.state.checkInDate)
-    : "";
-  const checkOutDate = location.state
-    ? formatDate(location.state.checkOutDate)
-    : "";
-
-  const [hotel, setHotels] = useState<Hotel>(initialHotels);
-  console.log("🚀 ~ hotel:", hotel.id);
+  // const initialHotels: Hotel = location.state ? location.state.hotel : [];
+  const checkInDateFormatted = checkInDate ? formatDate(checkInDate) : "";
+  const checkOutDateFormatted = checkOutDate ? formatDate(checkOutDate) : "";
+  const [selectedHotelInfo] = useState<Hotel>(hotel);
   const [rooms, setRooms] = useState<any[]>([]);
+  const [selectedRoom, setSelectedRoom] = useState("");
 
   const getRooms = async (
     hotelId: number,
@@ -54,16 +51,23 @@ const Rooms: React.FC = () => {
     );
     const roomData = await response.json();
     setRooms(roomData);
-    console.log("🚀 ~ getRooms ~ roomData:", roomData);
   };
 
   useEffect(() => {
-    getRooms(hotel.id, checkInDate, checkOutDate);
+    getRooms(hotel.id, checkInDateFormatted, checkOutDateFormatted);
   }, []);
 
   const handleViewRooms = (hotel: Hotel) => {
-    navigate("/reservations/rooms", {
-      state: { hotel, checkInDate, checkOutDate },
+    navigate("/reservations/rooms/booking", {
+      state: {
+        selectedHotelInfo,
+        checkInDateFormatted,
+        checkOutDateFormatted,
+        selectedRoom,
+        guests,
+        selectedHotel,
+        roomType,
+      },
     });
   };
 
@@ -93,6 +97,11 @@ const Rooms: React.FC = () => {
                   <Card.Text>
                     <strong>Description:</strong> {room.description}
                     <br />
+                    <strong>Type:</strong>{" "}
+                    {room.capacity == 2
+                      ? "Single King Bed"
+                      : "Double Queen Bed"}
+                    <br />
                     <strong>Capacity:</strong> {room.capacity} people
                     <br />
                     <strong>Price:</strong> ${room.price} per night
@@ -111,7 +120,10 @@ const Rooms: React.FC = () => {
                     type="button"
                     className="btn btn-success"
                     style={{ marginLeft: "70%" }}
-                    onClick={() => handleViewRooms(room)}
+                    onClick={() => {
+                      handleViewRooms(room);
+                      setSelectedRoom(room);
+                    }}
                   >
                     Book Now
                   </button>

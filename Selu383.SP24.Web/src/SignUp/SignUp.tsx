@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./SignUp.css";
 import { useNavigate } from "react-router-dom";
+import { Slide, toast } from "react-toastify";
 
 interface CreateUserDto {
   userName: string;
@@ -9,7 +10,11 @@ interface CreateUserDto {
   roles: string[];
 }
 
-const SignupPage: React.FC = () => {
+interface SignupPageProps {
+  onSuccess: () => void;
+}
+
+const SignupPage: React.FC<SignupPageProps> = ({ onSuccess }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
@@ -23,7 +28,7 @@ const SignupPage: React.FC = () => {
       userName: username,
       password: password,
       email: email,
-      roles: ["Customer"], // or provide the necessary roles
+      roles: ["User"],
     };
 
     const response = await fetch(`/api/users/customer`, {
@@ -33,15 +38,17 @@ const SignupPage: React.FC = () => {
       },
       body: JSON.stringify(newUser),
     }).then(async (x) => {
-      const responseData = await x.json();
-      if (x.status === 200) {
-        // Optionally handle success
-        console.log(responseData);
-        console.log(response);
-        navigate("/");
+      const resp = await x;
+      if (resp.status !== 200) {
+        toast.error(await resp.text(), {
+          transition: Slide,
+        });
       } else {
-        // Optionally handle errors
-        console.error("Signup failed", x.status, x.statusText);
+        navigate("/");
+        onSuccess();
+        toast.success("User successfully registered", {
+          transition: Slide,
+        });
       }
     });
   };
@@ -52,26 +59,32 @@ const SignupPage: React.FC = () => {
         <h1 className="WelcomeEnstay">Welcome to EnStay</h1>
         <h3>Sign up to create an account</h3>
         <form id="Signup" onSubmit={handleSignup}>
-          <label>Email</label>
+          <label>
+            <b>Email</b>
+          </label>
           <input
             type="text"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
-          <label>Username</label>
+          <label>
+            <b>Username</b>
+          </label>
           <input
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
-          <label>Password</label>
+          <label>
+            <b>Password</b>
+          </label>
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
           <button className="button1" type="submit">
-            Sign up
+            <b>Sign up</b>
           </button>
         </form>
       </div>
