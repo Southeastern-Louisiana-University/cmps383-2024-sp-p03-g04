@@ -22,6 +22,7 @@ const Booking: React.FC = () => {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   console.log("🚀 ~ email:", email)
+  console.log("🚀 ~ email:", email)
   const [phoneNumber, setPhoneNumber] = useState("");
   const { user } = useUser();
   
