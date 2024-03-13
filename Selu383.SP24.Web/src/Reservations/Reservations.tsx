@@ -21,7 +21,7 @@ const Reservations: React.FC = () => {
 
   const [hotels, setHotels] = useState<Hotel[]>(initialHotels);
 
-  const getHotels = async () => {
+ async () => {
     let hotelData;
     if (!selectedHotel) {
       const response = await fetch(`/api/hotels`, {

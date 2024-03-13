@@ -31,7 +31,7 @@ const SignupPage: React.FC<SignupPageProps> = ({ onSuccess }) => {
       roles: ["User"],
     };
 
-    const response = await fetch(`/api/users/customer`, {
+    await fetch(`/api/users/customer`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
