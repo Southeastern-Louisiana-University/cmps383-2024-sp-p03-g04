@@ -18,6 +18,7 @@ const Booking: React.FC = () => {
   // Hotel booking form state (consider using a form library like Formik for complex forms)
   const [firstName, setFirstName] = useState("");
   console.log("🚀 ~ firstName:", firstName)
+  console.log("🚀 ~ firstName:", firstName)
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   console.log("🚀 ~ email:", email)
