@@ -21,6 +21,7 @@ const Reservations: React.FC = () => {
   const checkOutDate = location.state ? location.state.checkOutDate : [];
 
   const [hotels, setHotels] = useState<Hotel[]>(initialHotels);
+  console.log("sljfdslf",hotels);
   const [searchQuery, setSearchQuery] = useState("");
 
   const getHotels = async () => {

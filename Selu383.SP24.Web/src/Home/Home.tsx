@@ -223,7 +223,7 @@ const Home: React.FC = () => {
           </Row>
         </>
       </section>
-      <section className="about-us-section">
+      <section className="about-us-section" style={{ background:"linear-gradient(to right, #6c74a0, #a0a4c9)"}}>
         <Container>
           <Row>
             <Col>

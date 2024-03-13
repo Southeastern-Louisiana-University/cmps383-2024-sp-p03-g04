@@ -12,6 +12,7 @@ import Rooms from "./Rooms/Rooms.tsx";
 import UserInfo from "./User/UserInfo.tsx";
 import UpdateProfile from "./User/UpdateProfile.tsx";
 import UserReservation from "./User/UserReservation.tsx";
+import Booking from "./Reservations/Booking.tsx"
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <BrowserRouter>
@@ -38,6 +39,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
           <Route path="/reservations/rooms" element={<Rooms/>} />
           <Route path="/profile/userinfo" element={<UserInfo />} />
           <Route path="/profile/update" element={<UpdateProfile />} />
+          <Route path="/reservations/rooms/booking" element={<Booking/>} />
 
         </Route>
       </Routes>

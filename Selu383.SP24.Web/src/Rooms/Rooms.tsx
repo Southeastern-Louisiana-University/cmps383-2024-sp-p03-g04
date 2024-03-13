@@ -62,7 +62,7 @@ const Rooms: React.FC = () => {
   }, []);
 
   const handleViewRooms = (hotel: Hotel) => {
-    navigate("/reservations/rooms", {
+    navigate("/reservations/rooms/booking", {
       state: { hotel, checkInDate, checkOutDate },
     });
   };
