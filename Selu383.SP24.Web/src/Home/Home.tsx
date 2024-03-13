@@ -245,7 +245,7 @@ const Home: React.FC = () => {
               <h2></h2>
               <section className="home">
                 <div className="image-container">
-                  <img src={homeImage} alt="EnStay Hotel" className="image" />
+                  <img src={homeImage} alt="EnStay Hotel" className="image" style={{width:"90%"}}/>
                 </div>
                 <div className="content">
                   <p>

@@ -1,29 +1,26 @@
 import React, { useState } from "react";
-import { Card, Col, Form, Row } from "react-bootstrap";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Button, Col, Form, Row } from "react-bootstrap";
+import { useLocation } from "react-router-dom";
 import "./booking.css";
+import { useUser } from "../Login/UserContext";
+import { Slide, toast } from "react-toastify";
 
 const Booking: React.FC = () => {
   const location = useLocation();
-  const navigate = useNavigate();
   const {
     selectedHotelInfo,
     checkInDateFormatted,
     checkOutDateFormatted,
-    selectedRoom,
+    room,
     guests,
-    selectedHotel,
-    roomType,
   } = location.state || {};
-  console.log("23432423hotel:", selectedHotelInfo);
-  console.log("🚀 ~ checkInDate:", checkInDateFormatted);
-  console.log("🚀 ~ hotel:", guests);
 
   // Hotel booking form state (consider using a form library like Formik for complex forms)
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
+  const { user } = useUser();
 
   const handleInputChange = (event: { target: { name: any; value: any } }) => {
     const { name, value } = event.target;
@@ -45,7 +42,38 @@ const Booking: React.FC = () => {
     }
   };
 
-  const handleSubmit = () => {};
+  const handleSubmit = async (event: any) => {
+    event.preventDefault();
+
+    const reservation = {
+      RoomId: room.id, // assuming selectedRoom is in your state
+      HotelId: selectedHotelInfo.id, // assuming selectedHotelInfo is in your state
+      CheckInDate: checkInDateFormatted,
+      CheckOutDate: checkOutDateFormatted,
+      NumberOfGuests: guests,
+      IsPaid: false, // or true, depending on your logic
+    };
+
+    const response = await fetch("/api/reservations", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        // include your authorization header
+      },
+      body: JSON.stringify(reservation),
+    });
+
+    if (response.ok) {
+      toast.success("Your Reservation has been created successfully", {
+        transition: Slide,
+      });
+    } else {
+      const error = await response.text();
+      toast.error(error, {
+        transition: Slide,
+      });
+    }
+  };
 
   return (
     <Form onSubmit={handleSubmit}>
@@ -57,7 +85,7 @@ const Booking: React.FC = () => {
               size="lg"
               type="text"
               name="firstName"
-              value={firstName}
+              value={user?.userName}
               onChange={handleInputChange}
               required
             />
@@ -85,7 +113,7 @@ const Booking: React.FC = () => {
               size="lg"
               type="email"
               name="email"
-              value={email}
+              value={user?.email}
               onChange={handleInputChange}
               required
             />
@@ -106,7 +134,7 @@ const Booking: React.FC = () => {
         </Col>
       </Row>
       <Row>
-        <Col xs={6}>
+        <Col xs={4}>
           <Form.Group controlId="guests">
             <Form.Label>Number of Guests</Form.Label>
             <Form.Control
@@ -120,7 +148,7 @@ const Booking: React.FC = () => {
             />
           </Form.Group>
         </Col>
-        <Col xs={6}>
+        <Col xs={4}>
           <Form.Group controlId="checkInDate">
             <Form.Label>Check In Date</Form.Label>
             <Form.Control
@@ -128,6 +156,19 @@ const Booking: React.FC = () => {
               type="date"
               name="checkInDate"
               defaultValue={checkInDateFormatted}
+              required
+            />
+          </Form.Group>
+        </Col>
+
+        <Col xs={4}>
+          <Form.Group controlId="checkOutDate">
+            <Form.Label>Check Out Date</Form.Label>
+            <Form.Control
+              size="lg"
+              type="date"
+              name="checkOutDate"
+              defaultValue={checkOutDateFormatted}
               required
             />
           </Form.Group>
@@ -153,15 +194,14 @@ const Booking: React.FC = () => {
               size="lg"
               type="text"
               name="roomType"
-              defaultValue={roomType} // Set default value if available
+              defaultValue={room.type == 0 ? "Single King" : "Double Queen"} // Set default value if available
               disabled // Prevent editing for now
             />
           </Form.Group>
         </Col>
       </Row>
-
       <Row>
-        <Col >
+        <Col>
           <Form.Group controlId="description">
             <Form.Label>Description</Form.Label>
             <Form.Control
@@ -174,6 +214,15 @@ const Booking: React.FC = () => {
           </Form.Group>
         </Col>
       </Row>
+      <Button
+        variant="success"
+        style={{
+          width: "30%",
+        }}
+        type="submit"
+      >
+        Confirm
+      </Button>
     </Form>
   );
 };
