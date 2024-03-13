@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Card } from "react-bootstrap";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -19,9 +19,12 @@ const Reservations: React.FC = () => {
     location.state || {};
   const initialHotels: Hotel[] = hotel ? hotel : [];
 
+  console.log("🚀 ~ selectedHotel:", selectedHotel);
   const [hotels, setHotels] = useState<Hotel[]>(initialHotels);
+  const [searchQuery, setSearchQuery] = useState("");
+  console.log("🚀 ~ setSearchQuery:", setSearchQuery)
 
- async () => {
+  const getHotels = async () => {
     let hotelData;
     if (!selectedHotel) {
       const response = await fetch(`/api/hotels`, {
@@ -45,14 +48,24 @@ const Reservations: React.FC = () => {
     }
   };
 
+  useEffect(() => {
+    getHotels();
+  }, [searchQuery]);
+
+  const handleSearch = () => {
+    getHotels();
+  };
+  console.log("🚀 ~ handleSearch ~ handleSearch:", handleSearch)
+
   const handleViewRooms = (hotel: Hotel) => {
+    console.log("🚀 ~ handleViewRooms ~ hotel:", hotel);
     navigate("/reservations/rooms", {
       state: { hotel, checkInDate, checkOutDate, guests, roomType },
     });
   };
 
   return (
-    <Container>
+    <Container >
       <h1>Hotels</h1>
       <Row>
         {/* <Col>
