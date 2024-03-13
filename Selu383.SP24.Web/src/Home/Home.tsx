@@ -63,6 +63,8 @@ const Home: React.FC = () => {
 
   const handleSearch = async () => {
     await getHotels();
+    console.log("🚀 ~ selectedHotel:", selectedHotel)
+
     navigate("/reservations", {
       state: { selectedHotel, hotels, checkInDate, checkOutDate,guests },
     });
@@ -115,8 +117,8 @@ const Home: React.FC = () => {
                               <Dropdown.Item
                                 key={index}
                                 onClick={() => {
-                                  setLocation(`${hotel.name} ${hotel.city}`);
-                                  setselectedHotel(`${hotel.id}`);
+                                  setLocation(`${hotel.name} ${hotel.city}`)
+                                  setselectedHotel(`${hotel.id}`)
                                 }}
                               >
                                 {hotel.name} {hotel.city}
