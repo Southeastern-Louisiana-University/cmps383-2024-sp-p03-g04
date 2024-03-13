@@ -61,7 +61,6 @@ namespace Selu383.SP24.Api.Features.Reservations
         }
         //he date should be passed in the URL in the format yyyy-MM-dd. For example, to check available rooms in hotel 1 on January 1, 2023, the URL would be api/reservations/availableRooms/1/2023-01-01
         [HttpGet("availableRooms/{hotelId}/{checkInDate}/{checkOutDate}")]
-        [Authorize]
         public ActionResult<IEnumerable<RoomDto>> GetAvailableRooms(int hotelId, DateTime checkInDate, DateTime checkOutDate)
         {
             var availableRooms = rooms

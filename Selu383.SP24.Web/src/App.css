@@ -5,9 +5,25 @@
 }
 
 .app-container {
+  /* flex: 1; 
+  position: relative; */
   display: flex;
+  /* max-height: 5vh; */
+
   flex-direction: column;
   top: 0;
   left: 0;
   right: 0;
+
+}
+
+.content-container {
+  /* max-height: 75vh; */
+  /* display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  flex: 1; 
+  max-height: 200vh; */
+  overflow: hidden;
+  min-height: 80vh;
 }

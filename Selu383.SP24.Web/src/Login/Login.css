@@ -1,7 +1,6 @@
 input {
   width: 100%;
   padding: 12px 20px;
-  margin: 8px 0;
   display: inline-block;
   border: 2px solid #a5b4fc;
   border-radius: 4px;
@@ -35,13 +34,7 @@ form {
   align-items: center;
 }
 
-body,
-html {
-  margin: 0;
-  padding: 0;
-  font-size: 16px;
-  height: 100%;
-}
+
 
 .LoginOrganizer {
   border-radius: 5px;
@@ -49,18 +42,18 @@ html {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #ffffff;
   max-width: 500px;
   margin: 0 auto;
   padding: 20px;
-  padding-bottom: 15vh;
-  padding-top: 15.2vh;
+  padding-top: 0vh;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .WelcomeEnstay {
-  padding-bottom: 30px;
+  padding-bottom: 20px;
   text-align: center;
-  text-shadow: 0px 10px 20px rgba(18, 60, 33, 0.2);
+  font-size: 24px;
+  color: #333;
 }
 
 .button1 {

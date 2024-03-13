@@ -7,3 +7,21 @@
     border-radius: 10px;
   }
 
+  .custom-dropdown-toggle {
+    background-color: transparent !important; 
+  }
+  
+  .custom-dropdown-toggle:focus {
+    box-shadow: none !important;
+  }
+  
+  .custom-dropdown-toggle:active {
+    background-color: transparent !important; 
+  }
+  
+  .dropdown-container{
+    display: flex;
+    flex-direction: row;
+    margin-right: 1rem;
+  }
+  
