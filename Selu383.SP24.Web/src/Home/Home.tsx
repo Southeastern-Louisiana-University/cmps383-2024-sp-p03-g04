@@ -9,13 +9,11 @@ import {
   Button,
 } from "react-bootstrap";
 import "./Home.css";
-import image from "../images/resort.webp";
-import homeImage from '../images/hotel.jpg'
+import homeImage from "../images/hotel.jpg";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "../components/Footer";
 import CustomCard from "../components/CustomCard";
-import { BiSearch } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 
 const Home: React.FC = () => {
@@ -28,6 +26,7 @@ const Home: React.FC = () => {
   tomorrowDate.setDate(tomorrowDate.getDate() + 1);
   const [checkOutDate, setCheckOutDate] = useState<Date | null>(tomorrowDate);
   const [showDropdown, setShowDropdown] = useState(false);
+  const [selectedHotel, setselectedHotel] = useState("");
 
   const [guests, setGuests] = useState(1);
   const [roomType, setRoomType] = useState("Single");
@@ -64,7 +63,9 @@ const Home: React.FC = () => {
 
   const handleSearch = async () => {
     await getHotels();
-    navigate("/reservations", { state: { hotels, checkInDate, checkOutDate } });
+    navigate("/reservations", {
+      state: { selectedHotel, hotels, checkInDate, checkOutDate,guests },
+    });
   };
 
   return (
@@ -72,25 +73,26 @@ const Home: React.FC = () => {
       <section
         className="home"
         style={{
-          backgroundImage: `url(${image})`,
+          backgroundImage: `url("https://images.pexels.com/photos/261102/pexels-photo-261102.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1")`,
           backgroundSize: "cover",
           backgroundPosition: "center",
-          minHeight:"100vh",
+          minHeight: "100vh",
           maxHeight: "100vh",
-          overflow:"hidden"
+          overflow: "hidden",
         }}
       >
         <>
-          <Row >
+          <Row>
             <Col>
               <Card className="text-dark bg-light mb-3">
                 <Card.Body>
                   <Row>
                     <Col>
-                      <CustomCard title="Hotels"> <br/>
+                      <CustomCard title="Hotels">
+                        <br />
                         <Form>
                           <Row className="align-items-center">
-                            <Col xs={9}>
+                            <Col>
                               <Form.Group controlId="location">
                                 <Form.Control
                                   type="text"
@@ -103,11 +105,6 @@ const Home: React.FC = () => {
                                 />
                               </Form.Group>
                             </Col>
-                            <Col xs={3}>
-                              <Button variant="primary" onClick={handleSearch}>
-                                <BiSearch />
-                              </Button>
-                            </Col>
                           </Row>
                         </Form>
                       </CustomCard>
@@ -117,9 +114,10 @@ const Home: React.FC = () => {
                             {hotels.map((hotel, index) => (
                               <Dropdown.Item
                                 key={index}
-                                onClick={() =>
-                                  setLocation(`${hotel.name} ${hotel.city}`)
-                                }
+                                onClick={() => {
+                                  setLocation(`${hotel.name} ${hotel.city}`);
+                                  setselectedHotel(`${hotel.id}`);
+                                }}
                               >
                                 {hotel.name} {hotel.city}
                               </Dropdown.Item>
@@ -217,17 +215,34 @@ const Home: React.FC = () => {
                       </CustomCard>
                     </Col>
                   </Row>
+                  <Row
+                    style={{
+                      justifyContent: "center",
+                      display: "flex",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Button
+                      variant="success"
+                      style={{
+                        width: "30%",
+                      }}
+                      onClick={handleSearch}
+                    >
+                      Search a hotel
+                    </Button>
+                  </Row>
                 </Card.Body>
               </Card>
             </Col>
           </Row>
         </>
       </section>
-      <section className="about-us-section" style={{ background:"linear-gradient(to right, #6c74a0, #a0a4c9)"}}>
+      <section className="about-us-section">
         <Container>
           <Row>
-            <Col>
-              <h2>EnStay</h2>
+            <Col style={{ fontFamily: "cursive", fontSize: "20px" }}>
+              <h2></h2>
               <section className="home">
                 <div className="image-container">
                   <img src={homeImage} alt="EnStay Hotel" className="image" />
@@ -246,7 +261,11 @@ const Home: React.FC = () => {
                     luxury meets unparalleled hospitality.
                   </p>
                 </div>
-              </section>
+              </section>{" "}
+              <br />
+              <br />
+              <br />
+              <br />
               <h3>Our Commitment:</h3>
               <p>
                 At EnStay, we are dedicated to providing our guests with

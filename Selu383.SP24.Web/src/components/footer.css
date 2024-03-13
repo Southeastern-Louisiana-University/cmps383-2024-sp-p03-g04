@@ -1,8 +1,6 @@
 .footer {
     background-color:  #a5b4fc;
     padding-top: 0rem;
-    margin-top: auto;
-
     /* height: 20vh; */
   }
   
@@ -19,7 +17,7 @@
   .footer-social,
   .footer-icon,
   .footer-copyright {
-    flex: 1 0 auto; 
+    flex: 1 0 100%; 
     text-align: center;
     padding-top: 1rem;
   }

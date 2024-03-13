@@ -15,27 +15,35 @@ interface Hotel {
 const Reservations: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
-
-  const initialHotels: Hotel[] = location.state ? location.state.hotels : [];
-  const checkInDate = location.state ? location.state.checkInDate : [];
-  const checkOutDate = location.state ? location.state.checkOutDate : [];
-
+  const { hotel, checkInDate, checkOutDate, guests, selectedHotel, roomType } = location.state || {};
+  const initialHotels: Hotel[] = hotel ? hotel : [];
+ 
+  console.log("🚀 ~ selectedHotel:", selectedHotel);
   const [hotels, setHotels] = useState<Hotel[]>(initialHotels);
-  console.log("sljfdslf",hotels);
   const [searchQuery, setSearchQuery] = useState("");
 
   const getHotels = async () => {
-    const response = await fetch(`/api/hotels`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const hotelData = await response.json();
-    // const filteredHotels = hotelData.filter((hotel: any) =>
-    //   hotel.address.toLowerCase().includes(searchQuery.toLowerCase())
-    // );
-    setHotels(hotelData);
+    let hotelData;
+    if (!selectedHotel) {
+      const response = await fetch(`/api/hotels`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      hotelData = await response.json();
+      setHotels(hotelData);
+    } else {
+      const response = await fetch(`/api/hotels/${selectedHotel}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const singleHotelData = await response.json();
+      hotelData = [singleHotelData];
+      setHotels(hotelData);
+    }
   };
 
   useEffect(() => {
@@ -49,7 +57,7 @@ const Reservations: React.FC = () => {
   const handleViewRooms = (hotel: Hotel) => {
     console.log("🚀 ~ handleViewRooms ~ hotel:", hotel);
     navigate("/reservations/rooms", {
-      state: { hotel, checkInDate, checkOutDate },
+      state: { hotel, checkInDate, checkOutDate,guests,roomType },
     });
   };
 
@@ -57,7 +65,7 @@ const Reservations: React.FC = () => {
     <Container>
       <h1>Reservations</h1>
       <Row>
-        <Col>
+        {/* <Col>
           <Form className="mb-3">
             <Row>
               <Col xs={9}>
@@ -75,7 +83,7 @@ const Reservations: React.FC = () => {
               </Col>
             </Row>
           </Form>
-        </Col>
+        </Col> */}
       </Row>
       <Row>
         <Col>
