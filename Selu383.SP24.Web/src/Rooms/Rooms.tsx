@@ -1,7 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Card } from "react-bootstrap";
 import { useLocation, useNavigate } from "react-router-dom";
-import "./Reservations.css"; // Import the CSS file
 
 interface Hotel {
   id: number;
@@ -19,10 +19,10 @@ const Rooms: React.FC = () => {
   const navigate = useNavigate();
 
   const formatDate = (dateString: string | number) => {
-    let date = new Date(dateString);
-    let year = date.getFullYear();
-    let month = ("0" + (date.getMonth() + 1)).slice(-2); // Months are 0-indexed in JavaScript
-    let day = ("0" + date.getDate()).slice(-2);
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = ("0" + (date.getMonth() + 1)).slice(-2); // Months are 0-indexed in JavaScript
+    const day = ("0" + date.getDate()).slice(-2);
     return `${year}-${month}-${day}`;
   };
 
@@ -34,7 +34,7 @@ const Rooms: React.FC = () => {
     ? formatDate(location.state.checkOutDate)
     : "";
 
-  const [hotel, setHotels] = useState<Hotel>(initialHotels);
+  const [hotel] = useState<Hotel>(initialHotels);
   console.log("🚀 ~ hotel:", hotel.id);
   const [rooms, setRooms] = useState<any[]>([]);
 
@@ -62,7 +62,7 @@ const Rooms: React.FC = () => {
   }, []);
 
   const handleViewRooms = (hotel: Hotel) => {
-    navigate("/reservations/rooms", {
+    navigate("/reservations/rooms/booking", {
       state: { hotel, checkInDate, checkOutDate },
     });
   };
