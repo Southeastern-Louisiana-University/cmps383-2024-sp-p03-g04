@@ -21,6 +21,8 @@ const Reservations: React.FC = () => {
 
   console.log("🚀 ~ selectedHotel:", selectedHotel);
   console.log("🚀 ~ selectedHotel:", selectedHotel);
+  console.log("🚀 ~ selectedHotel:", selectedHotel);
+
 
   const [hotels, setHotels] = useState<Hotel[]>(initialHotels);
   const [searchQuery, setSearchQuery] = useState("");
