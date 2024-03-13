@@ -4,6 +4,7 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import LoginScreen from './src/screens/LoginScreen';
+import HomeScreen from "./src/screens/HomeScreen";
 
 const Drawer = createDrawerNavigator();
 
@@ -14,7 +15,7 @@ export default function App(){
             <Drawer.Navigator initialRouteName="Login" screenOptions={{drawerActiveTintColor: "#1261E6"}}>
                 <Drawer.Screen
                     name="Home"
-                    component={LoginScreen}
+                    component={HomeScreen}
                 />
                 <Drawer.Screen
                     name="Login"
