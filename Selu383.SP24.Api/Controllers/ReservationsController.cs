@@ -90,6 +90,40 @@ namespace Selu383.SP24.Api.Features.Reservations
             return Ok(availableRoomDtos);
         }
 
+        [HttpGet("availableRoomTypes/{hotelId}/{checkInDate}/{checkOutDate}")]
+        public ActionResult<IEnumerable<RoomTypeDto>> GetAvailableRoomTypes(int hotelId, DateTime checkInDate, DateTime checkOutDate)
+        {
+            // Get all room types in the hotel
+            var roomTypes = rooms
+                .Where(r => r.HotelId == hotelId && r.IsClean)
+                .GroupBy(r => r.Type)
+                .Select(g => new { Type = g.Key, Rooms = g.ToList() })
+                .ToList();
+
+            // Filter out room types where all rooms are occupied
+            var availableRoomTypes = roomTypes
+                .Where(rt => rt.Rooms.Any(r => !IsRoomOccupied(r.Id, hotelId, checkInDate, checkOutDate)))
+                .Select(rt => new RoomTypeDto
+                {
+                    Type = rt.Type,
+                    Rooms = rt.Rooms.Select(r => new RoomDto
+                    {
+                        Id = r.Id,
+                        Number = r.Number,
+                        IsPremium = r.IsPremium,
+                        Description = r.Description,
+                        Price = r.Price,
+                        Capacity = r.Capacity,
+                        IsClean = r.IsClean,
+                        IsOccupied = IsRoomOccupied(r.Id, hotelId, checkInDate, checkOutDate),
+                        HotelId = r.HotelId
+                    }).ToList()
+                });
+
+            return Ok(availableRoomTypes);
+        }
+
+
         [HttpPost]
         [Authorize]
         public async Task<ActionResult<ReservationDto>> CreateReservation(ReservationDto dto)

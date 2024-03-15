@@ -5,7 +5,7 @@ namespace Selu383.SP24.Api.Features.Rooms
 {
     public enum RoomType
     {
-        Single, Double, Studio
+        Single, Double, Suite
     }
 
     public class Room
