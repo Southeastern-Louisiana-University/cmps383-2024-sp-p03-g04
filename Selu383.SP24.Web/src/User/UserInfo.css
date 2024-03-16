@@ -1,0 +1,36 @@
+.user-info-card {
+    width: 400px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .user-info-title {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .user-info-details {
+    font-size: 18px;
+    line-height: 1.5;
+    color: #333;
+  }
+  
+  .user-info-details strong {
+    color: #555;
+  }
+
+  .user-info-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .update-button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+  }
+  
