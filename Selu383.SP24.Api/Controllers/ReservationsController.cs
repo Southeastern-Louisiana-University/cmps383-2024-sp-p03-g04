@@ -102,11 +102,11 @@ namespace Selu383.SP24.Api.Features.Reservations
 
             // Filter out room types where all rooms are occupied
             var availableRoomTypes = roomTypes
-                .Where(rt => rt.Rooms.Any(r => !IsRoomOccupied(r.Id, hotelId, checkInDate, checkOutDate)))
+                .Where(rt=> rt.Rooms.Count>0 && rt.Rooms.Any(r=> !IsRoomOccupied(r.Id,hotelId,checkInDate,checkOutDate)))
                 .Select(rt => new RoomTypeDto
                 {
                     Type = rt.Type,
-                    Rooms = rt.Rooms.Select(r => new RoomDto
+                    Rooms = new List<RoomDto>{ rt.Rooms.Select(r => new RoomDto
                     {
                         Id = r.Id,
                         Number = r.Number,
@@ -117,7 +117,8 @@ namespace Selu383.SP24.Api.Features.Reservations
                         IsClean = r.IsClean,
                         IsOccupied = IsRoomOccupied(r.Id, hotelId, checkInDate, checkOutDate),
                         HotelId = r.HotelId
-                    }).ToList()
+                    }).First()
+                }
                 });
 
             return Ok(availableRoomTypes);
@@ -148,13 +149,15 @@ namespace Selu383.SP24.Api.Features.Reservations
                 CheckInDate = dto.CheckInDate,
                 CheckOutDate = dto.CheckOutDate,
                 NumberOfGuests = dto.NumberOfGuests,
-                IsPaid = dto.IsPaid
+                IsPaid = dto.IsPaid,
+                ConfirmationNumber = "EN" + Guid.NewGuid().ToString("N").Substring(0, 8).ToUpper(),
             };
             reservations.Add(reservation);
             dataContext.SaveChanges();
             dto.Id = reservation.Id;
+            dto.ConfirmationNumber = reservation.ConfirmationNumber;
 
-            return Ok(reservation);
+            return Ok(dto);
         }
 
 

@@ -199,12 +199,13 @@ public static class SeedHelper
                 {
                     GuestId = i,
                     HotelId = i + 1,
-                    RoomId =  i + 1,
+                    RoomId = i + 1,
                     CheckInDate = DateTime.Now.AddDays(i * 7),
                     CheckOutDate = DateTime.Now.AddDays((i * 7) + 7),
                     NumberOfGuests = i + 1,
-                    IsPaid = true
-                });
+                    IsPaid = true,
+                    ConfirmationNumber = Guid.NewGuid().ToString()
+                }) ;
         }
         await dataContext.SaveChangesAsync();
 

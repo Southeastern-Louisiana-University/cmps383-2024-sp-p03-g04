@@ -16,5 +16,7 @@ public class Reservation
     public bool IsPaid { get; set; }
     public Hotel Hotel { get; set; }
     public Room Room { get; set; }
+    public string ConfirmationNumber { get; set; }
+
 
 }
