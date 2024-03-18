@@ -3,7 +3,6 @@
   align-items: center; /* Keeps elements vertically centered */
   justify-content: center; /* Centers the row horizontally */
   overflow: hidden;
-  height: auto;
 }
 
 .image-container {

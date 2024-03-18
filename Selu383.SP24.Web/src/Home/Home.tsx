@@ -63,10 +63,10 @@ const Home: React.FC = () => {
 
   const handleSearch = async () => {
     await getHotels();
-    console.log("🚀 ~ selectedHotel:", selectedHotel)
+    console.log("🚀 ~ selectedHotel:", selectedHotel);
 
     navigate("/reservations", {
-      state: { selectedHotel, hotels, checkInDate, checkOutDate,guests },
+      state: { selectedHotel, hotels, checkInDate, checkOutDate, guests },
     });
   };
 
@@ -77,10 +77,9 @@ const Home: React.FC = () => {
         style={{
           backgroundImage: `url("https://images.pexels.com/photos/261102/pexels-photo-261102.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1")`,
           backgroundSize: "cover",
-          backgroundPosition: "center",
           minHeight: "100vh",
           maxHeight: "100vh",
-          overflow: "hidden",
+          width:"100%"
         }}
       >
         <>
@@ -117,8 +116,8 @@ const Home: React.FC = () => {
                               <Dropdown.Item
                                 key={index}
                                 onClick={() => {
-                                  setLocation(`${hotel.name} ${hotel.city}`)
-                                  setselectedHotel(`${hotel.id}`)
+                                  setLocation(`${hotel.name} ${hotel.city}`);
+                                  setselectedHotel(`${hotel.id}`);
                                 }}
                               >
                                 {hotel.name} {hotel.city}
@@ -241,13 +240,18 @@ const Home: React.FC = () => {
         </>
       </section>
       <section className="about-us-section">
-        <Container>
+        <>
           <Row>
             <Col style={{ fontFamily: "cursive", fontSize: "20px" }}>
               <h2></h2>
               <section className="home">
                 <div className="image-container">
-                  <img src={homeImage} alt="EnStay Hotel" className="image" style={{width:"90%"}}/>
+                  <img
+                    src={homeImage}
+                    alt="EnStay Hotel"
+                    className="image"
+                    style={{ width: "90%" }}
+                  />
                 </div>
                 <div className="content">
                   <p>
@@ -283,7 +287,7 @@ const Home: React.FC = () => {
               </p>
             </Col>
           </Row>
-        </Container>
+        </>
       </section>
     </>
   );
