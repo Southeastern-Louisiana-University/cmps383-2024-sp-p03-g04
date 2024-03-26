@@ -6,7 +6,7 @@
       "launchUrl": "swagger",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "SENDGRID_API_KEY": "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"
+        "SENDGRID_API_KEY": "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"
       },
       "dotnetRunMessages": true,
       "applicationUrl": "https://localhost:7116"
