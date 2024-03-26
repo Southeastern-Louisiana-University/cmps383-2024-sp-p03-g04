@@ -1,10 +1,12 @@
-﻿namespace Selu383.SP24.Api.Controllers;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using SendGrid;
 using SendGrid.Helpers.Mail;
+using System;
 using System.Threading.Tasks;
 
+namespace Selu383.SP24.Api.Controllers
+{
     [ApiController]
     [Route("api/email")]
     public class EmailController : ControllerBase
@@ -18,11 +20,12 @@ using System.Threading.Tasks;
 
         [HttpPost]
         [Route("sendEmail")]
-    public async Task<IActionResult> SendEmail(EmailRequestModel model)
+        public async Task<IActionResult> SendEmail(EmailRequestModel model)
         {
             try
             {
-                var apiKey = _configuration["SENDGRID_API_KEY"];
+                var apiKey = Environment.GetEnvironmentVariable("SENDGRID_API_KEY");
+
                 var client = new SendGridClient(apiKey);
 
                 var from = new EmailAddress("enstayhotels@gmail.com", model.SenderName);
@@ -33,14 +36,7 @@ using System.Threading.Tasks;
                 var msg = MailHelper.CreateSingleEmail(from, to, subject, "", htmlContent);
                 var response = await client.SendEmailAsync(msg);
 
-                if (response.StatusCode == System.Net.HttpStatusCode.OK)
-                {
-                    return Ok("Email sent successfully!");
-                }
-                else
-                {
-                    return StatusCode(500, "Failed to send email");
-                }
+               return Ok(response);
             }
             catch (Exception ex)
             {
@@ -56,4 +52,4 @@ using System.Threading.Tasks;
         public string Subject { get; set; }
         public string Html { get; set; }
     }
-
+}

@@ -54,7 +54,7 @@ const Booking: React.FC = () => {
       body: JSON.stringify({
         to: user?.email,
         from: "enstayhotels@gmail.com", // Sender's email
-        senderName: user?.userName, // Logged-in user's name
+        senderName: "EnStay Hotels", // Logged-in user's name
         subject: "Room Reservation Confirmation",
         html: `<strong>Your reservation has been confirmed!</strong>
           <br>
@@ -62,7 +62,9 @@ const Booking: React.FC = () => {
           <br>
           <strong>Hotel Name:</strong> ${selectedHotelInfo.name}
           <br>
-          <strong>Room Type:</strong> ${room.type}
+          <strong>Room Type:</strong> ${
+            room.type == 0 ? "Single King" : "Double Queen"
+          }
           <br>
           <strong>Check In Date:</strong> ${checkInDateFormatted}
           <br>
@@ -113,155 +115,175 @@ const Booking: React.FC = () => {
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
+    <>
       <Row>
-        <Col lg={6}>
-          <Form.Group controlId="firstName">
-            <Form.Label>First Name</Form.Label>
-            <Form.Control
-              size="lg"
-              type="text"
-              name="firstName"
-              value={user?.userName}
-              onChange={handleInputChange}
-              required
-            />
-          </Form.Group>
-        </Col>
         <Col>
-          <Form.Group controlId="lastName">
-            <Form.Label>Last Name</Form.Label>
-            <Form.Control
-              size="lg"
-              type="text"
-              name="lastName"
-              value={lastName}
-              onChange={handleInputChange}
-              required
-            />
-          </Form.Group>
+          <h1>Your Reservation Info:</h1>
+          <div className="BookingOrganizer">
+            <h2>Hotel Name: {selectedHotelInfo.name}</h2>
+            <div className="infoSection">
+              <h2>
+                Room Type: {room.type == 0 ? "Single King" : "Double Queen"}
+              </h2>
+              <h2>Check In Date: {checkInDateFormatted}</h2>
+            </div>
+            <div className="infoSection">
+              <h2>Check Out Date: {checkOutDateFormatted}</h2>
+              <h2>Number of Guests: {guests}</h2>
+            </div>
+          </div>
         </Col>
       </Row>
-      <Row>
-        <Col xs={6}>
-          <Form.Group controlId="email">
-            <Form.Label>Email Address</Form.Label>
-            <Form.Control
-              size="lg"
-              type="email"
-              name="email"
-              value={user?.email}
-              onChange={handleInputChange}
-              required
-            />
-          </Form.Group>
-        </Col>
-        <Col xs={6}>
-          <Form.Group controlId="phoneNumber">
-            <Form.Label>Phone Number</Form.Label>
-            <Form.Control
-              size="lg"
-              type="tel"
-              name="phoneNumber"
-              value={phoneNumber}
-              onChange={handleInputChange}
-              required
-            />
-          </Form.Group>
-        </Col>
-      </Row>
-      <Row>
-        <Col xs={4}>
-          <Form.Group controlId="guests">
-            <Form.Label>Number of Guests</Form.Label>
-            <Form.Control
-              size="lg"
-              type="number"
-              name="guests"
-              min={1}
-              value={guests}
-              onChange={handleInputChange}
-              required
-            />
-          </Form.Group>
-        </Col>
-        <Col xs={4}>
-          <Form.Group controlId="checkInDate">
-            <Form.Label>Check In Date</Form.Label>
-            <Form.Control
-              size="lg"
-              type="date"
-              name="checkInDate"
-              defaultValue={checkInDateFormatted}
-              required
-            />
-          </Form.Group>
-        </Col>
+      <Form onSubmit={handleSubmit}>
+        <Row>
+          <Col lg={6}>
+            <Form.Group controlId="firstName">
+              <Form.Label>First Name</Form.Label>
+              <Form.Control
+                size="lg"
+                type="text"
+                name="firstName"
+                value={user?.userName}
+                onChange={handleInputChange}
+                required
+              />
+            </Form.Group>
+          </Col>
+          <Col>
+            <Form.Group controlId="lastName">
+              <Form.Label>Last Name</Form.Label>
+              <Form.Control
+                size="lg"
+                type="text"
+                name="lastName"
+                value={lastName}
+                onChange={handleInputChange}
+                required
+              />
+            </Form.Group>
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={6}>
+            <Form.Group controlId="email">
+              <Form.Label>Email Address</Form.Label>
+              <Form.Control
+                size="lg"
+                type="email"
+                name="email"
+                value={user?.email}
+                onChange={handleInputChange}
+                required
+              />
+            </Form.Group>
+          </Col>
+          <Col xs={6}>
+            <Form.Group controlId="phoneNumber">
+              <Form.Label>Phone Number</Form.Label>
+              <Form.Control
+                size="lg"
+                type="tel"
+                name="phoneNumber"
+                value={phoneNumber}
+                onChange={handleInputChange}
+                required
+              />
+            </Form.Group>
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={4}>
+            <Form.Group controlId="guests">
+              <Form.Label>Number of Guests</Form.Label>
+              <Form.Control
+                size="lg"
+                type="number"
+                name="guests"
+                min={1}
+                value={guests}
+                onChange={handleInputChange}
+                required
+              />
+            </Form.Group>
+          </Col>
+          <Col xs={4}>
+            <Form.Group controlId="checkInDate">
+              <Form.Label>Check In Date</Form.Label>
+              <Form.Control
+                size="lg"
+                type="date"
+                name="checkInDate"
+                defaultValue={checkInDateFormatted}
+                required
+              />
+            </Form.Group>
+          </Col>
 
-        <Col xs={4}>
-          <Form.Group controlId="checkOutDate">
-            <Form.Label>Check Out Date</Form.Label>
-            <Form.Control
-              size="lg"
-              type="date"
-              name="checkOutDate"
-              defaultValue={checkOutDateFormatted}
-              required
-            />
-          </Form.Group>
-        </Col>
-      </Row>
-      <Row>
-        <Col xs={6}>
-          <Form.Group controlId="hotelName">
-            <Form.Label>Hotel Name</Form.Label>
-            <Form.Control
-              size="lg"
-              type="text"
-              name="hotelName"
-              defaultValue={selectedHotelInfo.name} // Set default value if available
-              disabled // Prevent editing for now
-            />
-          </Form.Group>
-        </Col>
-        <Col xs={6}>
-          <Form.Group controlId="roomType">
-            <Form.Label>Room Type</Form.Label>
-            <Form.Control
-              size="lg"
-              type="text"
-              name="roomType"
-              defaultValue={room.type == 0 ? "Single King" : "Double Queen"} // Set default value if available
-              disabled // Prevent editing for now
-            />
-          </Form.Group>
-        </Col>
-      </Row>
-      <Row>
-        <Col>
-          <Form.Group controlId="description">
-            <Form.Label>Description</Form.Label>
-            <Form.Control
-              as="textarea"
-              width="100%"
-              rows={3} // Adjust number of rows as needed
-              size="lg"
-              name="description"
-            />
-          </Form.Group>
-        </Col>
-      </Row>
-      <Button
-        variant="success"
-        style={{
-          width: "30%",
-        }}
-        type="submit"
-        onClick={sendEmail}
-      >
-        Confirm
-      </Button>
-    </Form>
+          <Col xs={4}>
+            <Form.Group controlId="checkOutDate">
+              <Form.Label>Check Out Date</Form.Label>
+              <Form.Control
+                size="lg"
+                type="date"
+                name="checkOutDate"
+                defaultValue={checkOutDateFormatted}
+                required
+              />
+            </Form.Group>
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={6}>
+            <Form.Group controlId="hotelName">
+              <Form.Label>Hotel Name</Form.Label>
+              <Form.Control
+                size="lg"
+                type="text"
+                name="hotelName"
+                defaultValue={selectedHotelInfo.name} // Set default value if available
+                disabled // Prevent editing for now
+              />
+            </Form.Group>
+          </Col>
+          <Col xs={6}>
+            <Form.Group controlId="roomType">
+              <Form.Label>Room Type</Form.Label>
+              <Form.Control
+                size="lg"
+                type="text"
+                name="roomType"
+                defaultValue={room.type == 0 ? "Single King" : "Double Queen"} // Set default value if available
+                disabled // Prevent editing for now
+              />
+            </Form.Group>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <Form.Group controlId="description">
+              <Form.Label>Description</Form.Label>
+              <Form.Control
+                as="textarea"
+                width="100%"
+                rows={3} // Adjust number of rows as needed
+                size="lg"
+                name="description"
+              />
+            </Form.Group>
+          </Col>
+        </Row>
+        <Button
+          variant="success"
+          style={{
+            width: "30%",
+          }}
+          type="submit"
+          onClick={sendEmail}
+        >
+          Confirm
+        </Button>
+      </Form>
+    </>
   );
 };
 
