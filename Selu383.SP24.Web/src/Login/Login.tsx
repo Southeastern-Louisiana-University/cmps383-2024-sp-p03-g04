@@ -5,13 +5,13 @@ import { useUser } from "./UserContext";
 import { Slide, toast } from "react-toastify";
 
 interface LoginPageProps {
-  onSuccess: () => void; 
+  onSuccess: () => void;
 }
 
 const LoginPage: React.FC<LoginPageProps> = ({ onSuccess }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const { setUser } = useUser(); 
+  const { setUser } = useUser();
   const navigate = useNavigate();
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -32,9 +32,9 @@ const LoginPage: React.FC<LoginPageProps> = ({ onSuccess }) => {
         setUser(responseData);
         navigate("/");
         toast.success("Successfully LoggedIn", {
-          transition: Slide
+          transition: Slide,
         });
-        onSuccess(); 
+        onSuccess();
       }
     });
   };
@@ -43,21 +43,26 @@ const LoginPage: React.FC<LoginPageProps> = ({ onSuccess }) => {
     <>
       <div className="LoginOrganizer">
         <h1 className="WelcomeEnstay">Welcome to EnStay</h1>
-        <h3>Login to continue</h3>
         <form id="Login" onSubmit={handleLogin}>
-          <label><b>Username</b></label>
+          <label>
+            <b>Username</b>
+          </label>
           <input
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
-          <label><b>Password</b></label>
+          <label>
+            <b>Password</b>
+          </label>
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <button className="button1" type="submit"><b>Login</b></button>
+          <button className="button1" type="submit">
+            <b>Login</b>
+          </button>
         </form>
       </div>
     </>

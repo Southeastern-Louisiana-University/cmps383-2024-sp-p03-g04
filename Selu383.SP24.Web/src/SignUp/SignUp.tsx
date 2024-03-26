@@ -57,7 +57,6 @@ const SignupPage: React.FC<SignupPageProps> = ({ onSuccess }) => {
     <>
       <div className="SignupOrganizer">
         <h1 className="WelcomeEnstay">Welcome to EnStay</h1>
-        <h3>Sign up to create an account</h3>
         <form id="Signup" onSubmit={handleSignup}>
           <label>
             <b>Email</b>
