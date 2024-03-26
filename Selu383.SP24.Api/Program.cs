@@ -1,8 +1,16 @@
 using Microsoft.EntityFrameworkCore;
 using Selu383.SP24.Api.Data;
 using Selu383.SP24.Api.Features.Authorization;
+using Selu383.SP24.Api.Features.EmailRequest;
+using SendGrid;
+using SendGrid.Helpers.Mail;
+using System.Net.Mail;
+using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);
+
+
+builder.Configuration.AddJsonFile("appsettings.json");
 
 // Add services to the container.
 builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DataContext")));

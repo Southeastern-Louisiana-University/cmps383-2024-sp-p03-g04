@@ -46,54 +46,37 @@ const Booking: React.FC = () => {
   };
 
   const sendEmail = async () => {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const sgMail = require("@sendgrid/mail");
-    sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+    const response = await fetch("/api/email/sendEmail", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        to: user?.email,
+        from: "enstayhotels@gmail.com", // Sender's email
+        senderName: user?.userName, // Logged-in user's name
+        subject: "Room Reservation Confirmation",
+        html: `<strong>Your reservation has been confirmed!</strong>
+          <br>
+          <strong>Reservation Info:</strong>
+          <br>
+          <strong>Hotel Name:</strong> ${selectedHotelInfo.name}
+          <br>
+          <strong>Room Type:</strong> ${room.type}
+          <br>
+          <strong>Check In Date:</strong> ${checkInDateFormatted}
+          <br>
+          <strong>Check Out Date:</strong> ${checkOutDateFormatted}
+          <br>
+          <strong>Number of Guests:</strong> ${guests}`,
+      }),
+    });
 
-    const msg = {
-      to: email, // Change to your recipient
-      from: "enstayhotels@gmail.com", // Change to your verified sender
-      subject: "Room Reservation Confirmation",
-      text: "",
-      html:
-        "<strong>Your reservation has been confirmed!</strong>" +
-        "<br>" +
-        "<strong>Reservation Info:</strong>" +
-        "<br>" +
-        "<strong>Hotel Name:</strong> " +
-        selectedHotelInfo.name +
-        "<br>" +
-        "<strong>Room Type:</strong> " +
-        room.type +
-        "<br>" +
-        "<strong>Check In Date:</strong> " +
-        checkInDateFormatted +
-        "<br>" +
-        "<strong>Check Out Date:</strong> " +
-        checkOutDateFormatted +
-        "<br>" +
-        "<strong>Number of Guests:</strong> " +
-        guests,
-    };
-
-    console.log("email test");
-
-    sgMail
-      .send(msg)
-      .then(
-        (
-          response: {
-            statusCode(statusCode: any): unknown;
-            headers: any;
-          }[]
-        ) => {
-          console.log(response[0].statusCode);
-          console.log(response[0].headers);
-        }
-      )
-      .catch((error: any) => {
-        console.error(error);
-      });
+    if (response.ok) {
+      console.log("Email sent successfully!");
+    } else {
+      console.error("Failed to send email");
+    }
   };
 
   const handleSubmit = async (event: any) => {
