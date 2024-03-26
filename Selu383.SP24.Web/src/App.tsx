@@ -25,10 +25,12 @@ function App() {
       <div className="app-container">
         <NavBar brandName={"EnStay"} navItems={items} />
       </div>
-      <div className="content-container">
-        <Outlet />
+      <div className="content-organizer">
+        <div className="content-container">
+          <Outlet />
+        </div>
+        <Footer />
       </div>
-      <Footer />
     </>
   );
 }

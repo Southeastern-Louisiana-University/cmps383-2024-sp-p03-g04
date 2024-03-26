@@ -56,6 +56,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
           <Route path="/profile/update" element={<UpdateProfile />} />
           <Route path="/reservations/rooms/booking" element={<Booking />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/book a room" element={<Reservations />} />
         </Route>
       </Routes>
     </UserProvider>
