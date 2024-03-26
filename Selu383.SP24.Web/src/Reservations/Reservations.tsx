@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Card, Form, Button } from "react-bootstrap";
+import { Container, Row, Col, Card } from "react-bootstrap";
 import { useLocation, useNavigate } from "react-router-dom";
 
 interface Hotel {
@@ -15,12 +15,18 @@ interface Hotel {
 const Reservations: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { hotel, checkInDate, checkOutDate, guests, selectedHotel, roomType } = location.state || {};
+  const { hotel, checkInDate, checkOutDate, guests, selectedHotel, roomType } =
+    location.state || {};
   const initialHotels: Hotel[] = hotel ? hotel : [];
- 
+
   console.log("🚀 ~ selectedHotel:", selectedHotel);
+  console.log("🚀 ~ selectedHotel:", selectedHotel);
+  console.log("🚀 ~ selectedHotel:", selectedHotel);
+
+
   const [hotels, setHotels] = useState<Hotel[]>(initialHotels);
   const [searchQuery, setSearchQuery] = useState("");
+  console.log("🚀 ~ setSearchQuery:", setSearchQuery)
 
   const getHotels = async () => {
     let hotelData;
@@ -53,17 +59,18 @@ const Reservations: React.FC = () => {
   const handleSearch = () => {
     getHotels();
   };
+  console.log("🚀 ~ handleSearch ~ handleSearch:", handleSearch)
 
   const handleViewRooms = (hotel: Hotel) => {
     console.log("🚀 ~ handleViewRooms ~ hotel:", hotel);
     navigate("/reservations/rooms", {
-      state: { hotel, checkInDate, checkOutDate,guests,roomType },
+      state: { hotel, checkInDate, checkOutDate, guests, roomType },
     });
   };
 
   return (
-    <Container>
-      <h1>Reservations</h1>
+    <Container >
+      <h1>Hotels</h1>
       <Row>
         {/* <Col>
           <Form className="mb-3">

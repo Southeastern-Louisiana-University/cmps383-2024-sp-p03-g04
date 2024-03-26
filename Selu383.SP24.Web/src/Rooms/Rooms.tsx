@@ -25,7 +25,7 @@ const Rooms: React.FC = () => {
     const day = ("0" + date.getDate()).slice(-2);
     return `${year}-${month}-${day}`;
   };
-  const { hotel, checkInDate, checkOutDate, guests, selectedHotel, roomType } =
+  const { hotel, checkInDate, checkOutDate, guests, selectedHotel } =
     location.state || {};
 
   // const initialHotels: Hotel = location.state ? location.state.hotel : [];
@@ -33,7 +33,6 @@ const Rooms: React.FC = () => {
   const checkOutDateFormatted = checkOutDate ? formatDate(checkOutDate) : "";
   const [selectedHotelInfo] = useState<Hotel>(hotel);
   const [rooms, setRooms] = useState<any[]>([]);
-  const [selectedRoom, setSelectedRoom] = useState("");
 
   const getRooms = async (
     hotelId: number,
@@ -57,16 +56,15 @@ const Rooms: React.FC = () => {
     getRooms(hotel.id, checkInDateFormatted, checkOutDateFormatted);
   }, []);
 
-  const handleViewRooms = (hotel: Hotel) => {
+  const handleViewRooms = (room: any) => {
     navigate("/reservations/rooms/booking", {
       state: {
         selectedHotelInfo,
         checkInDateFormatted,
         checkOutDateFormatted,
-        selectedRoom,
+        room,
         guests,
         selectedHotel,
-        roomType,
       },
     });
   };
@@ -122,7 +120,6 @@ const Rooms: React.FC = () => {
                     style={{ marginLeft: "70%" }}
                     onClick={() => {
                       handleViewRooms(room);
-                      setSelectedRoom(room);
                     }}
                   >
                     Book Now
