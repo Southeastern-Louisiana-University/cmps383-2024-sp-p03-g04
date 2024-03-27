@@ -105,6 +105,36 @@ public class UsersController : ControllerBase
         return Ok(userDto);
     }
 
+    [HttpPut("update/{id}")]
+    [Authorize(Roles = RoleNames.User + "," + RoleNames.Admin)]
+    public async Task<ActionResult<UserDto>> UpdateUser(string id, UpdateUserDto dto)
+    {
+        var user = await userManager.FindByIdAsync(id);
+
+        if (user == null)
+        {
+            return NotFound();
+        }
+
+        user.UserName = dto.UserName;
+        user.Email = dto.Email;
+
+        var updateResult = await userManager.UpdateAsync(user);
+
+        if (!updateResult.Succeeded)
+        {
+            return BadRequest();
+        }
+
+        return Ok(new UserDto
+        {
+            Id = user.Id,
+            UserName = user.UserName,
+            Email = user.Email,
+            Roles = (await userManager.GetRolesAsync(user)).ToArray()
+        });
+    }
+
 
     [HttpPost("customer")] //customer registration
     public async Task<ActionResult<CreateUserDto>> RegisterUser(CreateUserDto dto)

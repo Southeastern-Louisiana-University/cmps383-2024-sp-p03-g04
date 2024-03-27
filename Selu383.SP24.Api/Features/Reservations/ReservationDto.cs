@@ -13,14 +13,16 @@ namespace Selu383.SP24.Api.Features.Reservations
         public DateTime CheckOutDate { get; set; }
         public int NumberOfGuests { get; set; }
         public bool IsPaid { get; set; }
-        
+        public string? ConfirmationNumber { get; set; }
+
+
 
         // Constructors
         public ReservationDto()
         {
         }
 
-        public ReservationDto(int Id, int guestId, int hotelId,int roomId, DateTime checkInDate, DateTime checkOutDate, int numberOfGuests, bool isPaid)
+        public ReservationDto(int Id, int guestId, int hotelId,int roomId, DateTime checkInDate, DateTime checkOutDate, int numberOfGuests, bool isPaid, string confirmationNumber)
         {
             HotelId = hotelId;
             GuestId = guestId;
@@ -29,6 +31,7 @@ namespace Selu383.SP24.Api.Features.Reservations
             CheckOutDate = checkOutDate;
             NumberOfGuests = numberOfGuests;
             IsPaid = isPaid;
+            ConfirmationNumber = confirmationNumber;
         }
 
     }

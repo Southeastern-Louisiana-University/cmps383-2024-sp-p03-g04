@@ -13,16 +13,17 @@ namespace Selu383.SP24.Api.Features.Reservations
     [ApiController]
     public class ReservationsController : ControllerBase
     {
-        private readonly DbSet<Reservation> reservations;
         private readonly DataContext dataContext;
         private readonly UserManager<User> userManager;
         private readonly DbSet<Room> rooms;
+        private readonly DbSet<Reservation> reservations;
+
 
         public ReservationsController(DataContext dataContext)
         {
             this.dataContext = dataContext;
-            reservations = dataContext.Set<Reservation>();
             rooms = dataContext.Set<Room>();
+            reservations = dataContext.Set<Reservation>();
         }
 
         [HttpGet]
@@ -90,6 +91,41 @@ namespace Selu383.SP24.Api.Features.Reservations
             return Ok(availableRoomDtos);
         }
 
+        [HttpGet("availableRoomTypes/{hotelId}/{checkInDate}/{checkOutDate}")]
+        public ActionResult<IEnumerable<RoomTypeDto>> GetAvailableRoomTypes(int hotelId, DateTime checkInDate, DateTime checkOutDate)
+        {
+            // Get all room types in the hotel
+            var roomTypes = rooms
+                .Where(r => r.HotelId == hotelId && r.IsClean)
+                .GroupBy(r => r.Type)
+                .Select(g => new { Type = g.Key, Rooms = g.ToList() })
+                .ToList();
+
+            // Filter out room types where all rooms are occupied
+            var availableRoomTypes = roomTypes
+                .Where(rt=> rt.Rooms.Count>0 && rt.Rooms.Any(r=> !IsRoomOccupied(r.Id,hotelId,checkInDate,checkOutDate)))
+                .Select(rt => new RoomTypeDto
+                {
+                    Type = rt.Type,
+                    Rooms = new List<RoomDto>{ rt.Rooms.Select(r => new RoomDto
+                    {
+                        Id = r.Id,
+                        Number = r.Number,
+                        IsPremium = r.IsPremium,
+                        Description = r.Description,
+                        Price = r.Price,
+                        Capacity = r.Capacity,
+                        IsClean = r.IsClean,
+                        IsOccupied = IsRoomOccupied(r.Id, hotelId, checkInDate, checkOutDate),
+                        HotelId = r.HotelId
+                    }).First()
+                }
+                });
+
+            return Ok(availableRoomTypes);
+        }
+
+
         [HttpPost]
         [Authorize]
         public async Task<ActionResult<ReservationDto>> CreateReservation(ReservationDto dto)
@@ -114,13 +150,15 @@ namespace Selu383.SP24.Api.Features.Reservations
                 CheckInDate = dto.CheckInDate,
                 CheckOutDate = dto.CheckOutDate,
                 NumberOfGuests = dto.NumberOfGuests,
-                IsPaid = dto.IsPaid
+                IsPaid = dto.IsPaid,
+                ConfirmationNumber = "EN" + Guid.NewGuid().ToString("N").Substring(0, 8).ToUpper(),
             };
             reservations.Add(reservation);
             dataContext.SaveChanges();
             dto.Id = reservation.Id;
+            dto.ConfirmationNumber = reservation.ConfirmationNumber;
 
-            return Ok(reservation);
+            return Ok(dto);
         }
 
 

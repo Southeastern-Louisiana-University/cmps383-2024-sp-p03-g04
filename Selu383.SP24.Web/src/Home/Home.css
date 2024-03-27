@@ -3,7 +3,6 @@
   align-items: center; /* Keeps elements vertically centered */
   justify-content: center; /* Centers the row horizontally */
   overflow: hidden;
-  height: auto;
 }
 
 .image-container {
@@ -26,6 +25,20 @@
 .content {
   width: 50%;
   padding: 0 20px;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  padding: 100px;
+}
+
+.col p {
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  font-size: 1.2rem;
+}
+
+.col h3 {
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
 }
 
 .about-us-section {

@@ -14,7 +14,6 @@
   top: 0;
   left: 0;
   right: 0;
-
 }
 
 .content-container {
@@ -24,6 +23,27 @@
   min-height: 100vh;
   flex: 1; 
   max-height: 200vh; */
-  overflow: hidden;
   min-height: 80vh;
+  overflow-y: scroll;
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+.content-organizer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  ::-webkit-scrollbar {
+    display: none;
+  }
+  scroll-behavior: smooth;
+}
+
+Footer {
+  background-color: #f2f2f2;
+  padding: 10px;
+  text-align: center;
+  width: 100%;
+  color: black;
+  font-size: 12px;
 }
