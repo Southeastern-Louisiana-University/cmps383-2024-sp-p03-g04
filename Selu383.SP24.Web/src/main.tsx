@@ -57,11 +57,10 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
           <Route path="/reservations/rooms" element={<Rooms />} />
           <Route path="/profile/userinfo" element={<UserInfo />} />
           <Route path="/profile/update" element={<UpdateProfile />} />
-          <Route path="/reservations/rooms/booking" element={<Booking/>} />
+          <Route path="/reservations/rooms/booking" element={<Booking />} />
           <Route path="/about" element={<About />} />
           <Route path="/rooms" element={<Room />} />
           <Route path="/services" element={<Services />} />
-
           <Route path="/contact" element={<Contact />} />
           <Route path="/book a room" element={<Reservations />} />
         </Route>

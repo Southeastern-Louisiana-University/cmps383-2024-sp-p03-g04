@@ -1,9 +1,0 @@
-# Ignore environment files
-.env
-
-# Ignore configuration files with sensitive information
-appsettings.json
-
-# Ignore sensitive information
-launchSettings.json
-
