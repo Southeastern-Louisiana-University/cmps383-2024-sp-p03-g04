@@ -25,6 +25,8 @@ function Contact() {
           setMessage("");
         },
         (error) => {
+          console.log(error.text);
+
         }
       );
   };
