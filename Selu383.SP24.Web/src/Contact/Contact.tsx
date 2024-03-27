@@ -26,7 +26,6 @@ function Contact() {
         },
         (error) => {
           console.log(error.text);
-
         }
       );
   };
