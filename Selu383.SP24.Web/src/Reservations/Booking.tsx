@@ -163,7 +163,7 @@ const Booking: React.FC = () => {
           </Col>
         </Row>
         <Row>
-          <Col xs={12} style={{ background: "red" }}>
+          <Col xs={12}>
             <Form.Group controlId="email">
               <Form.Label>Email Address</Form.Label>
               <Form.Control
