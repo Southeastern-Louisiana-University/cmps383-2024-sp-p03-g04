@@ -20,6 +20,7 @@ function Contact() {
       )
       .then(
         (result) => {
+          console.log("🚀 ~ handleSubmit ~ result:", result)
           console.log(result.text);
           // Reset form fields
           setMessage("");
