@@ -29,7 +29,7 @@ jobs:
         uses: expo/expo-github-action@v8
         with:
           eas-version: latest
-          token: ${{'AUz8hSMTmiH6gOs0V9UCO-KeMCI9PxURtEk35REN'}}
+          token: ${{ secrets.EXPO_TOKEN }}
           project: Selu383.SP24.Mobile
           packager: npm
 

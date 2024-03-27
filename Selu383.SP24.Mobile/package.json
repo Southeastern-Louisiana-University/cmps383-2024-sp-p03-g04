@@ -1,5 +1,5 @@
 {
-  "name": "selu383.sp24.mobile",
+  "name": "stickersmash",
   "version": "1.0.0",
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
@@ -9,10 +9,21 @@
     "web": "expo start --web"
   },
   "dependencies": {
-    "expo": "~50.0.6",
-    "expo-status-bar": "~1.11.1",
+    "@expo/metro-runtime": "~3.1.3",
+    "@expo/webpack-config": "^19.0.0",
+    "@react-navigation/drawer": "^6.6.14",
+    "@react-navigation/native": "^6.1.16",
+    "@react-navigation/stack": "^6.3.28",
+    "expo": "^49.0.23",
+    "expo-status-bar": "~1.6.0",
     "react": "18.2.0",
-    "react-native": "0.73.4"
+    "react-dom": "18.2.0",
+    "react-native": "0.72.10",
+    "react-native-gesture-handler": "~2.12.0",
+    "react-native-image-zoom-viewer": "^3.0.1",
+    "react-native-reanimated": "~3.3.0",
+    "react-native-swiper": "^1.6.0",
+    "react-native-web": "~0.19.6"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

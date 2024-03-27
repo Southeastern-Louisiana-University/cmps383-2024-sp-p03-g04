@@ -19,16 +19,18 @@ function App() {
     });
   }, []);
 
-  let items = ["Book a Room", "About", "Services", "Rooms", "Contact"];
+  const items = ["Book a Room", "About", "Services", "Rooms", "Contact"];
   return (
     <>
       <div className="app-container">
         <NavBar brandName={"EnStay"} navItems={items} />
       </div>
-      <div className="content-container">
-        <Outlet />
+      <div className="content-organizer">
+        <div className="content-container">
+          <Outlet />
+        </div>
+        <Footer />
       </div>
-      <Footer />
     </>
   );
 }

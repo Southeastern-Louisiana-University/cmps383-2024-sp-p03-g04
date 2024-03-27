@@ -1,7 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useEffect } from "react";
 import {
   Card,
-  Container,
   Row,
   Col,
   Form,
@@ -242,7 +242,7 @@ const Home: React.FC = () => {
       <section className="about-us-section">
         <>
           <Row>
-            <Col style={{ fontFamily: "cursive", fontSize: "20px" }}>
+            <Col style={{ fontFamily: "Georgia, serif", fontSize: "20px" }}>
               <h2></h2>
               <section className="home">
                 <div className="image-container">

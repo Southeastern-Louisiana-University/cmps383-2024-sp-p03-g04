@@ -13,7 +13,9 @@
     "@fortawesome/fontawesome-free": "^6.5.1",
     "@fortawesome/fontawesome-svg-core": "^6.5.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
+    "@sendgrid/mail": "^8.1.1",
     "bootstrap": "^5.3.3",
+    "emailjs-com": "^3.2.0",
     "react": "^18.2.0",
     "react-bootstrap": "^2.10.1",
     "react-datepicker": "^6.1.0",
@@ -23,6 +25,7 @@
     "react-toastify": "^10.0.4"
   },
   "devDependencies": {
+    "@types/node": "^20.11.30",
     "@types/react": "^18.2.43",
     "@types/react-datepicker": "^6.0.1",
     "@types/react-dom": "^18.2.17",
