@@ -70,7 +70,8 @@ const Booking: React.FC = () => {
           <br>
           <strong>Check Out Date:</strong> ${checkOutDateFormatted}
           <br>
-          <strong>Number of Guests:</strong> ${guests}`,
+          <strong>Number of Guests:</strong> ${guests}
+          <br>`,
       }),
     });
 
@@ -105,7 +106,6 @@ const Booking: React.FC = () => {
       toast.success("Your Reservation has been created successfully", {
         transition: Slide,
       });
-      sendEmail();
     } else {
       const error = await response.text();
       toast.error(error, {
