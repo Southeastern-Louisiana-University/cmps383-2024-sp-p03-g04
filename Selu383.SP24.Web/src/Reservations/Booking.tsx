@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from "react";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { useLocation } from "react-router-dom";
@@ -21,7 +22,7 @@ const Booking: React.FC = () => {
   const [email, setEmail] = useState("");
   console.log("🚀 ~ email:", email);
   const [phoneNumber, setPhoneNumber] = useState("");
-  console.log("🚀 ~ phoneNumber:", phoneNumber)
+  console.log("🚀 ~ phoneNumber:", phoneNumber);
   const [checkInDate, setCheckInDate] = useState(checkInDateFormatted);
   const [checkOutDate, setCheckOutDate] = useState(checkOutDateFormatted);
 
@@ -58,6 +59,42 @@ const Booking: React.FC = () => {
         break;
     }
   };
+  const sendEmail = async () => {
+    const response = await fetch("/api/email/sendEmail", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        to: user?.email,
+        from: "enstayhotels@gmail.com", // Sender's email
+        senderName: "EnStay Hotels", // Logged-in user's name
+        subject: "Room Reservation Confirmation",
+        html: `<strong>Your reservation has been confirmed!</strong>
+          <br>
+          <strong>Reservation Info:</strong>
+          <br>
+          <strong>Hotel Name:</strong> ${selectedHotelInfo.name}
+          <br>
+          <strong>Room Type:</strong> ${
+            room.type == 0 ? "Single King" : "Double Queen"
+          }
+          <br>
+          <strong>Check In Date:</strong> ${checkInDateFormatted}
+          <br>
+          <strong>Check Out Date:</strong> ${checkOutDateFormatted}
+          <br>
+          <strong>Number of Guests:</strong> ${guests}
+          <br>`,
+      }),
+    });
+
+    if (response.ok) {
+      console.log("Email sent successfully!");
+    } else {
+      console.error("Failed to send email");
+    }
+  };
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
@@ -85,6 +122,7 @@ const Booking: React.FC = () => {
       toast.success("Your Reservation has been created successfully", {
         transition: Slide,
       });
+      sendEmail();
     } else {
       const error = await response.text();
       toast.error(error, {
