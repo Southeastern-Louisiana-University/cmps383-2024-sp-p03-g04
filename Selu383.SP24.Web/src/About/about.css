@@ -1,0 +1,37 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa; 
+  }
+  
+  .container {
+    padding-top: 50px; 
+  }
+  
+  .section-heading {
+    color: #343a40; 
+    font-size: 3rem; 
+    margin-bottom: 20px; 
+    align-items: center;
+    margin-Top: 30px;
+    font-Family: "Georgia, serif";
+  }
+
+
+  .wrapper {
+    display: flex;
+  }
+  
+  .carousel-container {
+    flex: 1;
+    padding-top: 10px;
+    padding-left: 50PX;
+  }
+  
+  .about-container {
+    flex: 1; 
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    padding: 20px; 
+    
+  }
