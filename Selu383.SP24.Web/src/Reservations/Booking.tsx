@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from "react";
-import { Button, Col, Form, Row } from "react-bootstrap";
+import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { useLocation } from "react-router-dom";
-import "./booking.css";
 import { useUser } from "../Login/UserContext";
 import { Slide, toast } from "react-toastify";
 
@@ -86,12 +85,14 @@ const Booking: React.FC = () => {
     event.preventDefault();
 
     const reservation = {
-      RoomId: room.id,
-      HotelId: selectedHotelInfo.id,
+      RoomId: room.id, 
+      HotelId: selectedHotelInfo.id, 
       CheckInDate: checkInDateFormatted,
       CheckOutDate: checkOutDateFormatted,
       NumberOfGuests: guests,
-      IsPaid: false,
+      IsPaid: false, 
+      ConfirmationNumber:"1",
+      
     };
 
     const response = await fetch("/api/reservations", {
@@ -99,7 +100,7 @@ const Booking: React.FC = () => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(reservation),
+      body: JSON.stringify({ dto: reservation}),
     });
 
     if (response.ok) {
@@ -134,6 +135,7 @@ const Booking: React.FC = () => {
           </div>
         </Col>
       </Row>
+    <Container fluid>
       <Form onSubmit={handleSubmit}>
         <Row>
           <Col lg={6}>
@@ -164,7 +166,7 @@ const Booking: React.FC = () => {
           </Col>
         </Row>
         <Row>
-          <Col xs={6}>
+          <Col xs={12} style={{background: 'red'}}>
             <Form.Group controlId="email">
               <Form.Label>Email Address</Form.Label>
               <Form.Control
@@ -177,7 +179,7 @@ const Booking: React.FC = () => {
               />
             </Form.Group>
           </Col>
-          <Col xs={6}>
+          {/* <Col xs={6}>
             <Form.Group controlId="phoneNumber">
               <Form.Label>Phone Number</Form.Label>
               <Form.Control
@@ -189,7 +191,7 @@ const Booking: React.FC = () => {
                 required
               />
             </Form.Group>
-          </Col>
+          </Col> */}
         </Row>
         <Row>
           <Col xs={4}>
@@ -283,7 +285,7 @@ const Booking: React.FC = () => {
           Confirm
         </Button>
       </Form>
-    </>
+    </Container>
   );
 };
 

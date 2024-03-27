@@ -17,7 +17,7 @@ public class ReservationConfiguration : IEntityTypeConfiguration<Reservation>
         builder.Property(x => x.HotelId)
             .IsRequired();
 
-        builder.HasIndex(x => new { x.GuestId, x.RoomId, x.HotelId })
+        builder.HasIndex(x => new { x.GuestId, x.RoomId, x.HotelId,x.CheckInDate,x.CheckOutDate })
             .IsUnique();
 
         builder.Property(x => x.CheckInDate)
