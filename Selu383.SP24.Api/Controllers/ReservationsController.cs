@@ -13,16 +13,17 @@ namespace Selu383.SP24.Api.Features.Reservations
     [ApiController]
     public class ReservationsController : ControllerBase
     {
-        private readonly DbSet<Reservation> reservations;
         private readonly DataContext dataContext;
         private readonly UserManager<User> userManager;
         private readonly DbSet<Room> rooms;
+        private readonly DbSet<Reservation> reservations;
+
 
         public ReservationsController(DataContext dataContext)
         {
             this.dataContext = dataContext;
-            reservations = dataContext.Set<Reservation>();
             rooms = dataContext.Set<Room>();
+            reservations = dataContext.Set<Reservation>();
         }
 
         [HttpGet]

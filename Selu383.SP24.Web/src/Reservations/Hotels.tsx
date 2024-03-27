@@ -55,7 +55,7 @@ const Reservations: React.FC = () => {
   };
 
   return (
-    <Container fluid>
+    <Container fluid style={{ width: "80%" }}>
       <h1>Hotels</h1>
       <Row>
         {/* <Col>
@@ -80,7 +80,7 @@ const Reservations: React.FC = () => {
       </Row>
       <Row>
         <Col>
-          <p>{hotels.length} Hotels Found</p>
+          {/* <p>{hotels.length} Hotels Found</p> */}
         </Col>
       </Row>
       {hotels.map((hotel, index) => (
@@ -117,7 +117,7 @@ const Reservations: React.FC = () => {
                   {/* Add more fields as needed */}
                   <Card.Text>
                     <small className="text-muted">
-                      Last updated 3 mins ago
+                      {/* Last updated 3 mins ago */}
                     </small>
                   </Card.Text>
                   <hr />
