@@ -35,8 +35,8 @@ namespace Selu383.SP24.Api.Controllers
                 Description = dto.Description,
                 Price = dto.Price,
                 Capacity = dto.Type == RoomType.Single ? 2 : 4,
-                IsClean=dto.IsClean,
-                IsOccupied=dto.IsOccupied,
+                IsClean = dto.IsClean,
+                IsOccupied = dto.IsOccupied,
                 HotelId = dto.HotelId,
             };
 
@@ -69,16 +69,44 @@ namespace Selu383.SP24.Api.Controllers
                 Description = room.Description,
                 Price = room.Price,
                 Capacity = room.Capacity,
-                IsClean=room.IsClean,
+                IsClean = room.IsClean,
                 IsOccupied = room.IsOccupied,
             });
 
             return Ok(roomDtos);
         }
 
+        [HttpGet("types")]
+        [Authorize(Roles = RoleNames.Admin)]
+        public async Task<ActionResult<IEnumerable<RoomTypeDto>>> GetRoomTypesByHotel(int hotelId)
+        {
+            var roomTypes = await Rooms.Where(x => x.HotelId == hotelId).GroupBy(x => x.Type).Select(x => new RoomTypeDto
+            {
+                Type = x.Key,
+                Rooms = x.Select(room => new RoomDto
+                {
+                    Id = room.Id,
+                    Type = room.Type,
+                    Number = room.Number,
+                    IsPremium = room.IsPremium,
+                    Description = room.Description,
+                    Price = room.Price,
+                    Capacity = room.Capacity,
+                    IsClean = room.IsClean,
+                    IsOccupied = room.IsOccupied,
+                    HotelId = room.HotelId
+                }).ToList()
+
+
+            }).ToListAsync();
+
+            return Ok(roomTypes);
+        }
+
+
         [HttpPut("{roomId}")]
         [Authorize(Roles = RoleNames.Admin)]
-        public async Task<ActionResult> EditRoom(int id,int hotelId, RoomDto dto)
+        public async Task<ActionResult> EditRoom(int id, int hotelId, RoomDto dto)
         {
             var room = await Rooms.FirstOrDefaultAsync(x => x.Id == id && x.HotelId == hotelId);
             if (room == null)

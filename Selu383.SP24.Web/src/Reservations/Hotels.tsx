@@ -8,25 +8,16 @@ interface Hotel {
   city: string;
   state: string;
   zipCode: string;
-
-  // Add more fields as needed
 }
 
 const Reservations: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { hotel, checkInDate, checkOutDate, guests, selectedHotel, roomType } =
-    location.state || {};
+  const { hotel, checkInDate, checkOutDate, guests, selectedHotel, roomType } =location.state || {};
   const initialHotels: Hotel[] = hotel ? hotel : [];
-
-  console.log("🚀 ~ selectedHotel:", selectedHotel);
-  console.log("🚀 ~ selectedHotel:", selectedHotel);
-  console.log("🚀 ~ selectedHotel:", selectedHotel);
-
-
   const [hotels, setHotels] = useState<Hotel[]>(initialHotels);
   const [searchQuery, setSearchQuery] = useState("");
-  console.log("🚀 ~ setSearchQuery:", setSearchQuery)
+  console.log("🚀 ~ setSearchQuery:", setSearchQuery);
 
   const getHotels = async () => {
     let hotelData;
@@ -56,11 +47,6 @@ const Reservations: React.FC = () => {
     getHotels();
   }, [searchQuery]);
 
-  const handleSearch = () => {
-    getHotels();
-  };
-  console.log("🚀 ~ handleSearch ~ handleSearch:", handleSearch)
-
   const handleViewRooms = (hotel: Hotel) => {
     console.log("🚀 ~ handleViewRooms ~ hotel:", hotel);
     navigate("/reservations/rooms", {
@@ -69,7 +55,7 @@ const Reservations: React.FC = () => {
   };
 
   return (
-    <Container >
+    <Container fluid>
       <h1>Hotels</h1>
       <Row>
         {/* <Col>

@@ -138,38 +138,49 @@ public static class SeedHelper
             return;
         }
 
-        var roomTypes = new RoomType[] { RoomType.Single, RoomType.Single, RoomType.Double, RoomType.Double };
+        var roomTypes = Enum.GetValues(typeof(RoomType)).Cast<RoomType>().ToList();
+        var allHotels = await hotels.ToListAsync();
 
-        var allhotel = await hotels.ToListAsync();
-        foreach (var hotel in allhotel)
+        foreach (var hotel in allHotels)
         {
-
-            for (int i = 0; i < 4; i++)
+            int roomNumber = 101;
+            foreach (var roomType in roomTypes)
             {
-                var isPremium = i % 2 == 0;
-                var description = isPremium ? "Premium room with snacks, extra plus comfy pillows, comforter and bigger TV" : "Standard room";
-                var price = isPremium ? 200 : 100;
-                dataContext.Set<Room>()
-               .Add(new Room
-               {
-                   Type = roomTypes[i],
-                   Number = 101 + i,
-                   IsPremium = isPremium,
-                   Description = description,
-                   Price = price,
-                   Capacity = roomTypes[i] == RoomType.Single ? 2 : 4,
-                   IsClean = true,
-                   IsOccupied = false,
-                   HotelId = hotel.Id
+                for (int i = 0; i < 2; i++)
+                {
+                    var description = roomType switch
+                    {
+                        RoomType.Single => "Unwind in our luxurious Single room, featuring premium amenities like plush bedding, a bigger TV, and complimentary snacks.",
+                        RoomType.Double => "Elevate your stay in our Premium Double, boasting upgraded bedding, a larger TV, and complimentary snacks for two.",
+                        RoomType.Suite => "Indulge in our expansive Premium Suite, offering a separate living area, top-of-the-line amenities, a bigger TV, and complimentary snacks.",
+                        _ => "Premium room",
+                    };
+                    var price = roomType switch {
+                        RoomType.Single => 100,
+                        RoomType.Double => 150,
+                        RoomType.Suite => 200,
+                        _ => 100,
+                    };
 
-               });
 
+                    rooms.Add(new Room
+                    {
+                        Type = roomType,
+                        Number = roomNumber++,
+                        IsPremium = true,
+                        Description = description,
+                        Price = price,
+                        Capacity = roomType == RoomType.Single ? 2 : 4,
+                        IsClean = true,
+                        IsOccupied = false,
+                        HotelId = hotel.Id
+                    });
+                }
             }
         }
         await dataContext.SaveChangesAsync();
-
-
     }
+
 
     private static async Task AddReservations(DataContext dataContext)
     {
@@ -188,12 +199,13 @@ public static class SeedHelper
                 {
                     GuestId = i,
                     HotelId = i + 1,
-                    RoomId =  i + 1,
+                    RoomId = i + 1,
                     CheckInDate = DateTime.Now.AddDays(i * 7),
                     CheckOutDate = DateTime.Now.AddDays((i * 7) + 7),
                     NumberOfGuests = i + 1,
-                    IsPaid = true
-                });
+                    IsPaid = true,
+                    ConfirmationNumber = Guid.NewGuid().ToString()
+                }) ;
         }
         await dataContext.SaveChangesAsync();
 

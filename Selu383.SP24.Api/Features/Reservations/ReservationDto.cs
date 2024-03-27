@@ -13,7 +13,9 @@ namespace Selu383.SP24.Api.Features.Reservations
         public DateTime CheckOutDate { get; set; }
         public int NumberOfGuests { get; set; }
         public bool IsPaid { get; set; }
-        
+        public string ConfirmationNumber { get; set; }
+
+
 
         // Constructors
         public ReservationDto()
