@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from "react";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { useLocation } from "react-router-dom";
@@ -22,7 +21,23 @@ const Booking: React.FC = () => {
   const [email, setEmail] = useState("");
   console.log("🚀 ~ email:", email);
   const [phoneNumber, setPhoneNumber] = useState("");
+  console.log("🚀 ~ phoneNumber:", phoneNumber)
+  const [checkInDate, setCheckInDate] = useState(checkInDateFormatted);
+  const [checkOutDate, setCheckOutDate] = useState(checkOutDateFormatted);
+
   const { user } = useUser();
+
+  const handleCheckInDateChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setCheckInDate(event.target.value);
+  };
+
+  const handleCheckOutDateChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setCheckOutDate(event.target.value);
+  };
 
   const handleInputChange = (event: { target: { name: any; value: any } }) => {
     const { name, value } = event.target;
@@ -44,63 +59,26 @@ const Booking: React.FC = () => {
     }
   };
 
-  const sendEmail = async () => {
-    const response = await fetch("/api/email/sendEmail", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        to: user?.email,
-        from: "enstayhotels@gmail.com", // Sender's email
-        senderName: "EnStay Hotels", // Logged-in user's name
-        subject: "Room Reservation Confirmation",
-        html: `<strong>Your reservation has been confirmed!</strong>
-          <br>
-          <strong>Reservation Info:</strong>
-          <br>
-          <strong>Hotel Name:</strong> ${selectedHotelInfo.name}
-          <br>
-          <strong>Room Type:</strong> ${
-            room.type == 0 ? "Single King" : "Double Queen"
-          }
-          <br>
-          <strong>Check In Date:</strong> ${checkInDateFormatted}
-          <br>
-          <strong>Check Out Date:</strong> ${checkOutDateFormatted}
-          <br>
-          <strong>Number of Guests:</strong> ${guests}
-          <br>`,
-      }),
-    });
-
-    if (response.ok) {
-      console.log("Email sent successfully!");
-    } else {
-      console.error("Failed to send email");
-    }
-  };
-
   const handleSubmit = async (event: any) => {
     event.preventDefault();
 
     const reservation = {
-      RoomId: room.id, 
-      HotelId: selectedHotelInfo.id, 
-      CheckInDate: checkInDateFormatted,
-      CheckOutDate: checkOutDateFormatted,
+      RoomId: room.id,
+      HotelId: selectedHotelInfo.id,
+      CheckInDate: checkInDate,
+      CheckOutDate: checkOutDate,
       NumberOfGuests: guests,
-      IsPaid: false, 
-      ConfirmationNumber:"1",
-      
+      IsPaid: false,
+      ConfirmationNumber: "1",
     };
 
     const response = await fetch("/api/reservations", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        // include your authorization header
       },
-      body: JSON.stringify({ dto: reservation}),
+      body: JSON.stringify(reservation),
     });
 
     if (response.ok) {
@@ -116,25 +94,6 @@ const Booking: React.FC = () => {
   };
 
   return (
-    <>
-      <Row>
-        <Col>
-          <h1>Your Reservation Info:</h1>
-          <div className="BookingOrganizer">
-            <h2>Hotel Name: {selectedHotelInfo.name}</h2>
-            <div className="infoSection">
-              <h2>
-                Room Type: {room.type == 0 ? "Single King" : "Double Queen"}
-              </h2>
-              <h2>Check In Date: {checkInDateFormatted}</h2>
-            </div>
-            <div className="infoSection">
-              <h2>Check Out Date: {checkOutDateFormatted}</h2>
-              <h2>Number of Guests: {guests}</h2>
-            </div>
-          </div>
-        </Col>
-      </Row>
     <Container fluid>
       <Form onSubmit={handleSubmit}>
         <Row>
@@ -166,7 +125,7 @@ const Booking: React.FC = () => {
           </Col>
         </Row>
         <Row>
-          <Col xs={12} style={{background: 'red'}}>
+          <Col xs={12} style={{ background: "red" }}>
             <Form.Group controlId="email">
               <Form.Label>Email Address</Form.Label>
               <Form.Control
@@ -216,6 +175,7 @@ const Booking: React.FC = () => {
                 type="date"
                 name="checkInDate"
                 defaultValue={checkInDateFormatted}
+                onChange={handleCheckInDateChange}
                 required
               />
             </Form.Group>
@@ -229,6 +189,7 @@ const Booking: React.FC = () => {
                 type="date"
                 name="checkOutDate"
                 defaultValue={checkOutDateFormatted}
+                onChange={handleCheckOutDateChange}
                 required
               />
             </Form.Group>
@@ -280,7 +241,6 @@ const Booking: React.FC = () => {
             width: "30%",
           }}
           type="submit"
-          onClick={sendEmail}
         >
           Confirm
         </Button>
