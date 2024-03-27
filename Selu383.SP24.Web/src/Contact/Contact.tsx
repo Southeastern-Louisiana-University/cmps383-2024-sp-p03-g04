@@ -25,7 +25,6 @@ function Contact() {
           setMessage("");
         },
         (error) => {
-          console.log("🚀 ~ handleSubmit ~ error:", error)
           console.log(error.text);
         }
       );
