@@ -1,4 +1,4 @@
-input {
+.input1 {
   width: 100%;
   padding: 12px 20px;
   display: inline-block;
@@ -21,7 +21,7 @@ h3 {
   text-shadow: 2px 2.5px 3px rgba(18, 60, 33, 0.25);
 }
 
-label {
+.loginlabel{
   padding: 12px 12px 12px 0;
   display: inline-block;
   align-self: flex-start;
