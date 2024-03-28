@@ -1,5 +1,4 @@
 // App.js
-import "react-native-gesture-handler";
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
@@ -9,7 +8,7 @@ import HomeScreen from "./src/screens/HomeScreen";
 const Drawer = createDrawerNavigator();
 
 export default function App(){
-  return (
+    return (
     
     <NavigationContainer>
             <Drawer.Navigator initialRouteName="Login" screenOptions={{drawerActiveTintColor: "#1261E6"}}>
@@ -51,5 +50,5 @@ export default function App(){
                 />
             </Drawer.Navigator>
     </NavigationContainer>
-  );
+    );
 }
