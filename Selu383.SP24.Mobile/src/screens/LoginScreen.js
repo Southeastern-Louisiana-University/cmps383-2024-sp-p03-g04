@@ -44,8 +44,7 @@ const LoginScreen = () => {
 
   return (
     <ImageBackground
-      source={require('../../assets/images/hotelExterior2.png')}
-      style={styles.backgroundImage}
+      
     >
       <View style={styles.container}>
         <TextInput
