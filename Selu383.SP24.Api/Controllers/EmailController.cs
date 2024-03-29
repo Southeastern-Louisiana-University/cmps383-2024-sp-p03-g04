@@ -24,7 +24,7 @@ namespace Selu383.SP24.Api.Controllers
         {
             try
             {
-                var apiKey = Environment.GetEnvironmentVariable("SENDGRID_API_KEY");
+                var apiKey = _configuration.GetSection("SendGridApiKey").Value;
 
                 var client = new SendGridClient(apiKey);
 
@@ -36,7 +36,7 @@ namespace Selu383.SP24.Api.Controllers
                 var msg = MailHelper.CreateSingleEmail(from, to, subject, "", htmlContent);
                 var response = await client.SendEmailAsync(msg);
 
-               return Ok(response);
+                return Ok(response);
             }
             catch (Exception ex)
             {
