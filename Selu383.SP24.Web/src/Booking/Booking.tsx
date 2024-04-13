@@ -23,7 +23,7 @@ const Booking: React.FC = () => {
     room,
     guests,
   } = location.state || {};
-    console.log("🚀 ~ room:", room)
+  console.log("🚀 ~ room:", room);
 
   // Hotel booking form state (consider using a form library like Formik for complex forms)
   const [firstName, setFirstName] = useState("");
@@ -180,7 +180,7 @@ const Booking: React.FC = () => {
           </Card>
         </Col>
         <Col xl={8} lg={8} className="mb-4">
-          <Card className="shadow-0 border">
+          <Card className="p-4 shadow-0 border">
             <Card.Body>
               <Card.Title>
                 <b>Guest checkout</b>
@@ -192,7 +192,6 @@ const Booking: React.FC = () => {
                       <Form.Label>First name</Form.Label>
                       <Form.Control
                         type="text"
-                        placeholder="First name"
                         value={user?.userName}
                         onChange={handleInputChange}
                         required
@@ -204,7 +203,6 @@ const Booking: React.FC = () => {
                       <Form.Label>Last name</Form.Label>
                       <Form.Control
                         type="text"
-                        placeholder="Last name"
                         value={user?.userName}
                         onChange={handleInputChange}
                         required
@@ -214,7 +212,7 @@ const Booking: React.FC = () => {
                   <Col md={6}>
                     <Form.Group controlId="phone">
                       <Form.Label>Phone</Form.Label>
-                      <Form.Control type="tel" defaultValue="+48 " />
+                      <Form.Control type="tel" defaultValue="+1 " />
                     </Form.Group>
                   </Col>
                   <Col md={6}>
@@ -222,7 +220,6 @@ const Booking: React.FC = () => {
                       <Form.Label>Email</Form.Label>
                       <Form.Control
                         type="email"
-                        placeholder="example@gmail.com"
                         value={user?.email}
                         onChange={handleInputChange}
                         required
@@ -280,19 +277,19 @@ const Booking: React.FC = () => {
                   <Col sm={8}>
                     <Form.Group controlId="address">
                       <Form.Label>Address</Form.Label>
-                      <Form.Control type="text" placeholder="Adress" required />
+                      <Form.Control type="text" required />
                     </Form.Group>
                   </Col>
                   <Col sm={4}>
                     <Form.Group controlId="city">
                       <Form.Label>City</Form.Label>
-                      <Form.Control type="text" placeholder="City" required />
+                      <Form.Control type="text" required />
                     </Form.Group>
                   </Col>
                   <Col sm={4}>
                     <Form.Group controlId="house">
                       <Form.Label>Apt (Optional)</Form.Label>
-                      <Form.Control type="text" placeholder="Type here" />
+                      <Form.Control type="text" />
                     </Form.Group>
                   </Col>
                   <Col sm={4} xs={6}>
@@ -310,7 +307,7 @@ const Booking: React.FC = () => {
                 </Row>
                 <Col md={12}>
                   <Form.Group controlId="messageToSeller" className="mb-3">
-                    <Form.Label>Message to seller</Form.Label>
+                    <Form.Label>Additional Request</Form.Label>
                     <Form.Control as="textarea" rows={3} />
                   </Form.Group>
                 </Col>
@@ -331,14 +328,14 @@ const Booking: React.FC = () => {
           </Card>
           <br />
 
-          <Card className="mb-4 border shadow-0">
+          <Card className="p-4 mb-4 border shadow-0">
             <Card.Body>
               <Card.Title>
                 <b>Payment Information</b>
               </Card.Title>
               <Form>
                 <Row>
-                  <Col md={12}>
+                  <Col md={6}>
                     <Form.Group controlId="cardNumber">
                       <Form.Label>Credit/Debit Card Number</Form.Label>
                       <Form.Control
@@ -348,19 +345,21 @@ const Booking: React.FC = () => {
                       />
                     </Form.Group>
                   </Col>
-                  <Col md={4}>
+                  <Col md={3}>
                     <Form.Group controlId="expirationMonth">
                       <Form.Label>Expiration Month</Form.Label>
                       <Form.Control type="text" placeholder="MM" required />
                     </Form.Group>
                   </Col>
-                  <Col md={4}>
+                  <Col md={3}>
                     <Form.Group controlId="expirationYear">
                       <Form.Label>Expiration Year</Form.Label>
                       <Form.Control type="text" placeholder="YYYY" required />
                     </Form.Group>
                   </Col>
-                  <Col md={4}>
+                </Row>
+                <Row className="align-items-start">
+                  <Col>
                     <Form.Group controlId="cvv">
                       <Form.Label>CVV Number</Form.Label>
                       <Form.Control
@@ -370,16 +369,10 @@ const Booking: React.FC = () => {
                       />
                     </Form.Group>
                   </Col>
-                </Row>
-                <Row>
                   <Col>
                     <Form.Group controlId="billingZip">
                       <Form.Label>Billing Zip</Form.Label>
-                      <Form.Control
-                        type="text"
-                        placeholder="Enter billing zip"
-                        required
-                      />
+                      <Form.Control type="text" required />
                     </Form.Group>
                   </Col>
                 </Row>
@@ -395,11 +388,11 @@ const Booking: React.FC = () => {
         >
           <Card
             className="ms-lg-4 mt-4 mt-lg-0"
-            style={{ maxWidth: "320px", maxHeight: "600px" }}
+            style={{ maxWidth: "320px", maxHeight: "550px" }}
           >
             <Card.Img
               variant="top"
-              src="https://cache.marriott.com/marriottassets/marriott/MSYFD/msyfd-guestroom-0018-hor-clsc.jpg"
+              src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aG90ZWwlMjByb29tfGVufDB8fDB8fHww"
             />
             <Card.Body>
               {/* <Row>
@@ -431,23 +424,58 @@ const Booking: React.FC = () => {
                 </Col>
               </Row> */}
               <Card.Title>
-                {selectedHotelInfo.name}{" "}
-                {room.type === 0 ? "Single King" : (room.type === 1 ? "Double Queen" : "Suite")}
+                <b>{selectedHotelInfo.name}</b>{" "}
               </Card.Title>
-              <Button variant="primary">Room Details</Button>
-              <Card.Text>Thu, Mar 28, 2024 - Fri, Mar 29, 2024</Card.Text>
-              <Card.Text>1 Room, 1 Adult</Card.Text>
-              <Button variant="primary">Member Rate Flexible</Button>
-              <Card.Link href="/reservation/rateListMenu.mi?showAllRates=true">
-                Edit Stay Details
-              </Card.Link>
+              <Card.Title>
+                <b>
+                  {room.type === 0
+                    ? "Single King"
+                    : room.type === 1
+                    ? "Double Queen"
+                    : "Suite"}
+                </b>
+              </Card.Title>
+              <Card.Link>Room Details </Card.Link>
+              <Card.Text>
+                <Row>
+                  <Col md={6}>
+                    <Form.Group controlId="checkInDate">
+                      <Form.Label>Check In Date</Form.Label>
+                      <Form.Control
+                        size="sm"
+                        type="date"
+                        name="checkInDate"
+                        defaultValue={checkInDateFormatted}
+                        onChange={handleCheckInDateChange}
+                        required
+                      />
+                    </Form.Group>
+                  </Col>
+                  <Col md={6}>
+                    <Form.Group controlId="checkInDate">
+                      <Form.Label>Check Out Date</Form.Label>
+                      <Form.Control
+                        size="sm"
+                        type="date"
+                        name="checkInDate"
+                        defaultValue={checkInDateFormatted}
+                        onChange={handleCheckInDateChange}
+                        required
+                      />
+                    </Form.Group>
+                  </Col>
+                  <Form.Label>Number of Guests: {guests}</Form.Label>
+                </Row>
+              </Card.Text>
+              <Card.Link>Edit Stay Details</Card.Link>
             </Card.Body>
             <Card.Footer>
               <div className="d-flex justify-content-between align-items-center">
-                <h3 className="mb-0">Summary of Charges</h3>
+                <h6 className="mb-0">Summary of Charges</h6>
                 <div className="text-right ml-4">
-                  <span className="total-cost">210.16 USD</span>
-                  <div className="text-muted">USD Subtotal</div>
+                  <span className="total-cost" style={{ fontSize: 16 }}>
+                    210.16 USD
+                  </span>
                 </div>
               </div>
             </Card.Footer>

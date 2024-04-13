@@ -27,7 +27,7 @@ h3 {
   align-self: flex-start;
 }
 
-form {
+.form {
   width: 100%;
   display: flex;
   flex-direction: column;

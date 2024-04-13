@@ -12,6 +12,7 @@ interface Hotel {
 
 const Reservations: React.FC = () => {
   const location = useLocation();
+  console.log("🚀 ~ location:", location.state);
   const navigate = useNavigate();
   const { hotel, checkInDate, checkOutDate, guests, selectedHotel, roomType } =location.state || {};
   const initialHotels: Hotel[] = hotel ? hotel : [];
