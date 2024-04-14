@@ -43,19 +43,22 @@ const LoginPage: React.FC<LoginPageProps> = ({ onSuccess }) => {
     <>
       <div className="LoginOrganizer">
         <h1 className="WelcomeEnstay">Welcome to EnStay</h1>
+        <h3>Login to continue</h3>
         <form id="Login" onSubmit={handleLogin}>
-          <label>
+          <label className="loginlabel">
             <b>Username</b>
           </label>
           <input
+            className="input1"
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
-          <label>
+          <label className="loginlabel">
             <b>Password</b>
           </label>
           <input
+            className="input1"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}

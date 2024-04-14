@@ -1,13 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useEffect } from "react";
-import {
-  Card,
-  Row,
-  Col,
-  Form,
-  Dropdown,
-  Button,
-} from "react-bootstrap";
+import { Card, Row, Col, Form, Dropdown, Button } from "react-bootstrap";
 import "./Home.css";
 import homeImage from "../images/hotel.jpg";
 import DatePicker from "react-datepicker";
@@ -15,6 +8,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import "../components/Footer";
 import CustomCard from "../components/CustomCard";
 import { useNavigate } from "react-router-dom";
+import { FaCalendarAlt } from "react-icons/fa";
 
 const Home: React.FC = () => {
   const currentDate = new Date();
@@ -31,6 +25,14 @@ const Home: React.FC = () => {
   const [guests, setGuests] = useState(1);
   const [roomType, setRoomType] = useState("Single");
   const [roomTypes, setRoomTypes] = useState(["Single", "Double"]);
+
+  const formatDate = (dateString: string | number) => {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = ("0" + (date.getMonth() + 1)).slice(-2); // Months are 0-indexed in JavaScript
+    const day = ("0" + date.getDate()).slice(-2);
+    return `${year}-${month}-${day}`;
+  };
 
   useEffect(() => {
     if (guests >= 3) {
@@ -79,7 +81,7 @@ const Home: React.FC = () => {
           backgroundSize: "cover",
           minHeight: "100vh",
           maxHeight: "100vh",
-          width:"100%"
+          width: "100%",
         }}
       >
         <>
@@ -131,13 +133,20 @@ const Home: React.FC = () => {
                       <CustomCard title="Check In">
                         <Card.Body>
                           <Form.Group controlId="checkInDate">
-                            <DatePicker
+                            {/* <DatePicker
                               selected={checkInDate}
                               onChange={(date: Date) => setCheckInDate(date)}
                               dateFormat="E MMM dd, yyyy"
                               minDate={new Date()}
                               className="form-control"
-                            />
+                            /> */}
+                            <Form.Control
+                              type="date"
+                              defaultValue={formatDate(Date())}
+                              onChange={(e) =>
+                                setCheckInDate(new Date(e.target.value))
+                              }
+                            ></Form.Control>
                           </Form.Group>
                         </Card.Body>
                       </CustomCard>
@@ -146,13 +155,20 @@ const Home: React.FC = () => {
                       <CustomCard title="Check Out">
                         <Card.Body>
                           <Form.Group controlId="checkOutDate">
-                            <DatePicker
+                            {/* <DatePicker
                               selected={checkOutDate}
                               onChange={(date: Date) => setCheckOutDate(date)}
                               dateFormat="E MMM dd, yyyy"
                               minDate={checkInDate || new Date()}
                               className="form-control"
-                            />
+                            /> */}
+                             <Form.Control
+                              type="date"
+                              defaultValue={formatDate(Date())}
+                              onChange={(e) =>
+                                setCheckOutDate(new Date(e.target.value))
+                              }
+                            ></Form.Control>
                           </Form.Group>
                         </Card.Body>
                       </CustomCard>
