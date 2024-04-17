@@ -227,6 +227,7 @@ namespace Selu383.SP24.Api.Features.Reservations
                     RoomId = x.RoomId,
                     CheckInDate = x.CheckInDate,
                     CheckOutDate = x.CheckOutDate,
+                    NumberOfGuests=x.NumberOfGuests
                 }); ;
         }
 
