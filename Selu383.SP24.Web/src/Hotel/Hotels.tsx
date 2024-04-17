@@ -15,6 +15,7 @@ const Reservations: React.FC = () => {
   console.log("🚀 ~ location:", location.state);
   const navigate = useNavigate();
   const { hotel, checkInDate, checkOutDate, guests, selectedHotel, roomType } =location.state || {};
+  console.log("🚀 ~ checkOutDate:", checkOutDate)
   const initialHotels: Hotel[] = hotel ? hotel : [];
   const [hotels, setHotels] = useState<Hotel[]>(initialHotels);
   const [searchQuery, setSearchQuery] = useState("");

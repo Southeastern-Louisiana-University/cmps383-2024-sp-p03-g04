@@ -3,12 +3,10 @@ import React, { useState, useEffect } from "react";
 import { Card, Row, Col, Form, Dropdown, Button } from "react-bootstrap";
 import "./Home.css";
 import homeImage from "../images/hotel.jpg";
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "../components/Footer";
 import CustomCard from "../components/CustomCard";
 import { useNavigate } from "react-router-dom";
-import { FaCalendarAlt } from "react-icons/fa";
 
 const Home: React.FC = () => {
   const currentDate = new Date();
@@ -28,9 +26,9 @@ const Home: React.FC = () => {
 
   const formatDate = (dateString: string | number) => {
     const date = new Date(dateString);
-    const year = date.getFullYear();
-    const month = ("0" + (date.getMonth() + 1)).slice(-2); // Months are 0-indexed in JavaScript
-    const day = ("0" + date.getDate()).slice(-2);
+    const year = date.getUTCFullYear();
+    const month = ("0" + (date.getUTCMonth() + 1)).slice(-2); // Months are 0-indexed in JavaScript
+    const day = ("0" + date.getUTCDate()).slice(-2);
     return `${year}-${month}-${day}`;
   };
 
