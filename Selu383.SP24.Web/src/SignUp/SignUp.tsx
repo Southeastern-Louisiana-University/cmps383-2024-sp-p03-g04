@@ -62,6 +62,7 @@ const SignupPage: React.FC<SignupPageProps> = ({ onSuccess }) => {
             <b>Email</b>
           </label>
           <input
+          className="input1"
             type="text"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -70,6 +71,7 @@ const SignupPage: React.FC<SignupPageProps> = ({ onSuccess }) => {
             <b>Username</b>
           </label>
           <input
+          className="input1"
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
@@ -78,6 +80,7 @@ const SignupPage: React.FC<SignupPageProps> = ({ onSuccess }) => {
             <b>Password</b>
           </label>
           <input
+          className="input1"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}

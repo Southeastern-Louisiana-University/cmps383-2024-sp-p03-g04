@@ -6,6 +6,7 @@ using Selu383.SP24.Api.Features.Authorization;
 using Selu383.SP24.Api.Features.Rooms;
 using Microsoft.AspNetCore.Identity;
 using Selu383.SP24.Api.Extensions;
+using Microsoft.Data.SqlClient;
 
 namespace Selu383.SP24.Api.Features.Reservations
 {
@@ -128,38 +129,55 @@ namespace Selu383.SP24.Api.Features.Reservations
 
         [HttpPost]
         [Authorize]
-        public async Task<ActionResult<ReservationDto>> CreateReservation(ReservationDto dto)
+       public async Task<ActionResult<ReservationDto>> CreateReservation(ReservationDto dto)
+{
+    var userID = User.GetCurrentUserId();
+
+    // Check if the room is available for the entire duration of the stay
+    for (var date = dto.CheckInDate; date < dto.CheckOutDate; date = date.AddDays(1))
+    {
+        if (IsRoomOccupied(dto.RoomId, dto.HotelId, dto.CheckInDate, dto.CheckOutDate))
         {
-            var userID = User.GetCurrentUserId();
-
-            // Check if the room is available for the entire duration of the stay
-            for (var date = dto.CheckInDate; date < dto.CheckOutDate; date = date.AddDays(1))
-            {
-                if (IsRoomOccupied(dto.RoomId, dto.HotelId, dto.CheckInDate, dto.CheckOutDate))
-                {
-                    return BadRequest("The room is not available for the entire duration of the stay.");
-                }
-            }
-
-            // Create new reservation
-            var reservation = new Reservation
-            {
-                GuestId = (int)userID,
-                RoomId = dto.RoomId,
-                HotelId = dto.HotelId,
-                CheckInDate = dto.CheckInDate,
-                CheckOutDate = dto.CheckOutDate,
-                NumberOfGuests = dto.NumberOfGuests,
-                IsPaid = dto.IsPaid,
-                ConfirmationNumber = "EN" + Guid.NewGuid().ToString("N").Substring(0, 8).ToUpper(),
-            };
-            reservations.Add(reservation);
-            dataContext.SaveChanges();
-            dto.Id = reservation.Id;
-            dto.ConfirmationNumber = reservation.ConfirmationNumber;
-
-            return Ok(dto);
+            return BadRequest("The room is not available for the entire duration of the stay.");
         }
+    }
+
+    // Create new reservation
+    var reservation = new Reservation
+    {
+        GuestId = (int)userID,
+        RoomId = dto.RoomId,
+        HotelId = dto.HotelId,
+        CheckInDate = dto.CheckInDate,
+        CheckOutDate = dto.CheckOutDate,
+        NumberOfGuests = dto.NumberOfGuests,
+        IsPaid = dto.IsPaid,
+        ConfirmationNumber = "EN" + Guid.NewGuid().ToString("N").Substring(0, 8).ToUpper(),
+    };
+    reservations.Add(reservation);
+    
+    try
+    {
+        dataContext.SaveChanges();
+    }
+    catch (DbUpdateException ex)
+    {
+        if (ex.InnerException is SqlException sqlException && (sqlException.Number == 547 || sqlException.Number == 2627))
+        {
+            // Handle foreign key violation
+            return BadRequest("Foreign key violation: " + ex.InnerException.Message);
+        }
+        else
+        {
+            throw;
+        }
+    }
+
+    dto.Id = reservation.Id;
+    dto.ConfirmationNumber = reservation.ConfirmationNumber;
+
+    return CreatedAtAction(nameof(GetReservation), new { id = reservation.Id }, dto);
+}
 
 
         [HttpPut("{id}")]
@@ -209,6 +227,7 @@ namespace Selu383.SP24.Api.Features.Reservations
                     RoomId = x.RoomId,
                     CheckInDate = x.CheckInDate,
                     CheckOutDate = x.CheckOutDate,
+                    NumberOfGuests=x.NumberOfGuests
                 }); ;
         }
 

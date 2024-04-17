@@ -12,6 +12,7 @@ public static class SeedHelper
     public static async Task MigrateAndSeed(IServiceProvider serviceProvider)
     {
         var dataContext = serviceProvider.GetRequiredService<DataContext>();
+        var userManager = serviceProvider.GetRequiredService<UserManager<User>>();
 
         await dataContext.Database.MigrateAsync();
 
@@ -19,7 +20,7 @@ public static class SeedHelper
         await AddUsers(serviceProvider);
         await AddHotels(dataContext);
         await AddRooms(dataContext);
-        await AddReservations(dataContext);
+        await AddReservations(dataContext,userManager);
 
     }
 
@@ -182,9 +183,10 @@ public static class SeedHelper
     }
 
 
-    private static async Task AddReservations(DataContext dataContext)
+    private static async Task AddReservations(DataContext dataContext,UserManager<User> userManager)
     {
         var reservations = dataContext.Set<Reservation>();
+        var users = await userManager.Users.ToListAsync(); 
 
         if (await reservations.AnyAsync())
         {
@@ -192,12 +194,12 @@ public static class SeedHelper
         }
 
 
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < users.Count; i++)
         {
             dataContext.Set<Reservation>()
                 .Add(new Reservation
                 {
-                    GuestId = i,
+                    GuestId = users[i].Id,
                     HotelId = i + 1,
                     RoomId = i + 1,
                     CheckInDate = DateTime.Now.AddDays(i * 7),

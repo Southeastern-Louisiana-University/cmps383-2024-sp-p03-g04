@@ -12,8 +12,10 @@ interface Hotel {
 
 const Reservations: React.FC = () => {
   const location = useLocation();
+  console.log("🚀 ~ location:", location.state);
   const navigate = useNavigate();
   const { hotel, checkInDate, checkOutDate, guests, selectedHotel, roomType } =location.state || {};
+  console.log("🚀 ~ checkOutDate:", checkOutDate)
   const initialHotels: Hotel[] = hotel ? hotel : [];
   const [hotels, setHotels] = useState<Hotel[]>(initialHotels);
   const [searchQuery, setSearchQuery] = useState("");
@@ -56,7 +58,7 @@ const Reservations: React.FC = () => {
 
   return (
     <Container fluid style={{ width: "80%" }}>
-      <h1>Hotels</h1>
+      <h1 >Hotels</h1>
       <Row>
         {/* <Col>
           <Form className="mb-3">
