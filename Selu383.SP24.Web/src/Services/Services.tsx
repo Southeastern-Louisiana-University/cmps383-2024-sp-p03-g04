@@ -1,51 +1,64 @@
 import React from 'react';
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col, Card } from "react-bootstrap";
+import { useNavigate } from "react-router-dom"; 
 import "./services.css";
 
 const Services: React.FC = () => {
+  const navigate = useNavigate(); 
+
+  const navigateToPage = (page: string) => {
+    console.log("Navigating to:", page);
+    navigate(page);
+  };
+
+
   return (
     <Container fluid className="services-container">
-      <h2 className="service-heading">Services</h2>
-      <Row>
-      <Col md={6} lg={6} className="service">
-          <img
-            src="https://imgs.search.brave.com/gN-PgM25KQ34k3Cq2qyyrR25a1RczQd7H7Vl--HwjYw/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9pMC53/cC5jb20vdGhlcG9p/bnRzZ3V5LmNvbS93/cC1jb250ZW50L3Vw/bG9hZHMvMjAxOC8x/MS9wYXJrLWh5YXR0/LXRva3lvLWhvdGVs/X3Bob3RvLXZpYS1i/b29raW5nLWRvdC1j/b20uanBnP2ZpdD0x/MjgwLDg1M3B4JnNz/bD0x" // Replace with actual URL or import the image
-            alt="Swimming Pool"
-            className="service-icon"
-          />
-          <h3>Swimming Pool</h3>
-          <p>Cool off and relax in our indoor swimming pool.</p>
+    <h2 className="service-heading">Services</h2>
+    <Row>
+      <Col md={4}>
+        <Card onClick={() => navigateToPage('/services/enstay-baronne')} className="service">
+            <Card.Img
+              variant="top"
+              src="https://imgs.search.brave.com/gxyAXk_M9YVHmRf7_WqGtcyE-Y82ndk7rGVdV5PIxik/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvOTA3/NjE0NDUwL3Bob3Rv/L2x1eHVyeS1yZXNv/cnQtaG90ZWwtd2l0/aC1zd2ltbWluZy1w/b29sLWF0LXN1bnNl/dC5qcGc_cz02MTJ4/NjEyJnc9MCZrPTIw/JmM9ZVVpanp3LU1r/UHcwMEhBdzQ2NEkz/bXdhNGIxN3locmZ2/aDVIaUdaaUVxbz0"
+              alt="EnStay Baronne"
+              className="service-icon"
+            />
+            <Card.Body>
+              <Card.Title><b>EnStay Baronne</b></Card.Title>
+              <Card.Text>225 Baronne St, New Orleans, LA 70112</Card.Text>
+            </Card.Body>
+          </Card>
         </Col>
-        <Col md={6} lg={6} className="service">
-          <img
-            src="https://imgs.search.brave.com/EMdTaQqMmGhpDARcG6RMYRegyw9n91r6APjnNfdTE0I/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5nZXR0eWltYWdl/cy5jb20vaWQvMTg0/ODYyNzkyL3Bob3Rv/L2JyZWFrZmFzdC1j/b2ZmZWUtYW5kLW11/ZmZpbi5qcGc_cz02/MTJ4NjEyJnc9MCZr/PTIwJmM9T2Q0QmtW/aTdYUUJfZy1DR0Yx/UDJUQUdKY20yNTdC/RnNOQzhSMzR2Y1Ax/WT0" // Replace with actual URL or import the image
-            alt="Free Breakfast"
-            className="service-icon"
-          />
-          <h3>Free Breakfast</h3>
-          <p>Start your day with a complimentary breakfast buffet.</p>
-        </Col>
-      </Row>
-      <Row>
-        <Col md={6} lg={6} className="service">
-          <img
-            src="https://imgs.search.brave.com/ynGpdwNK7q9WmBnpnfDxcEjK3vXO6sAy6C-r7rZee2c/rs:fit:860:0:0/g:ce/aHR0cHM6Ly93d3cu/MWhvdGVscy5jb20v/c2l0ZXMvMWhvdGVs/cy5jb20vZmlsZXMv/c3R5bGVzL2NhcmQv/cHVibGljL2JyYW5k/Zm9sZGVyL3I2Z2ht/anN0emdmN3F6anJ3/MmtmNy8xX0hvdGVs/X1NGXy1fVGhlX0Zp/ZWxkX0hvdXNldzE0/NDAucG5nP2g9NTAy/ZTc1ZmEmaXRvaz1f/c0lYbExORQ" // Replace with actual URL or import the image
-            alt="Gym"
-            className="service-icon"
-          />
-          <h3>Gym</h3>
-          <p>Stay active during your stay with our fully equipped fitness center.</p>
-        </Col>
-       
 
-        <Col md={6} lg={6} className="service">
-          <img
-            src="https://imgs.search.brave.com/472d9lJ4o_cB9y2ro3kmRb5uYtIu18TvYtq0FNMDU_g/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9pMC53/cC5jb20vdHJhdmVs/YXdhaXRzLmNvbS93/cC1jb250ZW50L3Vw/bG9hZHMvMjAyMi8w/OC9LaW1wdG9uLVZp/dmFkb3JhLVBldC1Q/aXhsZWUtNzY4eDYx/NC1FcmlrYS1FYnN3/b3J0aC1Hb29sZC5q/cGVnP3Jlc2l6ZT04/MDAsNjQwJnNzbD0x" // Replace with actual URL or import the image
-            alt="Pet Friendly"
-            className="service-icon"
-          />
-          <h3>Pet Friendly</h3>
-          <p>Bring your furry friends along! We offer pet-friendly accommodations.</p>
+        <Col md={4}>
+          <Card onClick={() => navigateToPage('/services/enstay-esplanade')} className="service">
+            <Card.Img
+              variant="top"
+              src="https://imgs.search.brave.com/4w12ClGdBu4SQk1uvS8XtjwBbPc3Aj5lKad_LAkXRPE/rs:fit:860:0:0/g:ce/aHR0cHM6Ly90NC5m/dGNkbi5uZXQvanBn/LzAyLzQ5Lzg5LzAz/LzM2MF9GXzI0OTg5/MDM5NV9GNEVtUG9x/aHN0OXFPc0hlOGoy/d1EyRXM3eWxrVEJv/WS5qcGc"
+              alt="EnStay Esplanade"
+              className="service-icon"
+            />
+            <Card.Body>
+              <Card.Title><b>EnStay Esplanade</b></Card.Title>
+              <Card.Text> 405 Esplanade Ave, New Orleans, LA 70116</Card.Text>
+            </Card.Body>
+          </Card>
+        </Col>
+
+        <Col md={4}>
+          <Card onClick={() => navigateToPage('/services/enstay-convention')} className="service">
+            <Card.Img
+              variant="top"
+              src="https://imgs.search.brave.com/0aaguDzkA4D6I7XMGx_VGDp-gGJcDDrWo8_FidTdxxI/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvNTAz/MDE2OTM0L3Bob3Rv/L2VudHJhbmNlLW9m/LWx1eHVyeS1ob3Rl/bC5qcGc_cz02MTJ4/NjEyJnc9MCZrPTIw/JmM9RFhGenVjQjJ4/V0dmM1BJNl95amhM/S0R2ckZjR2xPcE9q/WGg2S0RJOHJxVT0" 
+              alt="EnStay Convention"
+              className="service-icon"
+            />
+            <Card.Body>
+              <Card.Title><b>EnStay Convention</b></Card.Title>
+              <Card.Text>200 Convention St, Baton Rouge, LA 70801</Card.Text>
+            </Card.Body>
+          </Card>
         </Col>
       </Row>
     </Container>

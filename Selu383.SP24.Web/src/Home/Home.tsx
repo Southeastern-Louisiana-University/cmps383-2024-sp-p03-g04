@@ -3,12 +3,10 @@ import React, { useState, useEffect } from "react";
 import { Card, Row, Col, Form, Dropdown, Button } from "react-bootstrap";
 import "./Home.css";
 import homeImage from "../images/hotel.jpg";
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "../components/Footer";
 import CustomCard from "../components/CustomCard";
 import { useNavigate } from "react-router-dom";
-import { FaCalendarAlt } from "react-icons/fa";
 
 const Home: React.FC = () => {
   const currentDate = new Date();
@@ -28,9 +26,9 @@ const Home: React.FC = () => {
 
   const formatDate = (dateString: string | number) => {
     const date = new Date(dateString);
-    const year = date.getFullYear();
-    const month = ("0" + (date.getMonth() + 1)).slice(-2); // Months are 0-indexed in JavaScript
-    const day = ("0" + date.getDate()).slice(-2);
+    const year = date.getUTCFullYear();
+    const month = ("0" + (date.getUTCMonth() + 1)).slice(-2); // Months are 0-indexed in JavaScript
+    const day = ("0" + date.getUTCDate()).slice(-2);
     return `${year}-${month}-${day}`;
   };
 
@@ -270,7 +268,13 @@ const Home: React.FC = () => {
                   />
                 </div>
                 <div className="content">
-                  <p>
+                  <p
+                  style={{
+                    color: "#343a40",
+                    fontFamily: "Georgia, serif",
+                    fontSize: "20px",
+                    alignItems: "right",
+                  }}>
                     EnStay welcomes you to Louisiana's finest in luxury
                     accommodations. With prime locations in New Orleans and
                     Baton Rouge, our hotels epitomize elegance and comfort. From
@@ -284,23 +288,7 @@ const Home: React.FC = () => {
                   </p>
                 </div>
               </section>{" "}
-              <br />
-              <br />
-              <br />
-              <br />
-              <h3>Our Commitment:</h3>
-              <p>
-                At EnStay, we are dedicated to providing our guests with
-                exceptional service and unforgettable experiences. Whether
-                you're traveling for business or pleasure, our friendly staff is
-                here to ensure that your stay is nothing short of extraordinary.
-              </p>
-              <p>
-                Indulge in luxury, immerse yourself in Southern hospitality, and
-                make EnStay your home away from home. We look forward to
-                welcoming you to EnStay and making your visit to Louisiana truly
-                memorable.
-              </p>
+             
             </Col>
           </Row>
         </>

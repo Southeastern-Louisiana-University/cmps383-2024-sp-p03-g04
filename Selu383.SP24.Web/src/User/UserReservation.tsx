@@ -12,7 +12,18 @@ interface Reservation {
 
 function UserReservation() {
   const [reservations, setReservations] = useState<Reservation[]>([]);
-
+  console.log("🚀 ~ UserReservation ~ reservations:", reservations)
+  const formatDate = (dateString: string | number) => {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    const month = monthNames[date.getMonth()]; // Months are 0-indexed in JavaScript
+    const day = date.getDate();
+    const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const dayOfWeek = dayNames[date.getDay()];
+    return `${year} ${month} ${day} ${dayOfWeek}`;
+  };
+  
   useEffect(() => {
     fetch("/api/reservations")
       .then((response) => {
@@ -23,6 +34,7 @@ function UserReservation() {
         }
       })
       .then((reservationsData: Reservation[]) => {
+        console.log("🚀 ~ .then ~ reservationsData:", reservationsData)
         setReservations(reservationsData);
       })
       .catch((error) => {
@@ -41,8 +53,8 @@ function UserReservation() {
               <Card.Body>
                 <Card.Title>Reservation {reservation.id}</Card.Title>
                 <Card.Text>
-                  Check-in Date: {reservation.checkInDate}<br />
-                  Check-out Date: {reservation.checkOutDate}<br />
+                  Check-in Date: {formatDate(reservation.checkInDate)}<br />
+                  Check-out Date: {formatDate(reservation.checkOutDate)}<br />
                   Number of Guests: {reservation.numberOfGuests}<br />
                 </Card.Text>
                 <Button variant="primary">View Details</Button>

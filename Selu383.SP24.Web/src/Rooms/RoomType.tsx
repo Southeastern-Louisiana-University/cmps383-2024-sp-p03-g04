@@ -45,6 +45,7 @@ const RoomType: React.FC = () => {
   // const initialHotels: Hotel = location.state ? location.state.hotel : [];
   const checkInDateFormatted = checkInDate ? formatDate(checkInDate) : "";
   const checkOutDateFormatted = checkOutDate ? formatDate(checkOutDate) : "";
+  console.log("🚀 ~ checkOutDateFormatted:", checkOutDateFormatted)
   const [selectedHotelInfo] = useState<Hotel>(hotel);
   const [rooms, setRooms] = useState<any[]>([]);
   const roomTypeNames = {
@@ -77,8 +78,8 @@ const RoomType: React.FC = () => {
   }, []);
 
   const handleViewRooms = (room: any) => {
-    console.log("🚀 ~ handleViewRooms ~ room:", room)
-    navigate("/reservations/rooms/booking", {
+    console.log("🚀 ~ handleViewRooms ~ room:", room);
+    navigate(`/reservations/rooms/booking`, {
       state: {
         selectedHotelInfo,
         checkInDateFormatted,
@@ -142,7 +143,7 @@ const RoomType: React.FC = () => {
                           className="btn btn-success"
                           style={{ marginLeft: "70%" }}
                           onClick={() => {
-                            handleViewRooms(roomType);
+                            handleViewRooms(room);
                           }}
                         >
                           Book Now
