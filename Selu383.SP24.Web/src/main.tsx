@@ -17,6 +17,9 @@ import Contact from "./Contact/Contact.tsx";
 import About from "./About/About.tsx";
 import Room from "./Rooms/Rooms.tsx";
 import Services from "./Services/Services.tsx";
+import Baronne from "./Services/Baronne.tsx";
+import Esplanade from "./Services/Esplanade.tsx";
+import Convention from "./Services/Convention.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <BrowserRouter>
@@ -63,6 +66,10 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
           <Route path="/services" element={<Services />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/book a room" element={<Reservations />} />
+          <Route path="/services/enstay-baronne" element={<Baronne />} />
+          <Route path="/services/enstay-esplanade" element={<Esplanade />} />
+          <Route path="/services/enstay-convention" element={<Convention />} />
+
         </Route>
       </Routes>
     </UserProvider>

@@ -24,6 +24,7 @@ const About: React.FC = () => {
                   objectFit: "cover",
                   maxHeight: "75vh",
                   width: "100%",
+                  borderRadius: "20px",
                 }}
               />
             </Carousel.Item>
@@ -37,6 +38,7 @@ const About: React.FC = () => {
                   objectFit: "cover",
                   maxHeight: "75vh",
                   width: "100%",
+                  borderRadius: "20px",
                 }}
               />
             </Carousel.Item>
@@ -50,6 +52,7 @@ const About: React.FC = () => {
                   objectFit: "cover",
                   maxHeight: "75vh",
                   width: "100%",
+                  borderRadius: "20px",
                 }}
               />
             </Carousel.Item>
@@ -130,17 +133,22 @@ const About: React.FC = () => {
 
           <Col sm={12} md={6} lg={4}>
             <Card className="mb-3" style={{ fontFamily: "Georgia, serif" }}>
-            <Card.Img variant="top" src="https://imgs.search.brave.com/0aaguDzkA4D6I7XMGx_VGDp-gGJcDDrWo8_FidTdxxI/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvNTAz/MDE2OTM0L3Bob3Rv/L2VudHJhbmNlLW9m/LWx1eHVyeS1ob3Rl/bC5qcGc_cz02MTJ4/NjEyJnc9MCZrPTIw/JmM9RFhGenVjQjJ4/V0dmM1BJNl95amhM/S0R2ckZjR2xPcE9q/WGg2S0RJOHJxVT0" />
-            <Card.Body>
-              <Card.Title><b>EnStay Convention</b></Card.Title>
-              <Card.Text>
-                Address: 200 Convention St, Baton Rouge, LA 70801 <br />
-                Located in downtown Baton Rouge, EnStay Convention is the perfect
-                choice for business travelers and convention attendees. Our hotel
-                offers sophisticated meeting spaces and easy access to the city's
-                business district and entertainment.
-              </Card.Text>
-            </Card.Body>
+              <Card.Img
+                variant="top"
+                src="https://imgs.search.brave.com/0aaguDzkA4D6I7XMGx_VGDp-gGJcDDrWo8_FidTdxxI/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvNTAz/MDE2OTM0L3Bob3Rv/L2VudHJhbmNlLW9m/LWx1eHVyeS1ob3Rl/bC5qcGc_cz02MTJ4/NjEyJnc9MCZrPTIw/JmM9RFhGenVjQjJ4/V0dmM1BJNl95amhM/S0R2ckZjR2xPcE9q/WGg2S0RJOHJxVT0"
+              />
+              <Card.Body>
+                <Card.Title>
+                  <b>EnStay Convention</b>
+                </Card.Title>
+                <Card.Text>
+                  Address: 200 Convention St, Baton Rouge, LA 70801 <br />
+                  Located in downtown Baton Rouge, EnStay Convention is the
+                  perfect choice for business travelers and convention
+                  attendees. Our hotel offers sophisticated meeting spaces and
+                  easy access to the city's business district and entertainment.
+                </Card.Text>
+              </Card.Body>
             </Card>
           </Col>
         </Row>
