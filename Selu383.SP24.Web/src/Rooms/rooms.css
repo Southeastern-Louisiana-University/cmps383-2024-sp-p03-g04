@@ -1,0 +1,26 @@
+.rooms-container {
+    font-family: Georgia, serif;
+  }
+  
+  .rooms-heading {
+    color: #343a40;
+    font-size: 3rem;
+    margin-bottom: 20px;
+    margin-top: 30px;
+  }
+  
+  .room {
+    display: flex;
+    flex-direction: row; 
+    margin-bottom: 50px; 
+  }
+  
+  .room .card-img-top {
+    max-width: 50%; 
+  }
+  
+  .room .card-body {
+    flex: 1; 
+    padding: 20px; 
+  }
+  

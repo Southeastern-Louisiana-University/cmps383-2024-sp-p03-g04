@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "./footer.css";
 
 const Footer: React.FC = () => {
@@ -7,8 +8,14 @@ const Footer: React.FC = () => {
       <div className="footer-container">
         <div className="footer-guest-info">
           <h5 className="footer-title">Guest Information</h5>
-          <p>Why EnStay</p>
-          <p>Locations</p>
+          <Link to="/about" className="footer-link">
+            Why EnStay
+          </Link>
+          <br />
+
+          <Link to="/services" className="footer-link">
+            Locations
+          </Link>
         </div>
 
         <div className="footer-contact">

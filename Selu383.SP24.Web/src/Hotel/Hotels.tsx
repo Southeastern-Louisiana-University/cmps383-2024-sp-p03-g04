@@ -57,7 +57,7 @@ const Reservations: React.FC = () => {
 
   return (
     <Container fluid style={{ width: "80%" }}>
-      <h1>Hotels</h1>
+      <h1 >Hotels</h1>
       <Row>
         {/* <Col>
           <Form className="mb-3">
