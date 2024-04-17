@@ -76,6 +76,33 @@ namespace Selu383.SP24.Api.Controllers
             return Ok(roomDtos);
         }
 
+        [HttpGet("{roomId}")]
+
+        public async Task<ActionResult<RoomDto>> GetRoom(int hotelId, int roomId)
+        {
+            var room = await Rooms.FirstOrDefaultAsync(x => x.Id == roomId && x.HotelId == hotelId);
+            if (room == null)
+            {
+                return NotFound();
+            }
+
+            var roomDto = new RoomDto
+            {
+                Id = room.Id,
+                Type = room.Type,
+                Number = room.Number,
+                IsPremium = room.IsPremium,
+                Description = room.Description,
+                Price = room.Price,
+                Capacity = room.Capacity,
+                IsClean = room.IsClean,
+                IsOccupied = room.IsOccupied,
+                HotelId = room.HotelId
+            };
+
+            return Ok(roomDto);
+        }
+        
         [HttpGet("types")]
         [Authorize(Roles = RoleNames.Admin)]
         public async Task<ActionResult<IEnumerable<RoomTypeDto>>> GetRoomTypesByHotel(int hotelId)

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from "react";
 import {
@@ -23,6 +24,7 @@ const Booking: React.FC = () => {
     room,
     guests,
   } = location.state || {};
+
   console.log("🚀 ~ room:", room);
 
   // Hotel booking form state (consider using a form library like Formik for complex forms)
@@ -111,6 +113,7 @@ const Booking: React.FC = () => {
 
     const reservation = {
       RoomId: room.id,
+      UserId: user?.id,
       HotelId: selectedHotelInfo.id,
       CheckInDate: checkInDate,
       CheckOutDate: checkOutDate,
@@ -119,26 +122,30 @@ const Booking: React.FC = () => {
       ConfirmationNumber: "1",
     };
 
-    const response = await fetch("/api/reservations", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        // include your authorization header
-      },
-      body: JSON.stringify(reservation),
-    });
+    const createReservation = async () => {
+      const response = await fetch("/api/reservations", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          // include your authorization header
+        },
+        body: JSON.stringify(reservation),
+      });
 
-    if (response.ok) {
-      toast.success("Your Reservation has been created successfully", {
-        transition: Slide,
-      });
-      sendEmail();
-    } else {
-      const error = await response.text();
-      toast.error(error, {
-        transition: Slide,
-      });
-    }
+      if (response.ok) {
+        toast.success("Your Reservation has been created successfully", {
+          transition: Slide,
+        });
+        sendEmail();
+      } else {
+        const error = await response.text();
+        toast.error(error, {
+          transition: Slide,
+        });
+      }
+    };
+
+    createReservation();
   };
 
   return (

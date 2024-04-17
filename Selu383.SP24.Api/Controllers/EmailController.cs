@@ -24,7 +24,7 @@ namespace Selu383.SP24.Api.Controllers
         {
             try
             {
-                var apiKey = _configuration.GetSection("SendGridApiKey").Value;
+                var apiKey = _configuration.GetSection("SendgridApiKey").Value;
 
                 var client = new SendGridClient(apiKey);
 

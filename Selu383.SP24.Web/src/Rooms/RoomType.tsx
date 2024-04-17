@@ -77,8 +77,8 @@ const RoomType: React.FC = () => {
   }, []);
 
   const handleViewRooms = (room: any) => {
-    console.log("🚀 ~ handleViewRooms ~ room:", room)
-    navigate("/reservations/rooms/booking", {
+    console.log("🚀 ~ handleViewRooms ~ room:", room);
+    navigate(`/reservations/rooms/booking`, {
       state: {
         selectedHotelInfo,
         checkInDateFormatted,
@@ -142,7 +142,7 @@ const RoomType: React.FC = () => {
                           className="btn btn-success"
                           style={{ marginLeft: "70%" }}
                           onClick={() => {
-                            handleViewRooms(roomType);
+                            handleViewRooms(room);
                           }}
                         >
                           Book Now
