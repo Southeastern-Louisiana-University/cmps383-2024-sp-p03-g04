@@ -7,6 +7,7 @@ using Selu383.SP24.Api.Features.Rooms;
 using Microsoft.AspNetCore.Identity;
 using Selu383.SP24.Api.Extensions;
 using Microsoft.Data.SqlClient;
+using System.Security.Claims;
 
 namespace Selu383.SP24.Api.Features.Reservations
 {
@@ -48,6 +49,18 @@ namespace Selu383.SP24.Api.Features.Reservations
                 return NotFound();
             }
             return Ok(reservation);
+        }
+        [HttpGet("user/{userId}")]
+        [Authorize]
+        public ActionResult<IEnumerable<ReservationDto>> GetReservationsByUserId(int userId)
+        {
+           
+            var userReservations = reservations.Where(r => r.GuestId == userId);
+            if (!userReservations.Any())
+            {
+                return NotFound();
+            }
+            return Ok(GetReservationsDto(userReservations));
         }
 
         [HttpGet("date/{checkInDate}")]
@@ -227,7 +240,9 @@ namespace Selu383.SP24.Api.Features.Reservations
                     RoomId = x.RoomId,
                     CheckInDate = x.CheckInDate,
                     CheckOutDate = x.CheckOutDate,
-                    NumberOfGuests=x.NumberOfGuests
+                    NumberOfGuests=x.NumberOfGuests,
+                    ConfirmationNumber=x.ConfirmationNumber
+           
                 }); ;
         }
 
