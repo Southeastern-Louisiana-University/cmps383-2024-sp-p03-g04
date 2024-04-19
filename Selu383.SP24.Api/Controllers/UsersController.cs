@@ -186,3 +186,26 @@ public class UsersController : ControllerBase
 
 
 }
+
+[HttpGet("{email}")]
+[Authorize(Roles = RoleNames.Admin)]
+public async Task<ActionResult<UserDto>> GetUserByIdorName(string email)
+{
+    var user = await userManager.FindByEmailAsync(email);
+
+    if (user == null)
+    {
+        return NotFound();
+    }
+
+    // Create the user DTO
+    var userDto = new UserDto
+    {
+        Id = user.Id,
+        UserName = user.UserName,
+        Email = user.Email,
+        Roles = (await userManager.GetRolesAsync(user)).ToArray()
+    };
+
+    return Ok(userDto);
+}
