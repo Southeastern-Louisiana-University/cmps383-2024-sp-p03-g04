@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Card } from "react-bootstrap";
 import { useLocation, useNavigate } from "react-router-dom";
+import { formatDate } from "../Utils/dateUtils";
 
 interface Hotel {
   name: string;
@@ -13,9 +14,11 @@ interface Hotel {
 const Reservations: React.FC = () => {
   const location = useLocation();
   console.log("🚀 ~ location:", location.state);
+  
   const navigate = useNavigate();
   const { hotel, checkInDate, checkOutDate, guests, selectedHotel, roomType } =location.state || {};
   console.log("🚀 ~ checkOutDate:", checkOutDate)
+  
   const initialHotels: Hotel[] = hotel ? hotel : [];
   const [hotels, setHotels] = useState<Hotel[]>(initialHotels);
   const [searchQuery, setSearchQuery] = useState("");
@@ -52,7 +55,7 @@ const Reservations: React.FC = () => {
   const handleViewRooms = (hotel: Hotel) => {
     console.log("🚀 ~ handleViewRooms ~ hotel:", hotel);
     navigate("/reservations/rooms", {
-      state: { hotel, checkInDate, checkOutDate, guests, roomType },
+      state: { hotel, checkInDate, checkOutDate: formatDate(checkOutDate), guests, roomType },
     });
   };
 
@@ -97,7 +100,7 @@ const Reservations: React.FC = () => {
                 {/* Replace with your image source */}
               </Col>
               <Col md={9}>
-                <Card.Body style={{ fontFamily: "sans-serif" }}>
+                <Card.Body>
                   <Card.Title style={{ fontSize: "30px", fontWeight: "700" }}>
                     {hotel.name}
                   </Card.Title>

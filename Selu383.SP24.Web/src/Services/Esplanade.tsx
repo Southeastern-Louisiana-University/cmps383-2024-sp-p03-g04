@@ -4,8 +4,7 @@ import "./services.css";
 
 const Esplanade: React.FC = () => {
   return (
-    <Container fluid className="services-container">
-      <h2 className="service-heading">Services</h2>
+    <Container fluid style={{paddingTop:'5rem'}}>
       <Row>
         <Col md={6} lg={6} className="service">
           <img
@@ -16,8 +15,7 @@ const Esplanade: React.FC = () => {
           <h3>Free Breakfast</h3>
           <p>Start your day with a complimentary breakfast buffet.</p>
         </Col>
-      </Row>
-      <Row>
+
         <Col md={6} lg={6} className="service">
           <img
             src="https://imgs.search.brave.com/ynGpdwNK7q9WmBnpnfDxcEjK3vXO6sAy6C-r7rZee2c/rs:fit:860:0:0/g:ce/aHR0cHM6Ly93d3cu/MWhvdGVscy5jb20v/c2l0ZXMvMWhvdGVs/cy5jb20vZmlsZXMv/c3R5bGVzL2NhcmQv/cHVibGljL2JyYW5k/Zm9sZGVyL3I2Z2ht/anN0emdmN3F6anJ3/MmtmNy8xX0hvdGVs/X1NGXy1fVGhlX0Zp/ZWxkX0hvdXNldzE0/NDAucG5nP2g9NTAy/ZTc1ZmEmaXRvaz1f/c0lYbExORQ" // Replace with actual URL or import the image

@@ -21,14 +21,7 @@ const Rooms: React.FC = () => {
           />
           <Card.Body>
             <h3>Premium Room</h3>
-            <p
-              style={{
-                color: "#343a40",
-                fontFamily: "Georgia, serif",
-                fontSize: "20px",
-                alignItems: "right",
-              }}
-            >
+            <p>
               Immerse yourself in the epitome of luxury with our Premium Rooms.
               Offering a sweeping, uninterrupted view of the tranquil beach,
               these rooms redefine seaside living. Step onto your private
@@ -47,12 +40,6 @@ const Rooms: React.FC = () => {
           <Card.Body>
             <h3>Suite Room</h3>
             <p
-              style={{
-                color: "#343a40",
-                fontFamily: "Georgia, serif",
-                fontSize: "20px",
-                alignItems: "right",
-              }}
             >
               Elevate your coastal getaway with our Suite Rooms, where comfort
               meets elegance against the backdrop of the mesmerizing beach. Each
@@ -95,14 +82,7 @@ const Rooms: React.FC = () => {
 
           <Card.Body>
             <h3>Regular Room</h3>
-            <p
-              style={{
-                color: "#343a40",
-                fontFamily: "Georgia, serif",
-                fontSize: "20px",
-                alignItems: "right",
-              }}
-            >
+            <p>
               Experience the essence of coastal charm and comfort in our Regular
               Rooms. Designed for simplicity and tranquility, these cozy
               accommodations provide a peaceful haven for your beachside

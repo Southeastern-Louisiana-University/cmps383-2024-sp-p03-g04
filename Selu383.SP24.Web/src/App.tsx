@@ -19,7 +19,7 @@ function App() {
     });
   }, []);
 
-  const items = ["Book a Room", "About", "Services", "Rooms", "Contact"];
+  const items = [ "Services",  "Rooms", "About","Contact"];
   return (
     <>
       <div className="app-container">

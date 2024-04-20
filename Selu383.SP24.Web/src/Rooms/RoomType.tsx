@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Card } from "react-bootstrap";
 import { useLocation, useNavigate } from "react-router-dom";
+import { formatDate } from "../Utils/dateUtils";
 
 interface Hotel {
   id: number;
@@ -32,20 +33,13 @@ const RoomType: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const formatDate = (dateString: string | number) => {
-    const date = new Date(dateString);
-    const year = date.getFullYear();
-    const month = ("0" + (date.getMonth() + 1)).slice(-2); // Months are 0-indexed in JavaScript
-    const day = ("0" + date.getDate()).slice(-2);
-    return `${year}-${month}-${day}`;
-  };
   const { hotel, checkInDate, checkOutDate, guests, selectedHotel } =
     location.state || {};
 
   // const initialHotels: Hotel = location.state ? location.state.hotel : [];
   const checkInDateFormatted = checkInDate ? formatDate(checkInDate) : "";
-  const checkOutDateFormatted = checkOutDate ? formatDate(checkOutDate) : "";
-  console.log("🚀 ~ checkOutDateFormatted:", checkOutDateFormatted)
+ // const checkOutDateFormatted = checkOutDate ? formatDate(checkOutDate) : "";
+  console.log("🚀 ~ checkOutDateFormatted:", checkOutDate)
   const [selectedHotelInfo] = useState<Hotel>(hotel);
   const [rooms, setRooms] = useState<any[]>([]);
   const roomTypeNames = {
@@ -74,7 +68,7 @@ const RoomType: React.FC = () => {
   };
 
   useEffect(() => {
-    getRooms(hotel.id, checkInDateFormatted, checkOutDateFormatted);
+    getRooms(hotel.id, checkInDateFormatted, checkOutDate);
   }, []);
 
   const handleViewRooms = (room: any) => {
@@ -83,7 +77,7 @@ const RoomType: React.FC = () => {
       state: {
         selectedHotelInfo,
         checkInDateFormatted,
-        checkOutDateFormatted,
+        checkOutDate,
         room,
         guests,
         selectedHotel,
