@@ -33,14 +33,14 @@ const Booking: React.FC = () => {
   const [firstName, setFirstName] = useState("");
   console.log("🚀 ~ firstName:", firstName);
   const [lastName, setLastName] = useState("");
-  console.log("🚀 ~ lastName:", lastName)
+  console.log("🚀 ~ lastName:", lastName);
   const [email, setEmail] = useState("");
   console.log("🚀 ~ email:", email);
   const [phoneNumber, setPhoneNumber] = useState("");
   console.log("🚀 ~ phoneNumber:", phoneNumber);
   const [checkInDate, setCheckInDate] = useState(checkInDateFormatted);
   const [checkOutDate, setCheckOutDate] = useState(checkOutDateFormatted);
-  console.log("🚀 ~ setCheckOutDate:", setCheckOutDate)
+  console.log("🚀 ~ setCheckOutDate:", setCheckOutDate);
 
   const { user } = useUser();
   console.log("🚀 ~ user:", user);
@@ -53,6 +53,8 @@ const Booking: React.FC = () => {
   ) => {
     setCheckInDate(event.target.value);
   };
+
+  const [ConfirmationNumber, setConfirmationNumber] = useState("");
 
   // const handleCheckOutDateChange = (
   //   event: React.ChangeEvent<HTMLInputElement>
@@ -79,7 +81,8 @@ const Booking: React.FC = () => {
         break;
     }
   };
-  const sendEmail = async () => {
+
+  const sendEmail = async (confirmationNumber: string) => {
     const response = await fetch("/api/email/sendEmail", {
       method: "POST",
       headers: {
@@ -105,6 +108,8 @@ const Booking: React.FC = () => {
           <strong>Check Out Date:</strong> ${checkOutDateFormatted}
           <br>
           <strong>Number of Guests:</strong> ${guests}
+          <br>
+          <strong>Confirmation Number:</strong> ${confirmationNumber}
           <br>`,
       }),
     });
@@ -127,7 +132,7 @@ const Booking: React.FC = () => {
       CheckOutDate: checkOutDate,
       NumberOfGuests: guests,
       IsPaid: false,
-      ConfirmationNumber: "1",
+      ConfirmationNumber: ConfirmationNumber,
     };
 
     const createReservation = async () => {
@@ -141,11 +146,13 @@ const Booking: React.FC = () => {
       });
 
       if (response.ok) {
+        const data = await response.json();
+        console.log("your confirmation ##" + data.confirmationNumber);
+        console.log("Reservation created successfully", data);
         toast.success("Your Reservation has been created successfully", {
           transition: Slide,
         });
-        sendEmail();
-        navigate("/userReservation");
+        sendEmail(data.confirmationNumber);
       } else {
         const error = await response.text();
         toast.error(error, {
