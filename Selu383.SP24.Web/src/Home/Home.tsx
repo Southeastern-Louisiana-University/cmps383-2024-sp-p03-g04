@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useEffect } from "react";
 import { Card, Row, Col, Form, Dropdown, Button } from "react-bootstrap";
 import "./Home.css";
@@ -51,7 +50,7 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     if (hotels.length > 0) {
-      setShowDropdown(true); // Show dropdown if hotels are available
+      setShowDropdown(true); 
     } else {
       setShowDropdown(false);
     }
@@ -59,7 +58,6 @@ const Home: React.FC = () => {
 
   const handleSearch = async () => {
     await getHotels();
-    console.log("🚀 ~ selectedHotel:", selectedHotel);
     navigate("/reservations", {
       state: { selectedHotel, hotels, checkInDate, checkOutDate: formatDate(checkOutDate || tomorrowDate), guests },
     });
@@ -96,7 +94,7 @@ const Home: React.FC = () => {
                                   value={location}
                                   onChange={(e) => {
                                     setLocation(e.target.value);
-                                    getHotels(); // Trigger hotel fetching on input change
+                                    getHotels();
                                   }}
                                 />
                               </Form.Group>

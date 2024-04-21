@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from "react";
 import {
   Button,
@@ -76,8 +74,8 @@ const Booking: React.FC = () => {
       },
       body: JSON.stringify({
         to: user?.email,
-        from: "enstayhotels@gmail.com", // Sender's email
-        senderName: "EnStay Hotels", // Logged-in user's name
+        from: "enstayhotels@gmail.com", 
+        senderName: "EnStay Hotels",
         subject: "Room Reservation Confirmation",
         html: `<strong>Your reservation has been confirmed!</strong>
           <br>
@@ -124,7 +122,6 @@ const Booking: React.FC = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          // include your authorization header
         },
         body: JSON.stringify(reservation),
       });
@@ -140,7 +137,6 @@ const Booking: React.FC = () => {
         toast.error(error, {
           transition: Slide,
         });
-        console.log("asdas", error);
       }
     };
 

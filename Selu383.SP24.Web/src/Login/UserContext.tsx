@@ -1,4 +1,3 @@
-// UserContext.tsx
 import { ReactNode, createContext, useContext, useState } from "react";
 
 interface UserDto {
@@ -17,7 +16,7 @@ interface UserProviderProps {
 
 export const UserContext = createContext<UserContextProps | undefined>(undefined);
 
-export const UserProvider: React.FC<UserProviderProps> = ({ children }) => { // Use the UserProviderProps here
+export const UserProvider: React.FC<UserProviderProps> = ({ children }) => { 
   const [user, setUser] = useState<UserDto | null>(null);
 
   return (

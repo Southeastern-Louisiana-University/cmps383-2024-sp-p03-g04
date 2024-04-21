@@ -6,12 +6,11 @@ import "bootstrap/dist/js/bootstrap.min.js";
 import "@fortawesome/fontawesome-free/css/all.css";
 import Footer from "./components/Footer";
 import "react-toastify/dist/ReactToastify.css";
-//import imagePath from "./images/logo.png";
 import { useEffect } from "react";
 import { useUser } from "./Login/UserContext";
 
 function App() {
-  const { setUser } = useUser(); // Use the useUser hook here
+  const { setUser } = useUser(); 
 
   useEffect(() => {
     fetch("/api/authentication/me").then(async (x) => {
