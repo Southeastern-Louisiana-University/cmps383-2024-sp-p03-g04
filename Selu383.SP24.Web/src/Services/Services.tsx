@@ -32,10 +32,8 @@ const Services: React.FC = () => {
               <Card.Text>
                 225 Baronne St, New Orleans, LA 70112
                 <br />
-                Situated in the heart of New Orleans, EnStay Baronne is the
-                epitome of urban luxury. With its prime location near the city's
-                vibrant attractions and cultural landmarks, our hotel provides
-                guests with easy access to everything the Big Easy has to offer.
+                Epitome of urban luxury.<br/>
+                Prime location near the city's vibrant attractions.
               </Card.Text>
             </Card.Body>
           </Card>
@@ -60,10 +58,8 @@ const Services: React.FC = () => {
                 {" "}
                 405 Esplanade Ave, New Orleans, LA 70116
                 <br />
-                Nestled in the historic Esplanade Ridge district, EnStay
-                Esplanade combines classic charm with modern amenities.
-                Experience the charm of New Orleans' oldest neighborhoods while
-                enjoying the comfort of our stylish accommodations.
+               Combines classic charm with modern amenities.<br/>
+                Experience the charm of oldest neighborhoods.
               </Card.Text>
             </Card.Body>
           </Card>
@@ -87,10 +83,8 @@ const Services: React.FC = () => {
               <Card.Text>
                 200 Convention St, Baton Rouge, LA 70801
                 <br />
-                Located in downtown Baton Rouge, EnStay Convention is the
-                perfect choice for business travelers and convention attendees.
-                Our hotel offers sophisticated meeting spaces and easy access to
-                the city's business district and entertainment.
+                Perfect choice for business travelers.<br/>
+                We offer sophisticated meeting.
               </Card.Text>
             </Card.Body>
           </Card>

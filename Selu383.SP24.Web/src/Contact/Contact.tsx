@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import emailjs from "emailjs-com";
 import "./Contact.css";
 import { useUser } from "../Login/UserContext";
@@ -29,48 +30,67 @@ function Contact() {
   };
 
   return (
-    <div>
-      <h1 id="ContactText">Contact Us</h1>
-      <div className="ContactOragnizer">
-        <form id="contactForm" onSubmit={handleSubmit}>
-          <label htmlFor="nameInput" id="contactLabel">
-            <b>Name:</b>
-            <input
-              type="text"
-              id="nameInput"
-              name="name"
-              value={user?.userName || ""}
-              readOnly
-            />
-          </label>
-          <br />
-          <label htmlFor="emailInput" id="contactLabel">
-            <b>Email:</b>
-            <input
-              type="email"
-              id="emailInput"
-              name="email"
-              value={user?.email || ""}
-              readOnly
-            />
-          </label>
-          <br />
-          <label htmlFor="messageInput">
-            <b>Message:</b>
-            <textarea
-              id="messageInput"
-              name="message"
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-            />
-          </label>
-          <br />
-          <button type="submit" id="contactSubmit">
-            Send Message
-          </button>
-        </form>
-      </div>
-    </div>
+    <Container fluid>
+      <Row className="justify-content-center mt-5">
+        <Col xs={12} md={8}>
+          <h1 id="ContactText" className="text-center mb-4">
+            Contact Us
+          </h1>
+          <Form id="contactForm" onSubmit={handleSubmit}>
+            <Row className="mb-3">
+              <Col xs={12} md={6}>
+                <Form.Group controlId="nameInput">
+                  <Form.Label>
+                    <b>Name:</b>
+                  </Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="name"
+                    value={user?.userName || ""}
+                    readOnly
+                  />
+                </Form.Group>
+              </Col>
+              <Col xs={12} md={6}>
+                <Form.Group controlId="emailInput">
+                  <Form.Label>
+                    <b>Email:</b>
+                  </Form.Label>
+                  <Form.Control
+                    type="email"
+                    name="email"
+                    value={user?.email || ""}
+                    readOnly
+                  />
+                </Form.Group>
+              </Col>
+
+              <Col>
+                <Form.Group controlId="messageInput">
+                  <Form.Label>
+                    <b>Message:</b>
+                  </Form.Label>
+                  <Form.Control
+                    as="textarea"
+                    name="message"
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                  />
+                </Form.Group>
+              </Col>
+              <Row>
+                <Col>
+                  <Button variant="primary" type="submit">
+                    Send
+                  </Button>
+                </Col>
+              </Row>
+            </Row>
+            {message && <p className="mt-3">{message}</p>}
+          </Form>
+        </Col>
+      </Row>
+    </Container>
   );
 }
 

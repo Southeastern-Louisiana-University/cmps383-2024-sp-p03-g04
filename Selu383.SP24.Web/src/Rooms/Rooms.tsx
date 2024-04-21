@@ -19,7 +19,7 @@ const Rooms: React.FC = () => {
             }}
             src="https://th.bing.com/th/id/R.10790e90e41c325a167eb776a835a7f7?rik=p1Uz0DxRjA97Bg&pid=ImgRaw&r=0"
           />
-          <Card.Body>
+          <Card.Body >
             <h3>Premium Room</h3>
             <p>
               Immerse yourself in the epitome of luxury with our Premium Rooms.

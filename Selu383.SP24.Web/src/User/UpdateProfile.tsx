@@ -34,7 +34,7 @@ const UpdateProfile = () => {
     <>
       <div className="UpdateProfileOrganizer">
         <div>
-          <h1>Update Profile</h1>
+          <h1>Update Profile </h1>
         </div>
         <form id="UpdateProfile" onSubmit={handleUpdateProfile}>
           <label>
@@ -45,9 +45,9 @@ const UpdateProfile = () => {
             id="usernameInput"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-          />
+          /><br/>
           <label>
-            <b>Email</b>
+            <b>Email </b>
           </label>
           <input
             type="text"
