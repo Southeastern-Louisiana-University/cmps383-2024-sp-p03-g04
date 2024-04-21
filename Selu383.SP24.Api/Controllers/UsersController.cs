@@ -82,6 +82,29 @@ public class UsersController : ControllerBase
         return Ok(userDtos);
     }
 
+    [HttpGet("{id}")]
+    [Authorize(Roles = RoleNames.Admin)]
+    public async Task<ActionResult<UserDto>> GetUserById(string id)
+    {
+        var user = await userManager.FindByIdAsync(id);
+
+        if (user == null)
+        {
+            return NotFound();
+        }
+
+        // Create the user DTO
+        var userDto = new UserDto
+        {
+            Id = user.Id,
+            UserName = user.UserName,
+            Email = user.Email,
+            Roles = (await userManager.GetRolesAsync(user)).ToArray()
+        };
+
+        return Ok(userDto);
+    }
+
     [HttpGet("{email}")]
     [Authorize(Roles = RoleNames.Admin)]
     public async Task<ActionResult<UserDto>> GetUserByIdorName(string email)

@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from "react";
 import {
   Button,
@@ -20,22 +22,22 @@ const Booking: React.FC = () => {
   const {
     selectedHotelInfo,
     checkInDateFormatted,
-    checkOutDate,
+    checkOutDateFormatted,
+    confirmationNumber,
     room,
     guests,
   } = location.state || {};
 
   const [firtName, setFirstName] = useState("");
-  console.log("",firtName);
+  console.log("", firtName);
   const [lastName, setLastName] = useState("");
-  console.log("",lastName);
+  console.log("", lastName);
   console.log("🚀 ~ lastName:", lastName);
   const [email, setEmail] = useState("");
-  console.log("",email);
+  console.log("", email);
   const [phoneNumber, setPhoneNumber] = useState("");
-  console.log("",phoneNumber);
+  console.log("", phoneNumber);
   const [checkInDate, setCheckInDate] = useState(checkInDateFormatted);
-  const [checkOutdate, ] = useState(checkOutDate);
   const [checkOutDate, setCheckOutDate] = useState(checkOutDateFormatted);
   console.log("🚀 ~ setCheckOutDate:", setCheckOutDate);
 
@@ -49,14 +51,6 @@ const Booking: React.FC = () => {
   ) => {
     setCheckInDate(event.target.value);
   };
-
-  const [ConfirmationNumber, setConfirmationNumber] = useState("");
-
-  // const handleCheckOutDateChange = (
-  //   event: React.ChangeEvent<HTMLInputElement>
-  // ) => {
-  //   setCheckOutDate(event.target.value);
-  // };
 
   const handleInputChange = (event: { target: { name: any; value: any } }) => {
     const { name, value } = event.target;
@@ -86,7 +80,7 @@ const Booking: React.FC = () => {
       },
       body: JSON.stringify({
         to: user?.email,
-        from: "enstayhotels@gmail.com", 
+        from: "enstayhotels@gmail.com",
         senderName: "EnStay Hotels",
         subject: "Room Reservation Confirmation",
         html: `<strong>Your reservation has been confirmed!</strong>
@@ -125,10 +119,10 @@ const Booking: React.FC = () => {
       UserId: user?.id,
       HotelId: selectedHotelInfo.id,
       CheckInDate: checkInDate,
-      CheckOutDate: checkOutdate,
+      CheckOutDate: checkOutDate,
       NumberOfGuests: guests,
       IsPaid: false,
-      ConfirmationNumber: ConfirmationNumber,
+      ConfirmationNumber: confirmationNumber,
     };
 
     const createReservation = async () => {
@@ -412,7 +406,7 @@ const Booking: React.FC = () => {
                         size="sm"
                         type="date"
                         name="checkOutDate"
-                        defaultValue={checkOutdate}
+                        defaultValue={checkOutDate}
                         onChange={handleCheckInDateChange}
                         required
                       />

@@ -78,6 +78,18 @@ namespace Selu383.SP24.Api.Features.Reservations
             return Ok(reservationDto);
         }
 
+        [HttpGet("hotel/{hotelId}")]
+[Authorize(Roles = RoleNames.Admin)]
+public ActionResult<IEnumerable<ReservationDto>> GetReservationsByHotelId(int hotelId)
+{
+    var hotelReservations = reservations.Where(r => r.HotelId == hotelId);
+    if (!hotelReservations.Any())
+    {
+        return NotFound();
+    }
+    return Ok(GetReservationsDto(hotelReservations));
+}
+
         [HttpGet("date/{checkInDate}")]
         [Authorize(Roles = RoleNames.Admin)]
         public ActionResult<IEnumerable<ReservationDto>> GetReservationsByCheckInDate(DateTime checkInDate)
