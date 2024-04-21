@@ -25,7 +25,6 @@ function NavBar({ brandName, navItems }: NavBarProps) {
 
   const handleLogOut = () => {
     return fetch("/api/authentication/logout", { method: "POST" }).then(
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       async (_x) => {
         setUser(null);
         toast.success("Successfully Logged Out", {

@@ -12,12 +12,11 @@ interface Reservation {
 
 function UserReservation() {
   const [reservations, setReservations] = useState<Reservation[]>([]);
-  console.log("🚀 ~ UserReservation ~ reservations:", reservations)
   const formatDate = (dateString: string | number) => {
     const date = new Date(dateString);
     const year = date.getFullYear();
     const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-    const month = monthNames[date.getMonth()]; // Months are 0-indexed in JavaScript
+    const month = monthNames[date.getMonth()]; 
     const day = date.getDate();
     const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     const dayOfWeek = dayNames[date.getDay()];
@@ -34,7 +33,6 @@ function UserReservation() {
         }
       })
       .then((reservationsData: Reservation[]) => {
-        console.log("🚀 ~ .then ~ reservationsData:", reservationsData)
         setReservations(reservationsData);
       })
       .catch((error) => {

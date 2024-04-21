@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useEffect } from "react";
 import { Card, Row, Col, Form, Dropdown, Button } from "react-bootstrap";
 import "./Home.css";
@@ -7,30 +6,26 @@ import "react-datepicker/dist/react-datepicker.css";
 import "../components/Footer";
 import CustomCard from "../components/CustomCard";
 import { useNavigate } from "react-router-dom";
+import { formatDate } from "../Utils/dateUtils";
 
 const Home: React.FC = () => {
   const currentDate = new Date();
+
   const navigate = useNavigate();
   const [location, setLocation] = useState("");
   const [hotels, setHotels] = useState<any[]>([]);
   const [checkInDate, setCheckInDate] = useState<Date | null>(currentDate);
+
   const tomorrowDate = new Date();
   tomorrowDate.setDate(tomorrowDate.getDate() + 1);
   const [checkOutDate, setCheckOutDate] = useState<Date | null>(tomorrowDate);
+
   const [showDropdown, setShowDropdown] = useState(false);
   const [selectedHotel, setselectedHotel] = useState("");
 
   const [guests, setGuests] = useState(1);
   const [roomType, setRoomType] = useState("Single");
   const [roomTypes, setRoomTypes] = useState(["Single", "Double"]);
-
-  const formatDate = (dateString: string | number) => {
-    const date = new Date(dateString);
-    const year = date.getUTCFullYear();
-    const month = ("0" + (date.getUTCMonth() + 1)).slice(-2); // Months are 0-indexed in JavaScript
-    const day = ("0" + date.getUTCDate()).slice(-2);
-    return `${year}-${month}-${day}`;
-  };
 
   useEffect(() => {
     if (guests >= 3) {
@@ -55,7 +50,7 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     if (hotels.length > 0) {
-      setShowDropdown(true); // Show dropdown if hotels are available
+      setShowDropdown(true); 
     } else {
       setShowDropdown(false);
     }
@@ -63,10 +58,8 @@ const Home: React.FC = () => {
 
   const handleSearch = async () => {
     await getHotels();
-    console.log("🚀 ~ selectedHotel:", selectedHotel);
-
     navigate("/reservations", {
-      state: { selectedHotel, hotels, checkInDate, checkOutDate, guests },
+      state: { selectedHotel, hotels, checkInDate, checkOutDate: formatDate(checkOutDate || tomorrowDate), guests },
     });
   };
 
@@ -101,7 +94,7 @@ const Home: React.FC = () => {
                                   value={location}
                                   onChange={(e) => {
                                     setLocation(e.target.value);
-                                    getHotels(); // Trigger hotel fetching on input change
+                                    getHotels();
                                   }}
                                 />
                               </Form.Group>
@@ -131,18 +124,13 @@ const Home: React.FC = () => {
                       <CustomCard title="Check In">
                         <Card.Body>
                           <Form.Group controlId="checkInDate">
-                            {/* <DatePicker
-                              selected={checkInDate}
-                              onChange={(date: Date) => setCheckInDate(date)}
-                              dateFormat="E MMM dd, yyyy"
-                              minDate={new Date()}
-                              className="form-control"
-                            /> */}
                             <Form.Control
                               type="date"
-                              defaultValue={formatDate(Date())}
-                              onChange={(e) =>
+                              value={formatDate(checkInDate || tomorrowDate)}
+                              onChange={(e) =>{
+                                console.log('Selected Check-In Date:', e.target.value);
                                 setCheckInDate(new Date(e.target.value))
+                              }
                               }
                             ></Form.Control>
                           </Form.Group>
@@ -153,18 +141,14 @@ const Home: React.FC = () => {
                       <CustomCard title="Check Out">
                         <Card.Body>
                           <Form.Group controlId="checkOutDate">
-                            {/* <DatePicker
-                              selected={checkOutDate}
-                              onChange={(date: Date) => setCheckOutDate(date)}
-                              dateFormat="E MMM dd, yyyy"
-                              minDate={checkInDate || new Date()}
-                              className="form-control"
-                            /> */}
-                             <Form.Control
+                            <Form.Control
                               type="date"
-                              defaultValue={formatDate(Date())}
-                              onChange={(e) =>
+                              value={checkOutDate ? formatDate(checkOutDate) : ''}
+                            
+                              onChange={(e) =>{
+                                console.log('Selected Check-out Date:', e.target.value);
                                 setCheckOutDate(new Date(e.target.value))
+                              }
                               }
                             ></Form.Control>
                           </Form.Group>
@@ -254,44 +238,35 @@ const Home: React.FC = () => {
         </>
       </section>
       <section className="about-us-section">
-        <>
           <Row>
-            <Col style={{ fontFamily: "Georgia, serif", fontSize: "20px" }}>
-              <h2></h2>
-              <section className="home">
-                <div className="image-container">
-                  <img
-                    src={homeImage}
-                    alt="EnStay Hotel"
-                    className="image"
-                    style={{ width: "90%" }}
-                  />
-                </div>
-                <div className="content">
-                  <p
-                  style={{
-                    color: "#343a40",
-                    fontFamily: "Georgia, serif",
-                    fontSize: "20px",
-                    alignItems: "right",
-                  }}>
-                    EnStay welcomes you to Louisiana's finest in luxury
-                    accommodations. With prime locations in New Orleans and
-                    Baton Rouge, our hotels epitomize elegance and comfort. From
-                    meticulously designed rooms to gourmet dining and
-                    rejuvenating spa treatments, we ensure an unparalleled
-                    experience. Explore the vibrant culture of Louisiana or
-                    unwind in our serene ambiance. At EnStay, hospitality is a
-                    lifestyle. Join us for an unforgettable journey where every
-                    moment is tailored to perfection. Welcome to EnStay, where
-                    luxury meets unparalleled hospitality.
-                  </p>
-                </div>
-              </section>{" "}
-             
+            <span className="section-heading"> Louisiana's Luxury Escape</span>
+            <Col md={6}>
+              <div className="image-container">
+                <img
+                  src={homeImage}
+                  alt="EnStay Hotel"
+                  className="image"
+                
+                />
+              </div>
+            </Col>
+            <Col md={6}>
+              <div className="content">
+                <p>
+                  EnStay welcomes you to Louisiana's finest in luxury
+                  accommodations. With prime locations in New Orleans and Baton
+                  Rouge, our hotels epitomize elegance and comfort. From
+                  meticulously designed rooms to gourmet dining and rejuvenating
+                  spa treatments, we ensure an unparalleled experience. Explore
+                  the vibrant culture of Louisiana or unwind in our serene
+                  ambiance. At EnStay, hospitality is a lifestyle. Join us for
+                  an unforgettable journey where every moment is tailored to
+                  perfection. Welcome to EnStay, where luxury meets unparalleled
+                  hospitality.
+                </p>
+              </div>
             </Col>
           </Row>
-        </>
       </section>
     </>
   );

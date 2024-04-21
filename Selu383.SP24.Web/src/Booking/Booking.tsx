@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from "react";
 import {
   Button,
@@ -22,28 +20,26 @@ const Booking: React.FC = () => {
   const {
     selectedHotelInfo,
     checkInDateFormatted,
-    checkOutDateFormatted,
+    checkOutDate,
     room,
     guests,
   } = location.state || {};
 
-  console.log("🚀 ~ room:", room);
-
-  // Hotel booking form state (consider using a form library like Formik for complex forms)
-  const [firstName, setFirstName] = useState("");
-  console.log("🚀 ~ firstName:", firstName);
+  const [firtName, setFirstName] = useState("");
+  console.log("",firtName);
   const [lastName, setLastName] = useState("");
+  console.log("",lastName);
   console.log("🚀 ~ lastName:", lastName);
   const [email, setEmail] = useState("");
-  console.log("🚀 ~ email:", email);
+  console.log("",email);
   const [phoneNumber, setPhoneNumber] = useState("");
-  console.log("🚀 ~ phoneNumber:", phoneNumber);
+  console.log("",phoneNumber);
   const [checkInDate, setCheckInDate] = useState(checkInDateFormatted);
+  const [checkOutdate, ] = useState(checkOutDate);
   const [checkOutDate, setCheckOutDate] = useState(checkOutDateFormatted);
   console.log("🚀 ~ setCheckOutDate:", setCheckOutDate);
 
   const { user } = useUser();
-  console.log("🚀 ~ user:", user);
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showSignupModal, setShowSignupModal] = useState(false);
   const navigate = useNavigate();
@@ -90,8 +86,8 @@ const Booking: React.FC = () => {
       },
       body: JSON.stringify({
         to: user?.email,
-        from: "enstayhotels@gmail.com", // Sender's email
-        senderName: "EnStay Hotels", // Logged-in user's name
+        from: "enstayhotels@gmail.com", 
+        senderName: "EnStay Hotels",
         subject: "Room Reservation Confirmation",
         html: `<strong>Your reservation has been confirmed!</strong>
           <br>
@@ -105,7 +101,7 @@ const Booking: React.FC = () => {
           <br>
           <strong>Check In Date:</strong> ${checkInDateFormatted}
           <br>
-          <strong>Check Out Date:</strong> ${checkOutDateFormatted}
+          <strong>Check Out Date:</strong> ${checkOutDate}
           <br>
           <strong>Number of Guests:</strong> ${guests}
           <br>
@@ -129,7 +125,7 @@ const Booking: React.FC = () => {
       UserId: user?.id,
       HotelId: selectedHotelInfo.id,
       CheckInDate: checkInDate,
-      CheckOutDate: checkOutDate,
+      CheckOutDate: checkOutdate,
       NumberOfGuests: guests,
       IsPaid: false,
       ConfirmationNumber: ConfirmationNumber,
@@ -140,7 +136,6 @@ const Booking: React.FC = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          // include your authorization header
         },
         body: JSON.stringify(reservation),
       });
@@ -158,7 +153,6 @@ const Booking: React.FC = () => {
         toast.error(error, {
           transition: Slide,
         });
-        console.log("asdas", error);
       }
     };
 
@@ -261,52 +255,6 @@ const Booking: React.FC = () => {
                       </Form.Group>
                     </Col>
                   </Row>
-                  {/* <Form.Check
-                  type="checkbox"
-                  id="flexCheckDefault"
-                  label="Keep me up to date on news"
-                />
-
-                <hr className="my-4" />
-
-                <Card.Title>Shipping info</Card.Title>
-                <Row>
-                  <Col lg={4}>
-                    <Form.Check
-                      type="radio"
-                      id="flexRadioDefault1"
-                      label="Express delivery"
-                      name="shippingOption"
-                      checked
-                    />
-                    <Form.Text className="text-muted">
-                      3-4 days via Fedex
-                    </Form.Text>
-                  </Col>
-                  <Col lg={4}>
-                    <Form.Check
-                      type="radio"
-                      id="flexRadioDefault2"
-                      label="Post office"
-                      name="shippingOption"
-                    />
-                    <Form.Text className="text-muted">
-                      20-30 days via post
-                    </Form.Text>
-                  </Col>
-                  <Col lg={4}>
-                    <Form.Check
-                      type="radio"
-                      id="flexRadioDefault3"
-                      label="Self pick-up"
-                      name="shippingOption"
-                    />
-                    <Form.Text className="text-muted">
-                      Come to our shop
-                    </Form.Text>
-                  </Col>
-                </Row> */}
-
                   <Row>
                     <Col sm={8}>
                       <Form.Group controlId="address">
@@ -429,34 +377,6 @@ const Booking: React.FC = () => {
               src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aG90ZWwlMjByb29tfGVufDB8fDB8fHww"
             />
             <Card.Body>
-              {/* <Row>
-                <Col xs={6}>
-                  <Form.Group controlId="hotelName">
-                    <Form.Label>Hotel Name</Form.Label>
-                    <Form.Control
-                      size="lg"
-                      type="text"
-                      name="hotelName"
-                      defaultValue={selectedHotelInfo.name} // Set default value if available
-                      disabled // Prevent editing for now
-                    />
-                  </Form.Group>
-                </Col>
-                <Col xs={6}>
-                  <Form.Group controlId="roomType">
-                    <Form.Label>Room Type</Form.Label>
-                    <Form.Control
-                      size="lg"
-                      type="text"
-                      name="roomType"
-                      defaultValue={
-                        room.type == 0 ? "Single King" : "Double Queen"
-                      } // Set default value if available
-                      disabled // Prevent editing for now
-                    />
-                  </Form.Group>
-                </Col>
-              </Row> */}
               <Card.Title>
                 <b>{selectedHotelInfo.name}</b>{" "}
               </Card.Title>
@@ -486,13 +406,13 @@ const Booking: React.FC = () => {
                     </Form.Group>
                   </Col>
                   <Col md={6}>
-                    <Form.Group controlId="checkInDate">
+                    <Form.Group controlId="checkOutDate">
                       <Form.Label>Check Out Date</Form.Label>
                       <Form.Control
                         size="sm"
                         type="date"
-                        name="checkInDate"
-                        defaultValue={checkOutDateFormatted}
+                        name="checkOutDate"
+                        defaultValue={checkOutdate}
                         onChange={handleCheckInDateChange}
                         required
                       />
