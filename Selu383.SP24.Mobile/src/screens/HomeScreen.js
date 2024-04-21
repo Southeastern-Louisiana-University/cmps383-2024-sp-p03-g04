@@ -60,6 +60,8 @@ const HomeScreen = ({ route }) => {
               description={
                 <View style={styles.descriptionContainer}>
                   <Text style={styles.details}>
+                    Hotel Name: {reservation.hotelName}</Text>
+                  <Text style={styles.details}>
                     Location: {reservation.location}</Text>
                   <Text style={styles.details}>
                     Check-in: {reservation.checkInDate}
