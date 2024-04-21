@@ -11,9 +11,18 @@ export default function App() {
   return (
     <AuthProvider>
       <NavigationContainer>
-        <Drawer.Navigator initialRouteName="LoginScreen">
-          <Drawer.Screen name="Login" component={LoginScreen} />
+        <Drawer.Navigator initialRouteName="Login">
           <Drawer.Screen name="Home" component={HomeScreen} />
+          <Drawer.Screen name="Book Now" component={LoginScreen} />
+          <Drawer.Screen name="Reservations" component={LoginScreen} />
+          <Drawer.Screen name="Locations" component={LoginScreen} />
+          <Drawer.Screen name="About Us" component={LoginScreen} />
+          <Drawer.Screen name="Support" component={LoginScreen} />
+          <Drawer.Screen name="Login" component={LoginScreen} />
+          <Drawer.Screen name="Settings" component={LoginScreen} />
+
+
+
         </Drawer.Navigator>
       </NavigationContainer>
     </AuthProvider>
