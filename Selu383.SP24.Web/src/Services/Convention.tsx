@@ -4,8 +4,7 @@ import "./services.css";
 
 const Convention: React.FC = () => {
   return (
-    <Container fluid className="services-container">
-      <h2 className="service-heading">Services</h2>
+    <Container fluid style={{paddingTop:'5rem'}}>
       <Row>
       <Col md={6} lg={6} className="service">
           <img

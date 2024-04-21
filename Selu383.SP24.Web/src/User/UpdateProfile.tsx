@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./UpdateProfile.css"; // UpdateProfile.css is not included in the snippet
+import "./UpdateProfile.css";
 import { useUser } from "../Login/UserContext";
 
 const UpdateProfile = () => {

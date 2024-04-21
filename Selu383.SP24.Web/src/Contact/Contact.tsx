@@ -9,7 +9,6 @@ function Contact() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Send email using emailjs
     console.log("Sending email...");
     emailjs
       .sendForm(
@@ -21,7 +20,6 @@ function Contact() {
       .then(
         (result) => {
           console.log(result.text);
-          // Reset form fields
           setMessage("");
         },
         (error) => {
