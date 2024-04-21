@@ -52,16 +52,43 @@ namespace Selu383.SP24.Api.Features.Reservations
         }
         [HttpGet("user/{userId}")]
         [Authorize]
-        public ActionResult<IEnumerable<ReservationDto>> GetReservationsByUserId(int userId)
+        public ActionResult<ReservationDto> GetLatestReservationByUserId(int userId)
         {
-           
-            var userReservations = reservations.Where(r => r.GuestId == userId);
-            if (!userReservations.Any())
+            var latestReservation = reservations.Where(r => r.GuestId == userId)
+                               .OrderByDescending(r => r.CheckInDate)
+                               .FirstOrDefault();
+
+            if (latestReservation == null)
             {
-                return NotFound();
+            return NotFound();
             }
-            return Ok(GetReservationsDto(userReservations));
+
+            var reservationDto = new ReservationDto
+            {
+            Id = latestReservation.Id,
+            GuestId = latestReservation.GuestId,
+            HotelId = latestReservation.HotelId,
+            RoomId = latestReservation.RoomId,
+            CheckInDate = latestReservation.CheckInDate,
+            CheckOutDate = latestReservation.CheckOutDate,
+            NumberOfGuests = latestReservation.NumberOfGuests,
+            ConfirmationNumber = latestReservation.ConfirmationNumber
+            };
+
+            return Ok(reservationDto);
         }
+
+        [HttpGet("hotel/{hotelId}")]
+[Authorize(Roles = RoleNames.Admin)]
+public ActionResult<IEnumerable<ReservationDto>> GetReservationsByHotelId(int hotelId)
+{
+    var hotelReservations = reservations.Where(r => r.HotelId == hotelId);
+    if (!hotelReservations.Any())
+    {
+        return NotFound();
+    }
+    return Ok(GetReservationsDto(hotelReservations));
+}
 
         [HttpGet("date/{checkInDate}")]
         [Authorize(Roles = RoleNames.Admin)]

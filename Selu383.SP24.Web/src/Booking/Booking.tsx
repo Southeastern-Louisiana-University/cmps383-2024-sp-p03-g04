@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from "react";
 import {
   Button,
@@ -20,21 +22,24 @@ const Booking: React.FC = () => {
   const {
     selectedHotelInfo,
     checkInDateFormatted,
-    checkOutDate,
+    checkOutDateFormatted,
+    confirmationNumber,
     room,
     guests,
   } = location.state || {};
 
   const [firtName, setFirstName] = useState("");
-  console.log("",firtName);
+  console.log("", firtName);
   const [lastName, setLastName] = useState("");
-  console.log("",lastName);
+  console.log("", lastName);
+  console.log("🚀 ~ lastName:", lastName);
   const [email, setEmail] = useState("");
-  console.log("",email);
+  console.log("", email);
   const [phoneNumber, setPhoneNumber] = useState("");
-  console.log("",phoneNumber);
+  console.log("", phoneNumber);
   const [checkInDate, setCheckInDate] = useState(checkInDateFormatted);
-  const [checkOutdate, ] = useState(checkOutDate);
+  const [checkOutDate, setCheckOutDate] = useState(checkOutDateFormatted);
+  console.log("🚀 ~ setCheckOutDate:", setCheckOutDate);
 
   const { user } = useUser();
   const [showLoginModal, setShowLoginModal] = useState(false);
@@ -66,7 +71,8 @@ const Booking: React.FC = () => {
         break;
     }
   };
-  const sendEmail = async () => {
+
+  const sendEmail = async (confirmationNumber: string) => {
     const response = await fetch("/api/email/sendEmail", {
       method: "POST",
       headers: {
@@ -74,7 +80,7 @@ const Booking: React.FC = () => {
       },
       body: JSON.stringify({
         to: user?.email,
-        from: "enstayhotels@gmail.com", 
+        from: "enstayhotels@gmail.com",
         senderName: "EnStay Hotels",
         subject: "Room Reservation Confirmation",
         html: `<strong>Your reservation has been confirmed!</strong>
@@ -92,6 +98,8 @@ const Booking: React.FC = () => {
           <strong>Check Out Date:</strong> ${checkOutDate}
           <br>
           <strong>Number of Guests:</strong> ${guests}
+          <br>
+          <strong>Confirmation Number:</strong> ${confirmationNumber}
           <br>`,
       }),
     });
@@ -111,10 +119,10 @@ const Booking: React.FC = () => {
       UserId: user?.id,
       HotelId: selectedHotelInfo.id,
       CheckInDate: checkInDate,
-      CheckOutDate: checkOutdate,
+      CheckOutDate: checkOutDate,
       NumberOfGuests: guests,
       IsPaid: false,
-      ConfirmationNumber: "1",
+      ConfirmationNumber: confirmationNumber,
     };
 
     const createReservation = async () => {
@@ -127,11 +135,13 @@ const Booking: React.FC = () => {
       });
 
       if (response.ok) {
+        const data = await response.json();
+        console.log("your confirmation ##" + data.confirmationNumber);
+        console.log("Reservation created successfully", data);
         toast.success("Your Reservation has been created successfully", {
           transition: Slide,
         });
-        sendEmail();
-        navigate("/userReservation");
+        sendEmail(data.confirmationNumber);
       } else {
         const error = await response.text();
         toast.error(error, {
@@ -396,7 +406,7 @@ const Booking: React.FC = () => {
                         size="sm"
                         type="date"
                         name="checkOutDate"
-                        defaultValue={checkOutdate}
+                        defaultValue={checkOutDate}
                         onChange={handleCheckInDateChange}
                         required
                       />

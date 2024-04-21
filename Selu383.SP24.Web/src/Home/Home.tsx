@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useEffect } from "react";
 import { Card, Row, Col, Form, Dropdown, Button } from "react-bootstrap";
 import "./Home.css";
@@ -50,7 +51,7 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     if (hotels.length > 0) {
-      setShowDropdown(true); 
+      setShowDropdown(true);
     } else {
       setShowDropdown(false);
     }
@@ -59,7 +60,13 @@ const Home: React.FC = () => {
   const handleSearch = async () => {
     await getHotels();
     navigate("/reservations", {
-      state: { selectedHotel, hotels, checkInDate, checkOutDate: formatDate(checkOutDate || tomorrowDate), guests },
+      state: {
+        selectedHotel,
+        hotels,
+        checkInDate,
+        checkOutDate: formatDate(checkOutDate || tomorrowDate),
+        guests,
+      },
     });
   };
 
@@ -127,11 +134,13 @@ const Home: React.FC = () => {
                             <Form.Control
                               type="date"
                               value={formatDate(checkInDate || tomorrowDate)}
-                              onChange={(e) =>{
-                                console.log('Selected Check-In Date:', e.target.value);
-                                setCheckInDate(new Date(e.target.value))
-                              }
-                              }
+                              onChange={(e) => {
+                                console.log(
+                                  "Selected Check-In Date:",
+                                  e.target.value
+                                );
+                                setCheckInDate(new Date(e.target.value));
+                              }}
                             ></Form.Control>
                           </Form.Group>
                         </Card.Body>
@@ -143,13 +152,16 @@ const Home: React.FC = () => {
                           <Form.Group controlId="checkOutDate">
                             <Form.Control
                               type="date"
-                              value={checkOutDate ? formatDate(checkOutDate) : ''}
-                            
-                              onChange={(e) =>{
-                                console.log('Selected Check-out Date:', e.target.value);
-                                setCheckOutDate(new Date(e.target.value))
+                              value={
+                                checkOutDate ? formatDate(checkOutDate) : ""
                               }
-                              }
+                              onChange={(e) => {
+                                console.log(
+                                  "Selected Check-out Date:",
+                                  e.target.value
+                                );
+                                setCheckOutDate(new Date(e.target.value));
+                              }}
                             ></Form.Control>
                           </Form.Group>
                         </Card.Body>
@@ -238,35 +250,30 @@ const Home: React.FC = () => {
         </>
       </section>
       <section className="about-us-section">
-          <Row>
-            <span className="section-heading"> Louisiana's Luxury Escape</span>
-            <Col md={6}>
-              <div className="image-container">
-                <img
-                  src={homeImage}
-                  alt="EnStay Hotel"
-                  className="image"
-                
-                />
-              </div>
-            </Col>
-            <Col md={6}>
-              <div className="content">
-                <p>
-                  EnStay welcomes you to Louisiana's finest in luxury
-                  accommodations. With prime locations in New Orleans and Baton
-                  Rouge, our hotels epitomize elegance and comfort. From
-                  meticulously designed rooms to gourmet dining and rejuvenating
-                  spa treatments, we ensure an unparalleled experience. Explore
-                  the vibrant culture of Louisiana or unwind in our serene
-                  ambiance. At EnStay, hospitality is a lifestyle. Join us for
-                  an unforgettable journey where every moment is tailored to
-                  perfection. Welcome to EnStay, where luxury meets unparalleled
-                  hospitality.
-                </p>
-              </div>
-            </Col>
-          </Row>
+        <Row>
+          <span className="section-heading"> Louisiana's Luxury Escape</span>
+          <Col md={6}>
+            <div className="image-container">
+              <img src={homeImage} alt="EnStay Hotel" className="image" />
+            </div>
+          </Col>
+          <Col md={6}>
+            <div className="content">
+              <p>
+                EnStay welcomes you to Louisiana's finest in luxury
+                accommodations. With prime locations in New Orleans and Baton
+                Rouge, our hotels epitomize elegance and comfort. From
+                meticulously designed rooms to gourmet dining and rejuvenating
+                spa treatments, we ensure an unparalleled experience. Explore
+                the vibrant culture of Louisiana or unwind in our serene
+                ambiance. At EnStay, hospitality is a lifestyle. Join us for an
+                unforgettable journey where every moment is tailored to
+                perfection. Welcome to EnStay, where luxury meets unparalleled
+                hospitality.
+              </p>
+            </div>
+          </Col>
+        </Row>
       </section>
     </>
   );

@@ -6,7 +6,7 @@ import SignUp from "./SignUp/SignUp.tsx";
 import LoginPage from "./Login/Login.tsx";
 import Home from "./Home/Home.tsx";
 import Reservations from "./Hotel/Hotels.tsx";
-import { UserProvider } from "./Login/UserContext.tsx";
+import { UserProvider } from "./Login/UserContext.tsx"; // Importing useUser hook
 import { ToastContainer } from "react-toastify";
 import Rooms from "./Rooms/RoomType.tsx";
 import UserInfo from "./User/UserInfo.tsx";
@@ -20,6 +20,7 @@ import Services from "./Services/Services.tsx";
 import Baronne from "./Services/Baronne.tsx";
 import Esplanade from "./Services/Esplanade.tsx";
 import Convention from "./Services/Convention.tsx";
+import Admin from "./Admin/Admin.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <BrowserRouter>
@@ -69,7 +70,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
           <Route path="/services/enstay-baronne" element={<Baronne />} />
           <Route path="/services/enstay-esplanade" element={<Esplanade />} />
           <Route path="/services/enstay-convention" element={<Convention />} />
-
+          <Route path="/admin" element={<Admin />} />
         </Route>
       </Routes>
     </UserProvider>

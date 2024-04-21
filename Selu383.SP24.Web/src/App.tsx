@@ -10,15 +10,23 @@ import { useEffect } from "react";
 import { useUser } from "./Login/UserContext";
 
 function App() {
-  const { setUser } = useUser(); 
+  const { user, setUser } = useUser();
 
   useEffect(() => {
     fetch("/api/authentication/me").then(async (x) => {
       x.json().then((userResp) => setUser(userResp));
     });
-  }, []);
+  }, [setUser]);
 
-  const items = [ "Services",  "Rooms", "About","Contact"];
+  const isAdmin = () => {
+    // Assuming user object has an isAdmin property
+    return user && user.roles.includes("Admin" || "admin");
+  };
+
+  const items = ["Services", "Rooms", "About", "Contact"];
+  if (isAdmin()) {
+    items.push("Admin");
+  }
   return (
     <>
       <div className="app-container">
