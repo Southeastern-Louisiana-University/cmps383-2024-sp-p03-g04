@@ -96,33 +96,33 @@ function NavBar({ brandName, navItems }: NavBarProps) {
           </ul>
           {user ? (
             <>
-              <Link to={""} className="me-2 ">
-                <Dropdown>
-                  <Dropdown.Toggle
-                    id="dropdown-basic"
-                    className="btn btn-outline-light custom-dropdown-toggle"
-                    style={{
-                      backgroundColor: "transparent",
-                      borderColor: "#fff",
-                      color: "#fff",
-                    }}
-                  >
-                    {user.userName}
-                  </Dropdown.Toggle>
+              <Dropdown className="mr-3">
+                <Dropdown.Toggle
+                  id="dropdown-basic"
+                  className="btn btn-outline-light custom-dropdown-toggle"
+                  style={{
+                    backgroundColor: "transparent",
+                    borderColor: "#fff",
+                    color: "#fff",
+                  }}
+                >
+                  {user.userName}
+                </Dropdown.Toggle>
 
-                  <Dropdown.Menu>
-                    <Dropdown.Item as={Link} to="/profile/userinfo">
-                      Profile
-                    </Dropdown.Item>
+                <Dropdown.Menu>
+                  <Dropdown.Item as={Link} to="/profile/userinfo">
+                    Profile
+                  </Dropdown.Item>
 
-                    <Dropdown.Item as={Link} to="/userReservation">
-                      Reservations
-                    </Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
-              </Link>
+                  <Dropdown.Item as={Link} to="/userReservation">
+                    Reservations
+                  </Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
               <Link
-                className="btn btn-outline-light"
+                className="btn btn-outline-light "
+                style={{ marginLeft: "10px" }} 
+
                 to="/Home"
                 onClick={handleLogOut}
               >

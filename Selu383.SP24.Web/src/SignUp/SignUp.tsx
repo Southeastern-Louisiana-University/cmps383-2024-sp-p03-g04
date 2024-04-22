@@ -46,7 +46,7 @@ const SignupPage: React.FC<SignupPageProps> = ({ onSuccess }) => {
           transition: Slide,
         });
       } else {
-        navigate("/");
+        // navigate("/");
         onSuccess();
         toast.success("User successfully registered", {
           transition: Slide,
