@@ -1,15 +1,15 @@
 import React, { useState } from "react";
+import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import emailjs from "emailjs-com";
 import "./Contact.css";
 import { useUser } from "../Login/UserContext";
 function Contact() {
   const [message, setMessage] = useState("");
-
+  const [phone, setPhoneNumber] = useState("");
   const { user } = useUser();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Send email using emailjs
     console.log("Sending email...");
     emailjs
       .sendForm(
@@ -20,8 +20,7 @@ function Contact() {
       )
       .then(
         (result) => {
-          console.log(result.text);
-          // Reset form fields
+          console.log("🚀 ~ handleSubmit ~ result:", result)
           setMessage("");
         },
         (error) => {
@@ -31,48 +30,93 @@ function Contact() {
   };
 
   return (
-    <div>
-      <h1 id="ContactText">Contact Us</h1>
-      <div className="ContactOragnizer">
-        <form id="contactForm" onSubmit={handleSubmit}>
-          <label htmlFor="nameInput" id="contactLabel">
-            <b>Name:</b>
-            <input
-              type="text"
-              id="nameInput"
-              name="name"
-              value={user?.userName || ""}
-              readOnly
-            />
-          </label>
-          <br />
-          <label htmlFor="emailInput" id="contactLabel">
-            <b>Email:</b>
-            <input
-              type="email"
-              id="emailInput"
-              name="email"
-              value={user?.email || ""}
-              readOnly
-            />
-          </label>
-          <br />
-          <label htmlFor="messageInput">
-            <b>Message:</b>
-            <textarea
-              id="messageInput"
-              name="message"
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-            />
-          </label>
-          <br />
-          <button type="submit" id="contactSubmit">
-            Send Message
-          </button>
-        </form>
-      </div>
-    </div>
+    <Container fluid>
+      <Row className="justify-content-center mt-5">
+        <Col xs={12} md={8}>
+          <h1 className="text-center mb-4">Contact Us</h1>
+          <Form
+            id="contactForm"
+            onSubmit={handleSubmit}
+            style={{
+              backgroundColor: "#f8f9fa",
+              padding: "20px",
+              borderRadius: "15px",
+            }}
+          >
+            <Row className="mb-3">
+              <Col xs={12} md={4}>
+                <Form.Group controlId="nameInput">
+                  <Form.Label>
+                    <b>Name:</b>
+                  </Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="name"
+                    value={user?.userName || ""}
+                    style={{ borderRadius: "10px" }}
+                  />
+                </Form.Group>
+              </Col>
+              <Col xs={12} md={4} className="mb-4">
+                <Form.Group controlId="emailInput">
+                  <Form.Label>
+                    <b>Email:</b>
+                  </Form.Label>
+                  <Form.Control
+                    type="email"
+                    name="email"
+                    value={user?.email || ""}
+                    style={{ borderRadius: "10px" }}
+                  />
+                </Form.Group>
+              </Col>
+              <Col xs={12} md={4} className="mb-4">
+                <Form.Group controlId="phoneNumber">
+                  <Form.Label>
+                    <b>Phone Number:</b>
+                  </Form.Label>
+                  <Form.Control
+                    type="phone"
+                    name="phone"
+                    defaultValue={"+1 " + phone}
+                    onChange={(e) => setPhoneNumber(e.target.value)}
+                    style={{ borderRadius: "10px" }}
+                  />
+                </Form.Group>
+              </Col>
+
+              <Col className="mb-4">
+                <Form.Group controlId="messageInput">
+                  <Form.Label>
+                    <b>Message:</b>
+                  </Form.Label>
+                  <Form.Control
+                    as="textarea"
+                    name="message"
+                    value={message}
+                    rows={10}
+                    onChange={(e) => setMessage(e.target.value)}
+                    style={{ borderRadius: "10px" }}
+                  />
+                </Form.Group>
+              </Col>
+
+              <Row>
+                <Col>
+                  <Button
+                    variant="primary"
+                    type="submit"
+                    style={{ borderRadius: "10px" }}
+                  >
+                    Send
+                  </Button>
+                </Col>
+              </Row>
+            </Row>
+          </Form>
+        </Col>
+      </Row>
+    </Container>
   );
 }
 

@@ -27,6 +27,8 @@ public class HotelsController : ControllerBase
         return GetHotelDtos(hotels);
     }
 
+
+
     [HttpGet]
     [Route("{id}")]
     public ActionResult<HotelDto> GetHotelById(int id)
@@ -39,6 +41,20 @@ public class HotelsController : ControllerBase
 
         return Ok(result);
     }
+
+    [HttpGet]
+    [Route("manager/{userId}")]
+    public ActionResult<IEnumerable<HotelDto>> GetHotelsByManagerId(int userId)
+    {
+        var result = GetHotelDtos(hotels.Where(x => x.ManagerId == userId)).ToList();
+        if (result == null || result.Count == 0)
+        {
+            return NotFound();
+        }
+
+        return Ok(result);
+    }
+
 
     [HttpPost]
     [Authorize(Roles = RoleNames.Admin)]

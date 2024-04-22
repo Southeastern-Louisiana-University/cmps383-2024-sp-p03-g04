@@ -97,7 +97,8 @@ public static class SeedHelper
         StreetAddress = "225 Baronne St",
         City = "New Orleans",
         State = "LA",
-        ZipCode = "70112"
+        ZipCode = "70112",
+        ManagerId = 1
     },
     new Hotel
     {
@@ -106,7 +107,8 @@ public static class SeedHelper
         StreetAddress = "405 Esplanade Ave",
         City = "New Orleans",
         State = "LA",
-        ZipCode = "70116"
+        ZipCode = "70116",
+        ManagerId = 1
     },
     new Hotel
     {
@@ -115,7 +117,8 @@ public static class SeedHelper
         StreetAddress = "200 Convention St",
         City = "Baton Rouge",
         State = "LA",
-        ZipCode = "70801"
+        ZipCode = "70801",
+        ManagerId = 1
     }
 };
 

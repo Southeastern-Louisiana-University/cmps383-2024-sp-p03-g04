@@ -7,6 +7,7 @@ using Selu383.SP24.Api.Features.Rooms;
 using Microsoft.AspNetCore.Identity;
 using Selu383.SP24.Api.Extensions;
 using Microsoft.Data.SqlClient;
+using System.Security.Claims;
 
 namespace Selu383.SP24.Api.Features.Reservations
 {
@@ -49,6 +50,46 @@ namespace Selu383.SP24.Api.Features.Reservations
             }
             return Ok(reservation);
         }
+        [HttpGet("user/{userId}")]
+        [Authorize]
+        public ActionResult<List<ReservationDto>> GetAllReservationsByUserId(int userId)
+        {
+            var userReservations = reservations.Where(r => r.GuestId == userId)
+                               .OrderByDescending(r => r.CheckInDate)
+                               .ToList();
+
+            if (userReservations == null || userReservations.Count == 0)
+            {
+                return NotFound();
+            }
+
+            var reservationDtos = userReservations.Select(reservation => new ReservationDto
+            {
+                Id = reservation.Id,
+                GuestId = reservation.GuestId,
+                HotelId = reservation.HotelId,
+                RoomId = reservation.RoomId,
+                CheckInDate = reservation.CheckInDate,
+                CheckOutDate = reservation.CheckOutDate,
+                NumberOfGuests = reservation.NumberOfGuests,
+                ConfirmationNumber = reservation.ConfirmationNumber
+            }).ToList();
+
+            return Ok(reservationDtos);
+        }
+
+
+        [HttpGet("hotel/{hotelId}")]
+        [Authorize(Roles = RoleNames.Admin)]
+        public ActionResult<IEnumerable<ReservationDto>> GetReservationsByHotelId(int hotelId)
+        {
+            var hotelReservations = reservations.Where(r => r.HotelId == hotelId);
+            if (!hotelReservations.Any())
+            {
+                return NotFound();
+            }
+            return Ok(GetReservationsDto(hotelReservations));
+}
 
         [HttpGet("date/{checkInDate}")]
         [Authorize(Roles = RoleNames.Admin)]
@@ -227,7 +268,9 @@ namespace Selu383.SP24.Api.Features.Reservations
                     RoomId = x.RoomId,
                     CheckInDate = x.CheckInDate,
                     CheckOutDate = x.CheckOutDate,
-                    NumberOfGuests=x.NumberOfGuests
+                    NumberOfGuests=x.NumberOfGuests,
+                    ConfirmationNumber=x.ConfirmationNumber
+           
                 }); ;
         }
 

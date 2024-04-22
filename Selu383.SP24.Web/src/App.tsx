@@ -6,20 +6,27 @@ import "bootstrap/dist/js/bootstrap.min.js";
 import "@fortawesome/fontawesome-free/css/all.css";
 import Footer from "./components/Footer";
 import "react-toastify/dist/ReactToastify.css";
-//import imagePath from "./images/logo.png";
 import { useEffect } from "react";
 import { useUser } from "./Login/UserContext";
 
 function App() {
-  const { setUser } = useUser(); // Use the useUser hook here
+  const { user, setUser } = useUser();
 
   useEffect(() => {
     fetch("/api/authentication/me").then(async (x) => {
       x.json().then((userResp) => setUser(userResp));
     });
-  }, []);
+  }, [setUser]);
 
-  const items = ["Book a Room", "About", "Services", "Rooms", "Contact"];
+  const isAdmin = () => {
+    // Assuming user object has an isAdmin property
+    return user && user.roles.includes("Admin" || "admin");
+  };
+
+  const items = ["Services", "Rooms", "About", "Contact"];
+  if (isAdmin()) {
+    items.push("Admin");
+  }
   return (
     <>
       <div className="app-container">

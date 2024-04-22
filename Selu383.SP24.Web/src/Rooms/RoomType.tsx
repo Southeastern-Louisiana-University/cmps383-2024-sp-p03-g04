@@ -1,7 +1,7 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Card } from "react-bootstrap";
 import { useLocation, useNavigate } from "react-router-dom";
+import { formatDate } from "../Utils/dateUtils";
 
 interface Hotel {
   id: number;
@@ -10,8 +10,6 @@ interface Hotel {
   city: string;
   state: string;
   zipCode: string;
-
-  // Add more fields as needed
 }
 interface Room {
   id: number;
@@ -32,20 +30,12 @@ const RoomType: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const formatDate = (dateString: string | number) => {
-    const date = new Date(dateString);
-    const year = date.getFullYear();
-    const month = ("0" + (date.getMonth() + 1)).slice(-2); // Months are 0-indexed in JavaScript
-    const day = ("0" + date.getDate()).slice(-2);
-    return `${year}-${month}-${day}`;
-  };
   const { hotel, checkInDate, checkOutDate, guests, selectedHotel } =
     location.state || {};
 
-  // const initialHotels: Hotel = location.state ? location.state.hotel : [];
   const checkInDateFormatted = checkInDate ? formatDate(checkInDate) : "";
   const checkOutDateFormatted = checkOutDate ? formatDate(checkOutDate) : "";
-  console.log("🚀 ~ checkOutDateFormatted:", checkOutDateFormatted)
+
   const [selectedHotelInfo] = useState<Hotel>(hotel);
   const [rooms, setRooms] = useState<any[]>([]);
   const roomTypeNames = {
@@ -69,16 +59,14 @@ const RoomType: React.FC = () => {
       }
     );
     const roomData = await response.json();
-    console.log("🚀 ~ roomData:", roomData);
     setRooms(roomData);
   };
 
   useEffect(() => {
-    getRooms(hotel.id, checkInDateFormatted, checkOutDateFormatted);
+    getRooms(hotel.id, checkInDateFormatted, checkOutDate);
   }, []);
 
   const handleViewRooms = (room: any) => {
-    console.log("🚀 ~ handleViewRooms ~ room:", room);
     navigate(`/reservations/rooms/booking`, {
       state: {
         selectedHotelInfo,
@@ -94,9 +82,6 @@ const RoomType: React.FC = () => {
   return (
     <Container fluid style={{ width: "80%" }}>
       <h1>Available Room</h1>
-      <Row>
-        <Col>{/* <p>{hotels.length} Hotels Found</p> */}</Col>
-      </Row>
       {rooms.map((roomType, index) => (
         <div key={index}>
           {roomType.rooms.map(
@@ -108,8 +93,7 @@ const RoomType: React.FC = () => {
                       <Card.Img
                         variant="top"
                         src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aG90ZWwlMjByb29tfGVufDB8fDB8fHww"
-                      />{" "}
-                      {/* Replace with your image source */}
+                      />
                     </Col>
                     <Col md={9}>
                       <Card.Body style={{ fontFamily: "sans-serif" }}>
@@ -128,16 +112,8 @@ const RoomType: React.FC = () => {
                           <strong>Capacity:</strong> {room.capacity} people
                           <br />
                           <strong>Price:</strong> {room.price} USD/ Night
-                          <br />
-                          <br />
+         
                         </Card.Text>
-                        {/* Add more fields as needed */}
-                        {/* <Card.Text>
-                        <small className="text-muted">
-                          Last updated 3 mins ago
-                        </small>
-                      </Card.Text> */}
-                        <hr />
                         <button
                           type="button"
                           className="btn btn-success"
