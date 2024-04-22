@@ -156,10 +156,6 @@ const Home: React.FC = () => {
                                 checkOutDate ? formatDate(checkOutDate) : ""
                               }
                               onChange={(e) => {
-                                console.log(
-                                  "Selected Check-out Date:",
-                                  e.target.value
-                                );
                                 setCheckOutDate(new Date(e.target.value));
                               }}
                             ></Form.Control>

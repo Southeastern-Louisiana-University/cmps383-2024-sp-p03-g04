@@ -52,42 +52,43 @@ namespace Selu383.SP24.Api.Features.Reservations
         }
         [HttpGet("user/{userId}")]
         [Authorize]
-        public ActionResult<ReservationDto> GetLatestReservationByUserId(int userId)
+        public ActionResult<List<ReservationDto>> GetAllReservationsByUserId(int userId)
         {
-            var latestReservation = reservations.Where(r => r.GuestId == userId)
+            var userReservations = reservations.Where(r => r.GuestId == userId)
                                .OrderByDescending(r => r.CheckInDate)
-                               .FirstOrDefault();
+                               .ToList();
 
-            if (latestReservation == null)
+            if (userReservations == null || userReservations.Count == 0)
             {
-            return NotFound();
+                return NotFound();
             }
 
-            var reservationDto = new ReservationDto
+            var reservationDtos = userReservations.Select(reservation => new ReservationDto
             {
-            Id = latestReservation.Id,
-            GuestId = latestReservation.GuestId,
-            HotelId = latestReservation.HotelId,
-            RoomId = latestReservation.RoomId,
-            CheckInDate = latestReservation.CheckInDate,
-            CheckOutDate = latestReservation.CheckOutDate,
-            NumberOfGuests = latestReservation.NumberOfGuests,
-            ConfirmationNumber = latestReservation.ConfirmationNumber
-            };
+                Id = reservation.Id,
+                GuestId = reservation.GuestId,
+                HotelId = reservation.HotelId,
+                RoomId = reservation.RoomId,
+                CheckInDate = reservation.CheckInDate,
+                CheckOutDate = reservation.CheckOutDate,
+                NumberOfGuests = reservation.NumberOfGuests,
+                ConfirmationNumber = reservation.ConfirmationNumber
+            }).ToList();
 
-            return Ok(reservationDto);
+            return Ok(reservationDtos);
         }
 
+
         [HttpGet("hotel/{hotelId}")]
-[Authorize(Roles = RoleNames.Admin)]
-public ActionResult<IEnumerable<ReservationDto>> GetReservationsByHotelId(int hotelId)
-{
-    var hotelReservations = reservations.Where(r => r.HotelId == hotelId);
-    if (!hotelReservations.Any())
-    {
-        return NotFound();
-    }
-    return Ok(GetReservationsDto(hotelReservations));
+        [Authorize(Roles = RoleNames.Admin)]
+        public ActionResult<IEnumerable<ReservationDto>> GetReservationsByHotelId(int hotelId)
+        {
+            var hotelReservations = reservations.Where(r => r.HotelId == hotelId);
+            if (!hotelReservations.Any())
+            {
+                return NotFound();
+            }
+            return Ok(GetReservationsDto(hotelReservations));
 }
 
         [HttpGet("date/{checkInDate}")]

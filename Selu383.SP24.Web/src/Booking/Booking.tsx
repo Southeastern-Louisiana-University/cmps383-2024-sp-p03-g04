@@ -116,8 +116,6 @@ const Booking: React.FC = () => {
 
       if (response.ok) {
         const data = await response.json();
-        console.log("your confirmation ##" + data.confirmationNumber);
-        console.log("Reservation created successfully", data);
         toast.success("Your Reservation has been created successfully", {
           transition: Slide,
         });

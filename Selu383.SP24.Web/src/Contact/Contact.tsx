@@ -5,7 +5,7 @@ import "./Contact.css";
 import { useUser } from "../Login/UserContext";
 function Contact() {
   const [message, setMessage] = useState("");
-
+  const [phone, setPhoneNumber] = useState("");
   const { user } = useUser();
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -20,7 +20,7 @@ function Contact() {
       )
       .then(
         (result) => {
-          console.log(result.text);
+          console.log("🚀 ~ handleSubmit ~ result:", result)
           setMessage("");
         },
         (error) => {
@@ -33,13 +33,7 @@ function Contact() {
     <Container fluid>
       <Row className="justify-content-center mt-5">
         <Col xs={12} md={8}>
-          <h1
-            id="ContactText"
-            className="text-center mb-4"
-            style={{ color: "#6c74a0e8", fontWeight: "bold" }}
-          >
-            Contact Us
-          </h1>
+          <h1 className="text-center mb-4">Contact Us</h1>
           <Form
             id="contactForm"
             onSubmit={handleSubmit}
@@ -77,14 +71,15 @@ function Contact() {
                 </Form.Group>
               </Col>
               <Col xs={12} md={4} className="mb-4">
-                <Form.Group controlId="emailInput">
+                <Form.Group controlId="phoneNumber">
                   <Form.Label>
                     <b>Phone Number:</b>
                   </Form.Label>
                   <Form.Control
                     type="phone"
                     name="phone"
-                    value={""}
+                    defaultValue={"+1 " + phone}
+                    onChange={(e) => setPhoneNumber(e.target.value)}
                     style={{ borderRadius: "10px" }}
                   />
                 </Form.Group>
@@ -99,7 +94,7 @@ function Contact() {
                     as="textarea"
                     name="message"
                     value={message}
-                    rows={9}
+                    rows={10}
                     onChange={(e) => setMessage(e.target.value)}
                     style={{ borderRadius: "10px" }}
                   />

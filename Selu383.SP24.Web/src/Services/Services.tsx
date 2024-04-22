@@ -7,7 +7,6 @@ const Services: React.FC = () => {
   const navigate = useNavigate();
 
   const navigateToPage = (page: string) => {
-    console.log("Navigating to:", page);
     navigate(page);
   };
 

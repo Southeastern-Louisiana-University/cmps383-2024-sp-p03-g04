@@ -28,12 +28,7 @@ const Admin: React.FC = () => {
           if (response.ok) {
             const data = await response.json();
             setHotels(data);
-            console.log(data);
-
-            // Collect all reservations in a single array
             const allReservations: Reservation[] = [];
-
-            // Fetch reservations for each hotel
             for (const hotel of data) {
               const resResponse = await fetch(
                 `/api/reservations/hotel/${hotel.id}`
@@ -69,7 +64,6 @@ const Admin: React.FC = () => {
           ))}
           <h2>Reservations</h2>
           {reservations.map((reservation: Reservation) => {
-            console.log(reservation.CheckInDate, reservation.CheckOutDate); // Log the dates to the console
 
             return (
               <div key={reservation.ConfirmationNumber}>

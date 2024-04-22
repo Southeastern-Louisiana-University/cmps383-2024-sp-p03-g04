@@ -72,7 +72,7 @@ const Reservations: React.FC = () => {
               <Col md={3}>
                 <Card.Img
                   variant="top"
-                  src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aG90ZWwlMjByb29tfGVufDB8fDB8fHww"
+                  src="https://images.pexels.com/photos/258154/pexels-photo-258154.jpeg?cs=srgb&dl=pexels-pixabay-258154.jpg&fm=jpg"
                 />
               </Col>
               <Col md={9}>

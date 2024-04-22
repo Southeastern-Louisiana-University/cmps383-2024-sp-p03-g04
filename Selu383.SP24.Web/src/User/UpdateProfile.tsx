@@ -23,7 +23,6 @@ const UpdateProfile = () => {
     }).then(async (x) => {
       const resp = await x;
       if (resp.status !== 200) {
-        console.log(await resp.text());
       } else {
         console.log("User successfully updated");
       }

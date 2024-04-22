@@ -112,8 +112,7 @@ const RoomType: React.FC = () => {
                           <strong>Capacity:</strong> {room.capacity} people
                           <br />
                           <strong>Price:</strong> {room.price} USD/ Night
-                          <br />
-                          <br />
+         
                         </Card.Text>
                         <button
                           type="button"

@@ -18,7 +18,9 @@ const SignupPage: React.FC<SignupPageProps> = ({ onSuccess }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
-
+  const [firstName, setFirstName] = useState(""); 
+  const [lastName, setLastName] = useState(""); 
+  const [phoneNumber, setPhoneNumber] = useState(""); 
   const navigate = useNavigate();
 
   const handleSignup = async (e: React.FormEvent) => {
@@ -64,8 +66,8 @@ const SignupPage: React.FC<SignupPageProps> = ({ onSuccess }) => {
           <input
             className="input1"
             type="text"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={firstName} 
+            onChange={(e) => setFirstName(e.target.value)} 
           />
 
           <label>
@@ -74,8 +76,8 @@ const SignupPage: React.FC<SignupPageProps> = ({ onSuccess }) => {
           <input
             className="input1"
             type="text"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={lastName} 
+            onChange={(e) => setLastName(e.target.value)} 
           />
 
           <label>
@@ -84,8 +86,8 @@ const SignupPage: React.FC<SignupPageProps> = ({ onSuccess }) => {
           <input
             className="input1"
             type="text"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={phoneNumber} 
+            onChange={(e) => setPhoneNumber(e.target.value)} 
           />
 
           <label>
