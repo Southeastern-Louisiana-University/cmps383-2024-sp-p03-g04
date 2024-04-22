@@ -4,7 +4,7 @@ import { useUser } from "../Login/UserContext";
 
 const Admin: React.FC = () => {
   const [hotels, setHotels] = useState([]);
-  const { user, setUser } = useUser();
+  const { setUser } = useUser();
 
   type Reservation = {
     HotelId: number;

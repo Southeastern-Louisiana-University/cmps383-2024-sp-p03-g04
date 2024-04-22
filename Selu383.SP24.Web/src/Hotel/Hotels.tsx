@@ -64,7 +64,7 @@ const Reservations: React.FC = () => {
 
   return (
     <Container fluid style={{ width: "80%" }}>
-      <h1>Hotels</h1>
+      <br></br>
       {hotels.map((hotel, index) => (
         <Col key={index} xs={12}>
           <Card className="mb-3" style={{ maxWidth: "100%" }}>

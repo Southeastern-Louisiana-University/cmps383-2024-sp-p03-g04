@@ -10,7 +10,7 @@ import {
   Form,
   Row,
 } from "react-bootstrap";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { useUser } from "../Login/UserContext";
 import { Slide, toast } from "react-toastify";
 import "./booking.css";
@@ -27,49 +27,29 @@ const Booking: React.FC = () => {
     room,
     guests,
   } = location.state || {};
-
-  const [firtName, setFirstName] = useState("");
-  console.log("", firtName);
-  const [lastName, setLastName] = useState("");
-  console.log("", lastName);
-  console.log("🚀 ~ lastName:", lastName);
-  const [email, setEmail] = useState("");
-  console.log("", email);
-  const [phoneNumber, setPhoneNumber] = useState("");
-  console.log("", phoneNumber);
-  const [checkInDate, setCheckInDate] = useState(checkInDateFormatted);
-  const [checkOutDate, setCheckOutDate] = useState(checkOutDateFormatted);
-  console.log("🚀 ~ setCheckOutDate:", setCheckOutDate);
-
   const { user } = useUser();
+
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState(user?.email || "");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [address, setAddress] = useState("");
+  const [city, setCity] = useState("");
+  const [apt, setApt] = useState("");
+  const [postalCode, setPostalCode] = useState("");
+  const [addRequest, setAddRequest] = useState("");
+
+  const [checkInDate, setCheckInDate] = useState(checkInDateFormatted);
+  const [checkOutDate] = useState(checkOutDateFormatted);
+
+
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showSignupModal, setShowSignupModal] = useState(false);
-  const navigate = useNavigate();
 
   const handleCheckInDateChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     setCheckInDate(event.target.value);
-  };
-
-  const handleInputChange = (event: { target: { name: any; value: any } }) => {
-    const { name, value } = event.target;
-    switch (name) {
-      case "firstName":
-        setFirstName(value);
-        break;
-      case "lastName":
-        setLastName(value);
-        break;
-      case "email":
-        setEmail(value);
-        break;
-      case "phoneNumber":
-        setPhoneNumber(value);
-        break;
-      default:
-        break;
-    }
   };
 
   const sendEmail = async (confirmationNumber: string) => {
@@ -205,7 +185,7 @@ const Booking: React.FC = () => {
               <Card className="p-4 shadow-0 border">
                 <Card.Body>
                   <Card.Title>
-                    <b>Guest checkout</b>
+                    <b> Customer Checkout</b>
                   </Card.Title>
 
                   <Row>
@@ -214,8 +194,8 @@ const Booking: React.FC = () => {
                         <Form.Label>First name</Form.Label>
                         <Form.Control
                           type="text"
-                          value={user?.userName}
-                          onChange={handleInputChange}
+                          value={firstName || user?.userName || ""}
+                          onChange={(e) => setFirstName(e.target.value)}
                           required
                         />
                       </Form.Group>
@@ -225,8 +205,8 @@ const Booking: React.FC = () => {
                         <Form.Label>Last name</Form.Label>
                         <Form.Control
                           type="text"
-                          value={user?.userName}
-                          onChange={handleInputChange}
+                          value={lastName || user?.userName || ""}
+                          onChange={(e) => setLastName(e.target.value)}
                           required
                         />
                       </Form.Group>
@@ -234,7 +214,11 @@ const Booking: React.FC = () => {
                     <Col md={6}>
                       <Form.Group controlId="phone">
                         <Form.Label>Phone</Form.Label>
-                        <Form.Control type="tel" defaultValue="+1 " />
+                        <Form.Control
+                          type="tel"
+                          defaultValue={phoneNumber + "+1 "}
+                          onChange={(e) => setPhoneNumber(e.target.value)}
+                        />
                       </Form.Group>
                     </Col>
                     <Col md={6}>
@@ -242,8 +226,8 @@ const Booking: React.FC = () => {
                         <Form.Label>Email</Form.Label>
                         <Form.Control
                           type="email"
-                          value={user?.email}
-                          onChange={handleInputChange}
+                          value={email || user?.email || ""}
+                          onChange={(e) => setEmail(e.target.value)}
                           required
                         />
                       </Form.Group>
@@ -253,54 +237,74 @@ const Booking: React.FC = () => {
                     <Col sm={8}>
                       <Form.Group controlId="address">
                         <Form.Label>Address</Form.Label>
-                        <Form.Control type="text" required />
+                        <Form.Control
+                          type="text"
+                          defaultValue={address}
+                          onChange={(e) => setAddress(e.target.value)}
+                          required
+                        />
                       </Form.Group>
                     </Col>
                     <Col sm={4}>
                       <Form.Group controlId="city">
                         <Form.Label>City</Form.Label>
-                        <Form.Control type="text" required />
+                        <Form.Control
+                          type="text"
+                          defaultValue={city}
+                          onChange={(e) => setCity(e.target.value)}
+                          required
+                        />
                       </Form.Group>
                     </Col>
                     <Col sm={4}>
                       <Form.Group controlId="house">
                         <Form.Label>Apt (Optional)</Form.Label>
-                        <Form.Control type="text" />
+                        <Form.Control
+                          defaultValue={apt}
+                          type="text"
+                          onChange={(e) => setApt(e.target.value)}
+                        />
                       </Form.Group>
                     </Col>
                     <Col sm={4} xs={6}>
                       <Form.Group controlId="postalCode">
                         <Form.Label>Postal code</Form.Label>
-                        <Form.Control type="text" required />
-                      </Form.Group>
-                    </Col>
-                    <Col sm={4} xs={6}>
-                      <Form.Group controlId="zip">
-                        <Form.Label>Zip</Form.Label>
-                        <Form.Control type="text" required />
+                        <Form.Control
+                          type="text"
+                          defaultValue={postalCode}
+                          onChange={(e) => setPostalCode(e.target.value)}
+                          required
+                        />
                       </Form.Group>
                     </Col>
                   </Row>
                   <Col md={12}>
                     <Form.Group controlId="messageToSeller" className="mb-3">
                       <Form.Label>Additional Request</Form.Label>
-                      <Form.Control as="textarea" rows={3} />
+                      <Form.Control
+                        as="textarea"
+                        defaultValue={addRequest}
+                        rows={3}
+                        onChange={(e) => setAddRequest(e.target.value)}
+                      />
                     </Form.Group>
                   </Col>
+                  <Row className="d-flex justify-content-end">
+                    <Col xs md="2" className="d-flex justify-content-end">
+                      <Button variant="light" className="border me-2">
+                        Cancel
+                      </Button>
+                      <Button
+                        variant="success"
+                        className="shadow-0 border"
+                        type="submit"
+                        disabled={!user}
+                      >
+                        Continue
+                      </Button>
+                    </Col>
+                  </Row>
                 </Card.Body>
-                <div className="float-end">
-                  <Button variant="light" className="border me-2">
-                    Cancel
-                  </Button>
-                  <Button
-                    variant="success"
-                    className="shadow-0 border"
-                    type="submit"
-                    disabled={!user}
-                  >
-                    Continue
-                  </Button>
-                </div>
               </Card>
               <br />
               <Card className="p-4 mb-4 border shadow-0">

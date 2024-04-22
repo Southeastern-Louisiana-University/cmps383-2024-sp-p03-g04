@@ -10,7 +10,6 @@ interface Hotel {
   city: string;
   state: string;
   zipCode: string;
-
 }
 interface Room {
   id: number;
@@ -35,6 +34,8 @@ const RoomType: React.FC = () => {
     location.state || {};
 
   const checkInDateFormatted = checkInDate ? formatDate(checkInDate) : "";
+  const checkOutDateFormatted = checkOutDate ? formatDate(checkOutDate) : "";
+
   const [selectedHotelInfo] = useState<Hotel>(hotel);
   const [rooms, setRooms] = useState<any[]>([]);
   const roomTypeNames = {
@@ -70,7 +71,7 @@ const RoomType: React.FC = () => {
       state: {
         selectedHotelInfo,
         checkInDateFormatted,
-        checkOutDate,
+        checkOutDateFormatted,
         room,
         guests,
         selectedHotel,

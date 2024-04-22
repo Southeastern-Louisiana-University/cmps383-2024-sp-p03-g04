@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { Dropdown } from "react-bootstrap";
 import { useUser } from "../Login/UserContext";
@@ -14,15 +14,29 @@ interface NavBarProps {
 }
 
 function NavBar({ brandName, navItems }: NavBarProps) {
-  const [selectedIndex, setSelectedIndex] = useState(-1);
+  const [selectedIndex] = useState(-1);
   const [collapsed, setCollapsed] = useState(true);
   const { user, setUser } = useUser();
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showSignupModal, setShowSignupModal] = useState(false);
+  const navRef = useRef<HTMLDivElement>(null);
 
   const toggleCollapse = () => {
     setCollapsed(!collapsed);
   };
+
+  const handleClickOutside = (event: { target: any }) => {
+    if (navRef.current && !navRef.current.contains(event.target)) {
+      setCollapsed(true);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const handleLogOut = () => {
     return fetch("/api/authentication/logout", { method: "POST" }).then(
@@ -36,7 +50,11 @@ function NavBar({ brandName, navItems }: NavBarProps) {
   };
 
   return (
-    <nav className="navbar navbar-expand-lg" style={{ background: "#a5b4fc" }}>
+    <nav
+      className="navbar navbar-expand-lg"
+      style={{ background: "#a5b4fc" }}
+      ref={navRef}
+    >
       <div className="container-fluid">
         <Link className="navbar-brand" to="/">
           <span className="fw-bolder fs-4">{brandName}</span>
@@ -60,8 +78,10 @@ function NavBar({ brandName, navItems }: NavBarProps) {
             {navItems.map((item, index) => (
               <li
                 key={index}
-                className="nav-item"
-                onClick={() => setSelectedIndex(index)}
+                className={`nav-item ${
+                  index === selectedIndex ? "active" : ""
+                }`}
+                onClick={toggleCollapse}
               >
                 <Link
                   className={`nav-link ${
@@ -76,7 +96,7 @@ function NavBar({ brandName, navItems }: NavBarProps) {
           </ul>
           {user ? (
             <>
-              <div className="dropdown-container">
+              <Link to={""} className="me-2 ">
                 <Dropdown>
                   <Dropdown.Toggle
                     id="dropdown-basic"
@@ -100,7 +120,7 @@ function NavBar({ brandName, navItems }: NavBarProps) {
                     </Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>
-              </div>
+              </Link>
               <Link
                 className="btn btn-outline-light"
                 to="/Home"

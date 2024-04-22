@@ -10,9 +10,6 @@
 }
 
 #contactForm label {
-  padding: 12px 12px 12px 0;
-  display: inline-block;
-  align-self: flex-start;
   width: 100%;
 }
 
@@ -23,8 +20,6 @@
 #messageInput {
   border: 2px solid #a5b4fc;
   width: 50%;
-  margin: 15px 0;
-
   box-sizing: border-box;
   color: black;
   background-color: #f2f2f2;
