@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import "./SignUp.css";
-import { useNavigate } from "react-router-dom";
 import { Slide, toast } from "react-toastify";
 
 interface CreateUserDto {
@@ -21,7 +20,6 @@ const SignupPage: React.FC<SignupPageProps> = ({ onSuccess }) => {
   const [firstName, setFirstName] = useState(""); 
   const [lastName, setLastName] = useState(""); 
   const [phoneNumber, setPhoneNumber] = useState(""); 
-  const navigate = useNavigate();
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
